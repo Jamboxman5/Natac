@@ -3,6 +3,7 @@ package me.jamboxman5.natac.player;
 import me.jamboxman5.natac.map.Tile;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Player {
 
@@ -13,6 +14,12 @@ public class Player {
     private int money;
     private int resources;
     private int research;
+
+    private String username;
+    private UUID id;
+
+    public String getUsername() { return username; }
+    public String getID() { return id.toString(); }
 
     public enum Class {
         HOLYEMPIRE, MOLEPEOPLE, BARBARIAN, STEELCITY, GOLDENKEEP, NECROPOLIS;
