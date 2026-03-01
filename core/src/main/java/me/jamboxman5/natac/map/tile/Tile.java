@@ -1,4 +1,4 @@
-package me.jamboxman5.natac.map;
+package me.jamboxman5.natac.map.tile;
 
 import java.util.List;
 import java.util.UUID;

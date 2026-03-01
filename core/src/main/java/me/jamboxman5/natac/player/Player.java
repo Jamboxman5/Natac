@@ -1,6 +1,6 @@
 package me.jamboxman5.natac.player;
 
-import me.jamboxman5.natac.map.Tile;
+import me.jamboxman5.natac.map.tile.Tile;
 
 import java.util.List;
 import java.util.UUID;
