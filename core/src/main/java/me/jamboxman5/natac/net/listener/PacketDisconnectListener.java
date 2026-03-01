@@ -2,15 +2,13 @@ package me.jamboxman5.natac.net.listener;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import me.jamboxman5.abnpgame.main.ABNPGame;
-import me.jamboxman5.abnpgame.net.packets.PacketDisconnect;
+import me.jamboxman5.natac.net.packet.PacketDisconnect;
 
-public class PacketDisconnectListener extends Listener {
+public class PacketDisconnectListener implements Listener {
 
     @Override
     public void received(Connection conn, Object obj) {
         if (obj instanceof PacketDisconnect) {
-            ABNPGame.getInstance().getClientManager().disconnectPlayer((PacketDisconnect) obj);
         }
     }
 
