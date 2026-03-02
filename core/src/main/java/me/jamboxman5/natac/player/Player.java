@@ -21,6 +21,10 @@ public class Player {
     public String getUsername() { return username; }
     public String getID() { return id.toString(); }
 
+    public void draw() {
+
+    }
+
     public enum Class {
         HOLYEMPIRE, MOLEPEOPLE, BARBARIAN, STEELCITY, GOLDENKEEP, NECROPOLIS;
     }
