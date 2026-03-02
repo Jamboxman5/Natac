@@ -1,8 +1,11 @@
 package me.jamboxman5.natac.lwjgl3;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.util.Settings;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
@@ -28,8 +31,12 @@ public class Lwjgl3Launcher {
         //// useful for testing performance, but can also be very stressful to some hardware.
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
 
-        configuration.setWindowedMode(640, 480);
-        //// You can change these files; they are in lwjgl3/src/main/resources/ .
+        Graphics.DisplayMode displayMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
+        Vector2 displayRes = new Vector2(displayMode.width, displayMode.height);
+        if (displayRes.x == Settings.screenWidth && displayRes.y == Settings.screenHeight) configuration.setDecorated(false);
+        Settings.getAvailableResolutions(displayRes);
+        configuration.setBackBufferConfig(8, 8, 8, 8, 24, 8, 4);
+        configuration.setWindowedMode(Settings.screenWidth,Settings.screenHeight);        //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
         configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
 
