@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,7 +28,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final OrthographicCamera uiCamera;
     private final Viewport viewport;
 
-    private final Vector3 touchPos = new Vector3();
+    private final Vector2 touchPos = new Vector2();
 
     SpriteBatch batch;
     ShapeRenderer shapes;
@@ -38,26 +39,26 @@ public class GameScreen implements Screen, InputProcessor {
 
         gameCamera = new OrthographicCamera();
         uiCamera = new OrthographicCamera();
+        viewport = new FitViewport(1280, 720, gameCamera);
 
-        gameCamera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
-        gameCamera.zoom = Settings.maxZoom;
-        uiCamera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
         Gdx.input.setInputProcessor(this);
 
-        viewport = new FitViewport(1280, 720, gameCamera);
 
 
     }
 
     private void draw() {
-        map.draw(batch, shapes);
+        shapes.setProjectionMatrix(gameCamera.combined);
+
+        map.draw(gameCamera, batch, shapes);
         for (Player p : players) p.draw();
     }
 
     private void update(float delta) {
-        if (Gdx.input.isTouched()) {
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        }
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(touchPos);
+
+        map.update(touchPos);
 
     }
 
