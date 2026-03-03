@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -27,8 +28,10 @@ public class GameScreen implements Screen, InputProcessor {
     private final OrthographicCamera gameCamera;
     private final OrthographicCamera uiCamera;
     private final Viewport viewport;
-
+    private float targetZoom = 1.0f;
+    private final Vector2 targetPos = new Vector2(640, 360);
     private final Vector2 touchPos = new Vector2();
+    private final Vector2 lastTouchPos  = new Vector2();
 
     SpriteBatch batch;
     ShapeRenderer shapes;
@@ -54,12 +57,18 @@ public class GameScreen implements Screen, InputProcessor {
         for (Player p : players) p.draw();
     }
 
+
     private void update(float delta) {
+        gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
+        gameCamera.position.x = MathUtils.lerp(gameCamera.position.x, targetPos.x, 0.15f);
+        gameCamera.position.y = MathUtils.lerp(gameCamera.position.y, targetPos.y, 0.15f);
+
+        gameCamera.update();
+
         touchPos.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(touchPos);
 
         map.update(touchPos);
-
     }
 
     @Override
@@ -121,9 +130,10 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        lastTouchPos.set(screenX, screenY);
+        viewport.unproject(lastTouchPos);
+        return true;
     }
-
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
@@ -134,19 +144,41 @@ public class GameScreen implements Screen, InputProcessor {
         return false;
     }
 
+
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
+        Vector2 newTouchPos = new Vector2(screenX, screenY);
+        viewport.unproject(newTouchPos);
 
+        float deltaX = newTouchPos.x - lastTouchPos.x;
+        float deltaY = newTouchPos.y - lastTouchPos.y;
+
+        targetPos.x -= deltaX*5;
+        targetPos.y -= deltaY*5;
+
+        lastTouchPos.set(screenX, screenY);
+        viewport.unproject(lastTouchPos);
+
+        return true;
+    }
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
     }
 
+
     @Override
     public boolean scrolled(float amountX, float amountY) {
+        float worldMouseXBefore = touchPos.x;
+        float worldMouseYBefore = touchPos.y;
 
-        return false;
+        targetZoom = MathUtils.clamp(targetZoom + (amountY * 0.2f), 0.2f, 3.0f);
+
+        float zoomRatio = targetZoom / gameCamera.zoom;
+
+        targetPos.x = worldMouseXBefore + (gameCamera.position.x - worldMouseXBefore) * zoomRatio;
+        targetPos.y = worldMouseYBefore + (gameCamera.position.y - worldMouseYBefore) * zoomRatio;
+
+        return true;
     }
 }
