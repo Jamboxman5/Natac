@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -29,6 +30,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Vector3 touchPos = new Vector3();
 
     SpriteBatch batch;
+    ShapeRenderer shapes;
 
     public GameScreen(List<Player> players) {
         this.players = players;
@@ -48,7 +50,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void draw() {
-        map.draw(batch);
+        map.draw(batch, shapes);
         for (Player p : players) p.draw();
     }
 
@@ -62,6 +64,7 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        shapes = new ShapeRenderer();
     }
 
     @Override
