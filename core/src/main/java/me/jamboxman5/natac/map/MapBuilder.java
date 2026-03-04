@@ -8,8 +8,6 @@ public class MapBuilder {
         Map map = new Map();
 
         float hexRadius = 50;
-        float columns = radius + 2;
-        float rows = radius + 2;
 
 
         float startX = 200;
@@ -22,6 +20,10 @@ public class MapBuilder {
 
         float horizontalStep = 1.5f * (hexRadius * stretchFactor) + (gap * 0.866f * stretchFactor);
 
+        boolean[][] mapLayout = getHexLayout(3);
+        int columns = mapLayout[0].length;
+        int rows = mapLayout.length;
+
         for (int col = 0; col < columns; col++) {
             for (int row = 0; row < rows; row++) {
                 float x = startX + (col * horizontalStep);
@@ -29,9 +31,25 @@ public class MapBuilder {
 
                 if (col % 2 != 0) y += verticalStep / 2f;
 
-                map.addTile(new Tile(x, y));
+                map.addTile(new Tile(x, y, mapLayout[row][col]));
             }
         }
         return map;
     }
+
+    private static boolean[][] getHexLayout(int radius) {
+        return new boolean[][]
+            {
+                {false, false, false, true, true, true, false, false, false},
+                {false, true,  true,  true, true, true, true,  true,  false},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {false, false, true,  true, true, true, true,  false, false},
+                {false, false, false, false,true, false,false, false, false},
+            };
+    }
+
 }

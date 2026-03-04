@@ -1,5 +1,6 @@
 package me.jamboxman5.natac.player;
 
+import com.badlogic.gdx.graphics.Color;
 import me.jamboxman5.natac.map.tile.Tile;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public class Player {
     private int money;
     private int resources;
     private int research;
+
+    private Color tileColor;
 
     private String username;
     private UUID id;

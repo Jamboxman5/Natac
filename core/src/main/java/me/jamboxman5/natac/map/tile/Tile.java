@@ -39,8 +39,11 @@ public class Tile {
     private Color highlight = Color.WHITE;
     private Color fill = new Color(0, 0, .2f, .5f);
 
-    public Tile(float x, float y) {
+    boolean show = false;
+
+    public Tile(float x, float y, boolean show) {
         generateHexagon(x, y);
+        this.show = show;
     }
 
     private void generateHexagon(float x, float y) {
@@ -57,6 +60,8 @@ public class Tile {
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
+        if (!show) return;
+
         shapes.setColor(fill);
         shapes.filledPolygon(bounds.getTransformedVertices());
         shapes.setColor(highlight);
