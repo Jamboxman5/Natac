@@ -35,6 +35,7 @@ public class Tile {
     private int radius = 50;
     private float stretchFactor = 1.5f;
     private Color highlight = Color.WHITE;
+    private Color fill = new Color(0, 0, .2f, .5f);
 
     public Tile(float x, float y) {
         generateHexagon(x, y);
@@ -52,7 +53,8 @@ public class Tile {
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
-
+        shapes.setColor(fill);
+        shapes.filledPolygon(bounds.getTransformedVertices());
         shapes.setColor(highlight);
         shapes.polygon(bounds.getTransformedVertices());
     }
