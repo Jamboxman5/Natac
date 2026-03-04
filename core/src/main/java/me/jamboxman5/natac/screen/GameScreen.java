@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -17,6 +18,7 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.util.Settings;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Vector2 lastTouchPos  = new Vector2();
 
     SpriteBatch batch;
-    ShapeRenderer shapes;
+    ShapeDrawer shapes;
 
     public GameScreen(List<Player> players) {
         this.players = players;
@@ -51,10 +53,14 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void draw() {
-        shapes.setProjectionMatrix(gameCamera.combined);
+        batch.setProjectionMatrix(gameCamera.combined);
+        Gdx.gl.glEnable(GL30.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
+        batch.begin();
         map.draw(gameCamera, batch, shapes);
         for (Player p : players) p.draw();
+        batch.end();
     }
 
 
@@ -74,7 +80,15 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        shapes = new ShapeRenderer();
+
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        Texture texture = new Texture(pixmap);
+        TextureRegion whitePixel = new TextureRegion(texture);
+        pixmap.dispose();
+
+        shapes = new ShapeDrawer(batch, whitePixel);
     }
 
     @Override

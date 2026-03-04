@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.map.tile.Tile;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Map {
 
     }
 
-    public void draw(Camera camera, SpriteBatch batch, ShapeRenderer shapes) {
+    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
         for (Tile t : tiles) t.draw(camera, batch, shapes);
     }
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import me.jamboxman5.natac.Natac;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,14 +51,10 @@ public class Tile {
         bounds = new Polygon(vertices);
     }
 
-    public void draw(Camera camera, SpriteBatch batch, ShapeRenderer shapes) {
-        shapes.begin(ShapeRenderer.ShapeType.Line);
-        Gdx.gl.glEnable(GL30.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
         shapes.setColor(highlight);
         shapes.polygon(bounds.getTransformedVertices());
-        shapes.end();
     }
 
     public void update(Vector2 touchPos) {
