@@ -30,6 +30,8 @@ public class Tile {
     private List contents;
 
     private Sprite sprite;
+    private float targetScale = 1f;
+    private float currentScale = 1f;
 
     private Polygon bounds;
     private int radius = 50;
@@ -46,10 +48,12 @@ public class Tile {
         for (int i = 0; i < 6; i++) {
             float angle = i * MathUtils.PI / 3;
             // Multiply the X-offset by the stretch factor
-            vertices[i * 2] = x + (radius * MathUtils.cos(angle) * stretchFactor);
-            vertices[i * 2 + 1] = y + (radius * MathUtils.sin(angle));
+            vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
+            vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
         }
         bounds = new Polygon(vertices);
+        bounds.setPosition(x, y);
+        bounds.setOrigin(0,0);
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
@@ -60,11 +64,13 @@ public class Tile {
     }
 
     public void update(Vector2 touchPos) {
-        if (bounds.contains(touchPos.x, touchPos.y)) {
-            highlight = Color.RED;
-        } else {
-            highlight = Color.WHITE;
-        }
+
+        targetScale = bounds.contains(touchPos.x, touchPos.y) ? 1.1f : 1.0f;
+
+        currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
+
+        bounds.setScale(currentScale, currentScale);
+
     }
 
     public enum TileType {
