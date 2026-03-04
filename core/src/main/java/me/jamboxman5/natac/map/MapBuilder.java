@@ -27,7 +27,7 @@ public class MapBuilder {
         for (int col = 0; col < columns; col++) {
             for (int row = 0; row < rows; row++) {
                 float x = startX + (col * horizontalStep);
-                float y = startY + (row * verticalStep);
+                float y = startY + ((rows-1-row) * verticalStep);
 
                 if (col % 2 != 0) y += verticalStep / 2f;
 
@@ -40,15 +40,15 @@ public class MapBuilder {
     private static boolean[][] getHexLayout(int radius) {
         return new boolean[][]
             {
-                {false, false, false, true, true, true, false, false, false},
-                {false, true,  true,  true, true, true, true,  true,  false},
-                {true,  true,  true,  true, true, true, true,  true,  true},
-                {true,  true,  true,  true, true, true, true,  true,  true},
-                {true,  true,  true,  true, true, true, true,  true,  true},
-                {true,  true,  true,  true, true, true, true,  true,  true},
-                {true,  true,  true,  true, true, true, true,  true,  true},
-                {false, false, true,  true, true, true, true,  false, false},
                 {false, false, false, false,true, false,false, false, false},
+                {false, false, true,  true, true, true, true,  false, false},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {true,  true,  true,  true, true, true, true,  true,  true},
+                {false, true,  true,  true, true, true, true,  true,  false},
+                {false, false, false, true, true, true, false, false, false},
             };
     }
 
