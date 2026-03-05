@@ -58,8 +58,11 @@ public class Tile {
                 shapes.polygon(bounds.getVertices());
                 return;
             case SELECTED:
-                return;
-        }
+                shapes.setColor(new Color(0, 0, .4f, .7f));
+                shapes.filledPolygon(bounds.getVertices());
+                shapes.setColor(Color.WHITE);
+                shapes.polygon(bounds.getVertices());
+                return;        }
 
 
     }
@@ -68,6 +71,14 @@ public class Tile {
 
         bounds.update(touchPos);
 
+    }
+
+    public boolean contains(Vector2 point) {
+        return bounds.bounds.contains(point);
+    }
+
+    public void setState(TileState state) {
+        this.state = state;
     }
 
     public enum TileType {
@@ -110,6 +121,8 @@ public class Tile {
 
         public float[] getVertices() { return bounds.getTransformedVertices(); }
     }
+
+
 }
 
 

@@ -1,23 +1,19 @@
 package me.jamboxman5.natac.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
-import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
@@ -32,8 +28,9 @@ public class GameScreen implements Screen, InputProcessor {
     private final Viewport viewport;
     private float targetZoom = 1.0f;
     private final Vector2 targetPos = new Vector2(640, 360);
-    private final Vector2 touchPos = new Vector2();
-    private final Vector2 lastTouchPos  = new Vector2();
+    private final Vector2 mousePos = new Vector2();
+    private final Vector2 clickPos = new Vector2();
+    private final Vector2 lastMousePos = new Vector2();
 
     SpriteBatch batch;
     ShapeDrawer shapes;
@@ -71,10 +68,10 @@ public class GameScreen implements Screen, InputProcessor {
 
         gameCamera.update();
 
-        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-        viewport.unproject(touchPos);
+        mousePos.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(mousePos);
 
-        map.update(touchPos);
+        map.update(mousePos);
     }
 
     @Override
@@ -144,8 +141,10 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        lastTouchPos.set(screenX, screenY);
-        viewport.unproject(lastTouchPos);
+        lastMousePos.set(screenX, screenY);
+        viewport.unproject(lastMousePos);
+
+        map.clickTile(lastMousePos);
         return true;
     }
     @Override
@@ -161,17 +160,18 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+
         Vector2 newTouchPos = new Vector2(screenX, screenY);
         viewport.unproject(newTouchPos);
 
-        float deltaX = newTouchPos.x - lastTouchPos.x;
-        float deltaY = newTouchPos.y - lastTouchPos.y;
+        float deltaX = newTouchPos.x - lastMousePos.x;
+        float deltaY = newTouchPos.y - lastMousePos.y;
 
         targetPos.x -= deltaX*5;
         targetPos.y -= deltaY*5;
 
-        lastTouchPos.set(screenX, screenY);
-        viewport.unproject(lastTouchPos);
+        lastMousePos.set(screenX, screenY);
+        viewport.unproject(lastMousePos);
 
         return true;
     }
@@ -183,8 +183,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
-        float worldMouseXBefore = touchPos.x;
-        float worldMouseYBefore = touchPos.y;
+        float worldMouseXBefore = mousePos.x;
+        float worldMouseYBefore = mousePos.y;
 
         targetZoom = MathUtils.clamp(targetZoom + (amountY * 0.2f), 0.2f, 3.0f);
 

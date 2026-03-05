@@ -27,6 +27,13 @@ public class Map {
         for (Tile t : tiles) t.update(touchPos);
     }
 
+    public void clickTile(Vector2 pos) {
+        for (Tile t : tiles) {
+            if (t.contains(pos)) t.setState(Tile.TileState.SELECTED);
+        }
+    }
+
+
     public void addTile(Tile t) { tiles.add(t); }
 
 }
