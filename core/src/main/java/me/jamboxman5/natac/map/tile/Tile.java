@@ -81,6 +81,9 @@ public class Tile {
         this.state = state;
     }
 
+    public TileState getState() { return state;
+    }
+
     public enum TileType {
         PLAINS, FOREST, RADIATION;
     }
