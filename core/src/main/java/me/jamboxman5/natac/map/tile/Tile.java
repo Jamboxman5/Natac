@@ -38,7 +38,7 @@ public class Tile {
     public Tile(float x, float y, TileState state) {
         bounds = new Hexagon(x, y);
         this.state = state;
-        this.type = TileType.PLAINS;
+        this.type = getRandomType();
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
@@ -128,6 +128,12 @@ public class Tile {
         }
 
         public float[] getVertices() { return bounds.getTransformedVertices(); }
+    }
+
+    private static TileType getRandomType() {
+        TileType[] types = TileType.values();
+        int idx = (int) (Math.random() * types.length);
+        return types[idx];
     }
 
 
