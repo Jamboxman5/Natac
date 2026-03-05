@@ -51,6 +51,7 @@ public class Tile {
                 shapes.polygon(bounds.getVertices());
                 return;
             case SELECTABLE:
+
                 shapes.setColor(new Color(.4f, .4f, .4f, .5f));
                 shapes.filledPolygon(bounds.getVertices());
                 shapes.setColor(Color.WHITE);
