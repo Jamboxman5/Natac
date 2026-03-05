@@ -38,12 +38,15 @@ public class Tile {
     public Tile(float x, float y, TileState state) {
         bounds = new Hexagon(x, y);
         this.state = state;
+        this.type = TileType.PLAINS;
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
         if (state == TileState.HIDDEN) return;
 
+        shapes.setColor(type.tileColor);
+        shapes.filledPolygon(bounds.getVertices());
         shapes.setColor(state.tileColor);
         shapes.filledPolygon(bounds.getVertices());
         shapes.setColor(Color.WHITE);
@@ -70,7 +73,15 @@ public class Tile {
     }
 
     public enum TileType {
-        PLAINS, FOREST, RADIATION;
+        PLAINS(new Color(.2f, 0.8f, .2f, 1f)),
+        FOREST(new Color(.2f, 1f, .2f, 1f)),
+        RADIATION(new Color(.4f, .2f, .2f, 1f));
+
+        public final Color tileColor;
+
+        TileType(Color tileColor) {
+            this.tileColor = tileColor;
+        }
     }
 
     public enum TileState {
