@@ -30,56 +30,70 @@ public class Tile {
     private List contents;
 
     private Sprite sprite;
-    private float targetScale = 1f;
-    private float currentScale = 1f;
 
-    private Polygon bounds;
-    private int radius = 50;
-    private float stretchFactor = 1.5f;
-    private Color highlight = Color.WHITE;
-    private Color fill = new Color(0, 0, .2f, .5f);
+    private final Hexagon bounds;
 
     boolean show = false;
 
     public Tile(float x, float y, boolean show) {
-        generateHexagon(x, y);
+        bounds = new Hexagon(x, y);
         this.show = show;
     }
 
     private void generateHexagon(float x, float y) {
-        float[] vertices = new float[12];
-        for (int i = 0; i < 6; i++) {
-            float angle = i * MathUtils.PI / 3;
-            // Multiply the X-offset by the stretch factor
-            vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
-            vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
-        }
-        bounds = new Polygon(vertices);
-        bounds.setPosition(x, y);
-        bounds.setOrigin(0,0);
+
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
         if (!show) return;
 
-        shapes.setColor(fill);
-        shapes.filledPolygon(bounds.getTransformedVertices());
-        shapes.setColor(highlight);
-        shapes.polygon(bounds.getTransformedVertices());
+        shapes.setColor(bounds.fill);
+        shapes.filledPolygon(bounds.getVertices());
+        shapes.setColor(bounds.highlight);
+        shapes.polygon(bounds.getVertices());
     }
 
     public void update(Vector2 touchPos) {
 
-        targetScale = bounds.contains(touchPos.x, touchPos.y) ? 1.1f : 1.0f;
-
-        currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
-
-        bounds.setScale(currentScale, currentScale);
+        bounds.update(touchPos);
 
     }
 
     public enum TileType {
         PLAINS, FOREST, RADIATION;
+    }
+
+    private static class Hexagon {
+        private float currentScale = 1f;
+
+        private final Polygon bounds;
+        public Color highlight = Color.WHITE;
+        public Color fill = new Color(0, 0, .2f, .5f);
+
+        public Hexagon(float x, float y) {
+            float[] vertices = new float[12];
+            for (int i = 0; i < 6; i++) {
+                float angle = i * MathUtils.PI / 3;
+                // Multiply the X-offset by the stretch factor
+                float stretchFactor = 1.5f;
+                int radius = 50;
+                vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
+                vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
+            }
+            bounds = new Polygon(vertices);
+            bounds.setPosition(x, y);
+            bounds.setOrigin(0,0);
+        }
+
+        public void update(Vector2 touchPos) {
+            float targetScale = bounds.contains(touchPos.x, touchPos.y) ? 1.1f : 1.0f;
+
+            currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
+
+            bounds.setScale(currentScale, currentScale);
+        }
+
+        public float[] getVertices() { return bounds.getTransformedVertices(); }
     }
 }
 
