@@ -40,10 +40,6 @@ public class Tile {
         this.show = show;
     }
 
-    private void generateHexagon(float x, float y) {
-
-    }
-
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
         if (!show) return;
 
