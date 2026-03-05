@@ -29,7 +29,8 @@ public class Map {
 
     public void clickTile(Vector2 pos) {
         for (Tile t : tiles) {
-            if (t.contains(pos) && t.getState() != Tile.TileState.HIDDEN) t.setState(Tile.TileState.SELECTED);
+            if (t.contains(pos) && t.getState() == Tile.TileState.SELECTABLE) t.setState(Tile.TileState.SELECTED);
+            else if (t.contains(pos) && t.getState() == Tile.TileState.SELECTED) t.setState(Tile.TileState.SELECTABLE);
         }
     }
 
