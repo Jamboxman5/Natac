@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class Tile {
-    private int passability;
     private UUID owner;
     private TileType type;
     private int yield;
@@ -73,14 +72,16 @@ public class Tile {
     }
 
     public enum TileType {
-        PLAINS(new Color(.2f, 0.8f, .2f, 1f)),
-        FOREST(new Color(.2f, 1f, .2f, 1f)),
-        RADIATION(new Color(.4f, .2f, .2f, 1f));
+        PLAINS(new Color(.2f, 0.8f, .2f, 1f), 1),
+        FOREST(new Color(.2f, 1f, .2f, 1f), 3),
+        RADIATION(new Color(.4f, .2f, .2f, 1f), 10);
 
         public final Color tileColor;
+        public final int passability;
 
-        TileType(Color tileColor) {
+        TileType(Color tileColor, int passability) {
             this.tileColor = tileColor;
+            this.passability = passability;
         }
     }
 
