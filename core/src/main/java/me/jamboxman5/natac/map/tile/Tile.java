@@ -41,28 +41,13 @@ public class Tile {
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
-        switch (state) {
-            case HIDDEN:
-                return;
-            case BLOCKED:
-                shapes.setColor(new Color(0, 0, .2f, .5f));
-                shapes.filledPolygon(bounds.getVertices());
-                shapes.setColor(Color.WHITE);
-                shapes.polygon(bounds.getVertices());
-                return;
-            case SELECTABLE:
 
-                shapes.setColor(new Color(.4f, .4f, .4f, .5f));
-                shapes.filledPolygon(bounds.getVertices());
-                shapes.setColor(Color.WHITE);
-                shapes.polygon(bounds.getVertices());
-                return;
-            case SELECTED:
-                shapes.setColor(new Color(0, 0, .4f, .7f));
-                shapes.filledPolygon(bounds.getVertices());
-                shapes.setColor(Color.WHITE);
-                shapes.polygon(bounds.getVertices());
-                return;        }
+        if (state == TileState.HIDDEN) return;
+
+        shapes.setColor(state.tileColor);
+        shapes.filledPolygon(bounds.getVertices());
+        shapes.setColor(Color.WHITE);
+        shapes.polygon(bounds.getVertices());
 
 
     }
@@ -89,7 +74,16 @@ public class Tile {
     }
 
     public enum TileState {
-        HIDDEN, BLOCKED, SELECTABLE, SELECTED
+        HIDDEN(Color.BLACK),
+        BLOCKED(new Color(0, 0, .2f, .5f)),
+        SELECTABLE(new Color(.4f, .4f, .4f, .5f)),
+        SELECTED(new Color(0, 0, .4f, .7f));
+
+        public final Color tileColor;
+
+        TileState(Color tileColor) {
+            this.tileColor = tileColor;
+        }
     }
 
 
