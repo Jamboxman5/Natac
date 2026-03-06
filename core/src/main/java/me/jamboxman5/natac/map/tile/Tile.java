@@ -1,17 +1,12 @@
 package me.jamboxman5.natac.map.tile;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.units.Unit;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -76,12 +71,14 @@ public class Tile {
     public void addStructure(Structure structure) { buildings.add(structure); }
 
     public boolean contains(Vector2 point) {
-        return bounds.bounds.contains(point);
+        return bounds.shape.contains(point);
     }
 
     public void setState(TileState state) {
         this.state = state;
     }
+
+    public Vector2 getTilePosition() { return new Vector2(bounds.shape.getX(), bounds.shape.getY()); }
 
     public TileState getState() { return state;
     }
@@ -117,7 +114,7 @@ public class Tile {
     private static class Hexagon {
         private float currentScale = 1f;
 
-        private final Polygon bounds;
+        private final Polygon shape;
 
 
         public Hexagon(float x, float y) {
@@ -130,20 +127,20 @@ public class Tile {
                 vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
                 vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
             }
-            bounds = new Polygon(vertices);
-            bounds.setPosition(x, y);
-            bounds.setOrigin(0,0);
+            shape = new Polygon(vertices);
+            shape.setPosition(x, y);
+            shape.setOrigin(0,0);
         }
 
         public void update(Vector2 touchPos) {
-            float targetScale = bounds.contains(touchPos.x, touchPos.y) ? 1.1f : 1.0f;
+            float targetScale = shape.contains(touchPos.x, touchPos.y) ? 1.1f : 1.0f;
 
             currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
 
-            bounds.setScale(currentScale, currentScale);
+            shape.setScale(currentScale, currentScale);
         }
 
-        public float[] getVertices() { return bounds.getTransformedVertices(); }
+        public float[] getVertices() { return shape.getTransformedVertices(); }
     }
 
     private static TileType getRandomType() {
