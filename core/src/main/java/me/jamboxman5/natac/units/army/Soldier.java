@@ -1,6 +1,8 @@
 package me.jamboxman5.natac.units.army;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.units.Unit;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -22,6 +24,7 @@ public class Soldier extends Unit {
 
     @Override
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
-        shapes.circle(200, 200, 5);
+        shapes.setColor(Color.WHITE);
+        shapes.filledCircle(position, 5);
     }
 }
