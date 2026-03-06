@@ -16,6 +16,7 @@ import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.units.Unit;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +29,8 @@ public class Tile {
     private int health;
     private int defense;
 
-    private List<Structure> buildings;
-    private List<Unit> occupants;
+    private final List<Structure> buildings;
+    private final List<Unit> occupants;
 
     private Sprite sprite;
 
@@ -41,6 +42,9 @@ public class Tile {
         bounds = new Hexagon(x, y);
         this.state = state;
         this.type = getRandomType();
+
+        buildings = new ArrayList<>();
+        occupants = new ArrayList<>();
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
