@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.units.Unit;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
@@ -26,7 +28,8 @@ public class Tile {
     private int health;
     private int defense;
 
-    private List contents;
+    private List<Structure> buildings;
+    private List<Unit> occupants;
 
     private Sprite sprite;
 
