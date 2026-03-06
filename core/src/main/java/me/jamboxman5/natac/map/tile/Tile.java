@@ -54,14 +54,22 @@ public class Tile {
         shapes.setColor(Color.WHITE);
         shapes.polygon(bounds.getVertices());
 
+        for (Unit u : occupants) u.draw(batch, shapes);
+        for (Structure s : buildings) s.draw(batch, shapes);
+
 
     }
 
     public void update(Vector2 touchPos) {
 
         bounds.update(touchPos);
+        for (Unit u : occupants) u.update();
+        for (Structure s : buildings) s.update();
 
     }
+
+    public void addUnit(Unit unit) { occupants.add(unit); }
+    public void addStructure(Structure structure) { buildings.add(structure); }
 
     public boolean contains(Vector2 point) {
         return bounds.bounds.contains(point);
