@@ -1,5 +1,8 @@
 package me.jamboxman5.natac.units;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import space.earlygrey.shapedrawer.ShapeDrawer;
+
 public abstract class Unit {
     int speed;
     int range;
@@ -10,5 +13,5 @@ public abstract class Unit {
     }
 
     public abstract void update();
-    public abstract void draw();
+    public abstract void draw(SpriteBatch batch, ShapeDrawer shapes);
 }
