@@ -34,6 +34,8 @@ public class Tile {
 
     private TileState state;
 
+    private float highlightWidth = 1f;
+
     public Tile(float x, float y, TileState state) {
         bounds = new Hexagon(x, y);
         this.state = state;
@@ -53,6 +55,8 @@ public class Tile {
         shapes.filledPolygon(bounds.getVertices());
         shapes.setColor(state.tileColor);
         shapes.filledPolygon(bounds.getVertices());
+
+        shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
         shapes.polygon(bounds.getVertices());
 
@@ -67,6 +71,9 @@ public class Tile {
         bounds.update(touchPos);
         for (Unit u : occupants) u.update();
         for (Structure s : buildings) s.update();
+
+        float targetHighlightWidth = bounds.contains(touchPos) ? 3f : 1.0f;
+        highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
 
     }
 
@@ -144,6 +151,7 @@ public class Tile {
         }
 
         public float[] getVertices() { return shape.getTransformedVertices(); }
+        public boolean contains(Vector2 point) { return shape.contains(point); }
     }
 
     private static TileType getRandomType() {
