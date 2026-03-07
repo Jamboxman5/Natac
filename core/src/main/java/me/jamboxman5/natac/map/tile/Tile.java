@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -40,6 +41,8 @@ public class Tile {
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
+
+        if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
