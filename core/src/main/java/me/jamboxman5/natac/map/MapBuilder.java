@@ -1,6 +1,7 @@
 package me.jamboxman5.natac.map;
 
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.map.tile.TileState;
 
 public class MapBuilder {
     public static Map generateMap(int radius) {
@@ -20,7 +21,7 @@ public class MapBuilder {
 
         float horizontalStep = 1.5f * (hexRadius * stretchFactor) + (gap * 0.866f * stretchFactor);
 
-        Tile.TileState[][] mapLayout = getHexLayout(3);
+        TileState[][] mapLayout = getHexLayout(3);
         int columns = mapLayout[0].length;
         int rows = mapLayout.length;
 
@@ -37,18 +38,18 @@ public class MapBuilder {
         return map;
     }
 
-    private static Tile.TileState[][] getHexLayout(int radius) {
-        return new Tile.TileState[][]
+    private static TileState[][] getHexLayout(int radius) {
+        return new TileState[][]
             {
-                {Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.HIDDEN,Tile.TileState.SELECTABLE, Tile.TileState.HIDDEN,Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.HIDDEN},
-                {Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.HIDDEN, Tile.TileState.HIDDEN},
-                {Tile.TileState.SELECTABLE,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.SELECTABLE},
-                {Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED},
-                {Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED},
-                {Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED},
-                {Tile.TileState.SELECTABLE,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.SELECTABLE},
-                {Tile.TileState.HIDDEN, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED, Tile.TileState.BLOCKED,  Tile.TileState.BLOCKED,  Tile.TileState.HIDDEN},
-                {Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.BLOCKED, Tile.TileState.SELECTABLE, Tile.TileState.BLOCKED, Tile.TileState.HIDDEN, Tile.TileState.HIDDEN, Tile.TileState.HIDDEN},
+                {TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.SELECTABLE, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN},
+                {TileState.HIDDEN, TileState.HIDDEN, TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.HIDDEN, TileState.HIDDEN},
+                {TileState.SELECTABLE,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.SELECTABLE},
+                {TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED},
+                {TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED},
+                {TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED},
+                {TileState.SELECTABLE,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.SELECTABLE},
+                {TileState.HIDDEN, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.HIDDEN},
+                {TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.BLOCKED, TileState.SELECTABLE, TileState.BLOCKED, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN},
             };
     }
 

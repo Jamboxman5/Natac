@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
+import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -28,14 +29,6 @@ public class Tile {
     private final List<Structure> buildings;
     private final List<Unit> occupants;
 
-    private Sprite sprite;
-
-    private final Hexagon bounds;
-
-    private TileState state;
-
-    private float highlightWidth = 1f;
-
     public Tile(float x, float y, TileState state) {
         bounds = new Hexagon(x, y);
         this.state = state;
@@ -46,6 +39,14 @@ public class Tile {
 
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
+
+    private Sprite sprite;
+
+    private final Hexagon bounds;
+
+    private TileState state;
+
+    private float highlightWidth = 1f;
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
@@ -58,7 +59,7 @@ public class Tile {
 
         shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
-        shapes.polygon(bounds.getVertices());
+        shapes.polygon(bounds.shape, JoinType.SMOOTH);
 
         for (Unit u : occupants) u.draw(batch, shapes);
         for (Structure s : buildings) s.draw(batch, shapes);
@@ -91,33 +92,6 @@ public class Tile {
     public Vector2 getTilePosition() { return new Vector2(bounds.shape.getX(), bounds.shape.getY()); }
 
     public TileState getState() { return state;
-    }
-
-    public enum TileType {
-        PLAINS(new Color(.2f, 0.8f, .2f, 1f), 1),
-        FOREST(new Color(.2f, 1f, .2f, 1f), 3),
-        RADIATION(new Color(.4f, .2f, .2f, 1f), 10);
-
-        public final Color tileColor;
-        public final int passability;
-
-        TileType(Color tileColor, int passability) {
-            this.tileColor = tileColor;
-            this.passability = passability;
-        }
-    }
-
-    public enum TileState {
-        HIDDEN(Color.BLACK),
-        BLOCKED(new Color(0, 0, .2f, .5f)),
-        SELECTABLE(new Color(.4f, .4f, .4f, .5f)),
-        SELECTED(new Color(0, 0, .4f, .7f));
-
-        public final Color tileColor;
-
-        TileState(Color tileColor) {
-            this.tileColor = tileColor;
-        }
     }
 
 

@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
+import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
