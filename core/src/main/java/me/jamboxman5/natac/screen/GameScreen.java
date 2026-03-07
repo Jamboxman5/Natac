@@ -64,8 +64,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     private void update(float delta) {
         gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
-        gameCamera.position.x = MathUtils.clamp(MathUtils.lerp(gameCamera.position.x, targetPos.x, .9f), 0, 1280);
-        gameCamera.position.y = MathUtils.clamp(MathUtils.lerp(gameCamera.position.y, targetPos.y, .9f), 0, 720);
+        gameCamera.position.x = MathUtils.clamp(MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f), 0, 1280);
+        gameCamera.position.y = MathUtils.clamp(MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f), 0, 720);
 
         gameCamera.update();
 
