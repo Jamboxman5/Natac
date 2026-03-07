@@ -15,6 +15,9 @@ public class Player {
     private int money;
     private int resources;
     private int research;
+    private int status;
+    private int attack;
+    private int defense;
 
     private Color tileColor;
 
@@ -28,7 +31,4 @@ public class Player {
 
     }
 
-    public enum Class {
-        HOLYEMPIRE, MOLEPEOPLE, BARBARIAN, STEELCITY, GOLDENKEEP, NECROPOLIS;
-    }
 }
