@@ -53,13 +53,13 @@ public class Tile {
         if (state == TileState.HIDDEN) return;
 
         shapes.setColor(type.tileColor);
-        shapes.filledPolygon(bounds.getVertices());
+        shapes.filledPolygon(bounds.shape);
         shapes.setColor(state.tileColor);
-        shapes.filledPolygon(bounds.getVertices());
+        shapes.filledPolygon(bounds.shape);
 
         shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
-        shapes.polygon(bounds.shape, JoinType.SMOOTH);
+        shapes.polygon(bounds.shape, JoinType.POINTY);
 
         for (Unit u : occupants) u.draw(batch, shapes);
         for (Structure s : buildings) s.draw(batch, shapes);
