@@ -18,11 +18,14 @@ import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class GameScreen implements Screen, InputProcessor {
 
     private Map map;
     private List<Player> players;
+
+    public static Player player;
 
     private final OrthographicCamera gameCamera;
     private final OrthographicCamera uiCamera;
@@ -46,7 +49,9 @@ public class GameScreen implements Screen, InputProcessor {
 
         Gdx.input.setInputProcessor(this);
 
-
+        Scanner sc = new Scanner(System.in);
+        player = new Player(sc.nextLine(), Color.RED);
+        sc.close();
 
     }
 

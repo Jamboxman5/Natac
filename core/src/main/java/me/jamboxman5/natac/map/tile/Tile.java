@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
@@ -65,6 +66,12 @@ public class Tile {
         for (Structure s : buildings) s.draw(batch, shapes);
 
 
+    }
+
+    public void claim(Player p) {
+        owner = UUID.fromString(p.getID());
+        p.giveTile(this);
+        setState(TileState.CLAIMED);
     }
 
     public void update(Vector2 touchPos) {

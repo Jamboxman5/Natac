@@ -6,7 +6,8 @@ public enum TileState {
     HIDDEN(Color.BLACK),
     BLOCKED(new Color(0, 0, .2f, .5f)),
     SELECTABLE(new Color(.4f, .4f, .4f, .5f)),
-    SELECTED(new Color(0, 0, .4f, .7f));
+    SELECTED(new Color(0, 0, .4f, .7f)),
+    CLAIMED(new Color(0, .5f, 0f, .7f));
 
     public final Color tileColor;
 

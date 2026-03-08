@@ -1,10 +1,12 @@
 package me.jamboxman5.natac.map;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
+import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.units.army.Soldier;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -29,8 +31,17 @@ public class Map {
 
     public void clickTile(Vector2 pos) {
         for (Tile t : tiles) {
-            if (t.contains(pos) && t.getState() == TileState.SELECTABLE) t.addUnit(new Soldier(t));
-//            else if (t.contains(pos) && t.getState() == Tile.TileState.SELECTED) t.setState(Tile.TileState.SELECTABLE);
+            if (t.contains(pos)) {
+                switch (t.getState()) {
+                    case SELECTABLE:
+                        t.claim(GameScreen.player);
+                        return;
+                    default:
+                        return;
+
+                }
+            }
+
         }
     }
 
