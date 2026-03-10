@@ -27,6 +27,13 @@ public class Tile {
     private int health;
     private int defense;
 
+    private Tile up;
+    private Tile down;
+    private Tile lu;
+    private Tile ld;
+    private Tile ru;
+    private Tile rd;
+
     private final List<Structure> buildings;
     private final List<Unit> occupants;
 
