@@ -15,7 +15,7 @@ public class Fonts {
     private static GlyphLayout layout;
 
     public static void initFonts() {
-        PLACEHOLDER_FONT = createFont("placeholder", 16, Color.WHITE);
+        PLACEHOLDER_FONT = createFont("placeholder", 24, Color.WHITE);
         layout = new GlyphLayout();
     }
 

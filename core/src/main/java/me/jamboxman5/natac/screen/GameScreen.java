@@ -1,6 +1,7 @@
 package me.jamboxman5.natac.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
@@ -19,6 +20,7 @@ import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -55,9 +57,8 @@ public class GameScreen implements Screen, InputProcessor {
 
         Gdx.input.setInputProcessor(this);
 
-        Scanner sc = new Scanner(System.in);
-        player = new Player(sc.nextLine(), Color.RED);
-        sc.close();
+
+        player = new Player(JOptionPane.showInputDialog("Name?"), Color.RED);
 
     }
 
@@ -73,7 +74,7 @@ public class GameScreen implements Screen, InputProcessor {
         batch.end();
 
         uiSprites.begin();
-        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, player.getUsername(), uiSprites, 20, 20);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, player.getUsername(), uiSprites, 20, 40);
         uiSprites.end();
 
 
