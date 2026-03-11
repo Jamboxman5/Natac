@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -39,12 +41,16 @@ public class GameScreen implements Screen, InputProcessor {
     SpriteBatch batch;
     ShapeDrawer shapes;
 
+    SpriteBatch uiSprites;
+    ShapeDrawer uiShapes;
+
     public GameScreen(List<Player> players) {
         this.players = players;
         map = MapBuilder.generateMap(3);
 
         gameCamera = new OrthographicCamera();
-        uiCamera = new OrthographicCamera();
+        uiCamera = new OrthographicCamera(Settings.screenWidth, Settings.screenHeight);
+        uiCamera.setToOrtho(false);
         viewport = new FitViewport(1280, 720, gameCamera);
 
         Gdx.input.setInputProcessor(this);
@@ -57,6 +63,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     private void draw() {
         batch.setProjectionMatrix(gameCamera.combined);
+        uiSprites.setProjectionMatrix(uiCamera.combined);
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -64,6 +71,12 @@ public class GameScreen implements Screen, InputProcessor {
         map.draw(gameCamera, batch, shapes);
         for (Player p : players) p.draw();
         batch.end();
+
+        uiSprites.begin();
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, player.getUsername(), uiSprites, 20, 20);
+        uiSprites.end();
+
+
     }
 
 
@@ -73,6 +86,7 @@ public class GameScreen implements Screen, InputProcessor {
         gameCamera.position.y = MathUtils.clamp(MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f), 0, 720);
 
         gameCamera.update();
+        uiCamera.update();
 
         mousePos.set(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(mousePos);
@@ -83,6 +97,7 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        uiSprites = new SpriteBatch();
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -92,6 +107,7 @@ public class GameScreen implements Screen, InputProcessor {
         pixmap.dispose();
 
         shapes = new ShapeDrawer(batch, whitePixel);
+        uiShapes = new ShapeDrawer(uiSprites, whitePixel);
     }
 
     @Override

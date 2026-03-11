@@ -10,6 +10,7 @@ import me.jamboxman5.natac.net.ClientManager;
 import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
+import me.jamboxman5.natac.screen.ui.Fonts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class Natac extends Game {
         clientManager = new ClientManager(this);
         this.setScreen(new GameScreen(new ArrayList<Player>()));
 
+        Fonts.initFonts();
+
     }
 
     @Override
@@ -39,6 +42,6 @@ public class Natac extends Game {
 
     @Override
     public void dispose() {
-
+        Fonts.dispose();
     }
 }
