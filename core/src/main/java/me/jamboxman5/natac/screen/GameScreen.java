@@ -1,14 +1,12 @@
 package me.jamboxman5.natac.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -40,11 +38,15 @@ public class GameScreen implements Screen, InputProcessor {
     private final Vector2 clickPos = new Vector2();
     private final Vector2 lastMousePos = new Vector2();
 
+    private InputMultiplexer multiplexer;
+
     SpriteBatch batch;
     ShapeDrawer shapes;
 
     SpriteBatch uiSprites;
     ShapeDrawer uiShapes;
+
+    private Stage uiStage;
 
     public GameScreen(List<Player> players) {
         this.players = players;
@@ -54,9 +56,14 @@ public class GameScreen implements Screen, InputProcessor {
         uiCamera = new OrthographicCamera(Settings.screenWidth, Settings.screenHeight);
         uiCamera.setToOrtho(false);
         viewport = new FitViewport(1280, 720, gameCamera);
+        uiStage = new Stage(viewport);
 
-        Gdx.input.setInputProcessor(this);
 
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(this);
+        multiplexer.addProcessor(uiStage);
+
+        Gdx.input.setInputProcessor(multiplexer);
 
         player = new Player(JOptionPane.showInputDialog("Name?"), Color.RED);
 
@@ -77,11 +84,16 @@ public class GameScreen implements Screen, InputProcessor {
         Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, player.getUsername(), uiSprites, 20, 40);
         uiSprites.end();
 
+        uiStage.draw();
+
 
     }
 
 
     private void update(float delta) {
+
+        uiStage.act(delta);
+
         gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
         gameCamera.position.x = MathUtils.clamp(MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f), 0, 1280);
         gameCamera.position.y = MathUtils.clamp(MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f), 0, 720);
@@ -144,7 +156,9 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        uiStage.dispose();
+        uiSprites.dispose();
+        batch.dispose();
     }
 
     @Override
