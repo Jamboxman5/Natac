@@ -2,10 +2,7 @@ package me.jamboxman5.natac.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -15,11 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.util.Settings;
 
@@ -56,15 +55,23 @@ public class MainMenuScreen implements Screen {
         elements.setFillParent(true);
         uiStage.addActor(elements);
 
-        TextButton button = new TextButton("BUTTON1", new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json")));
+        Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
+
+        TextButton button = new TextButton("Start Game", skin);
+        TextField field = new TextField("", skin);
+
+        elements.add(field).fillX();
+        elements.row();
         elements.add(button).fillX();
         elements.row();
+        field.setMessageText("Enter name: ");
 
         elements.setDebug(true);
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Natac.instance.setScreen(new GameScreen(new ArrayList<>()));
+                if (field.getText().isEmpty()) return;
+                Natac.instance.setScreen(new GameScreen(new Player(field.getText(), Color.RED), new ArrayList<>()));
             }
         });
     }

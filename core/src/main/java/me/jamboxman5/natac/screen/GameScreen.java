@@ -48,8 +48,10 @@ public class GameScreen implements Screen, InputProcessor {
 
     private Stage uiStage;
 
-    public GameScreen(List<Player> players) {
-        this.players = players;
+    public GameScreen(Player player, List<Player> others) {
+        this.players = others;
+        GameScreen.player = player;
+
         map = MapBuilder.generateMap(3);
 
         gameCamera = new OrthographicCamera();
@@ -64,8 +66,6 @@ public class GameScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(uiStage);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-        player = new Player(JOptionPane.showInputDialog("Name?"), Color.RED);
 
     }
 
