@@ -91,7 +91,6 @@ public class MainMenuScreen implements Screen {
         shapes.setProjectionMatrix(camera.combined);
         spriteBatch.setProjectionMatrix(camera.combined);
 
-//        Fonts.TITLEFONT.draw(game.batch, "ABNP:", 20, ScreenInfo.HEIGHT - 20);
 //        Fonts.drawScaled(Fonts.SUBTITLEFONT, .85f, "Zombie Assault", game.batch,20, ScreenInfo.HEIGHT - Fonts.TITLEFONT.getScaleY() - Fonts.SUBTITLEFONT.getScaleY() - 220);
 
         update(delta);
@@ -131,6 +130,10 @@ public class MainMenuScreen implements Screen {
 
     public void draw() {
         uiStage.draw();
+
+        spriteBatch.begin();
+        Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT), 500);
+        spriteBatch.end();
     }
 
 
