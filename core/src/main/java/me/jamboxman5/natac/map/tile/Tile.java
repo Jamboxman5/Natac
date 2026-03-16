@@ -1,7 +1,9 @@
 package me.jamboxman5.natac.map.tile;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -37,6 +39,8 @@ public class Tile {
     private final List<Structure> buildings;
     private final List<Unit> occupants;
 
+    private Sprite sprite;
+
     public Tile(float x, float y, TileState state) {
         bounds = new Hexagon(x, y);
         this.state = state;
@@ -45,10 +49,11 @@ public class Tile {
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
 
+        sprite = new Sprite(new Texture(Gdx.files.internal("tile/PlainsTileSprite.png")));
+
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
 
-    private Sprite sprite;
 
     private final Hexagon bounds;
 
@@ -59,9 +64,11 @@ public class Tile {
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
         if (state == TileState.HIDDEN) return;
+        sprite.setScale(.9f);
 
-        shapes.setColor(type.tileColor);
-        shapes.filledPolygon(bounds.shape);
+        sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
+        sprite.setOriginCenter();
+        sprite.draw(batch);
         shapes.setColor(state.tileColor);
         shapes.filledPolygon(bounds.shape);
 
