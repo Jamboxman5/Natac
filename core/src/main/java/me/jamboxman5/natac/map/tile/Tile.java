@@ -40,6 +40,8 @@ public class Tile {
     private final List<Unit> occupants;
 
     private Sprite sprite;
+    private float currentScale = 1f;
+
 
     public Tile(float x, float y, TileState state) {
         bounds = new Hexagon(x, y);
@@ -64,7 +66,6 @@ public class Tile {
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
         if (state == TileState.HIDDEN) return;
-        sprite.setScale(.9f);
 
         sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
         sprite.setOriginCenter();
@@ -91,6 +92,13 @@ public class Tile {
     public void update(Vector2 touchPos) {
 
         bounds.update(touchPos);
+
+        float targetScale = bounds.contains(touchPos) ? 1f : .9f;
+
+        currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
+
+        sprite.setScale(currentScale, currentScale);
+
         for (Unit u : occupants) u.update();
         for (Structure s : buildings) s.update();
 
