@@ -14,6 +14,7 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.screen.ui.UIManager;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -86,6 +87,7 @@ public class GameScreen implements Screen, InputProcessor {
         batch.end();
 
         uiSprites.begin();
+        UIManager.draw(uiSprites, uiShapes, gameState);
         uiSprites.end();
 
         uiStage.draw();

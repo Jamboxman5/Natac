@@ -17,7 +17,7 @@ public class UIManager {
                 Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Waiting for other players... ", batch, 20, 80);
                 break;
             case CLAIM:
-                Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Select a tile to start. ", batch, 20, 80);
+                Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Select a starting tile. ", batch, 20, 80);
                 break;
         }
 
