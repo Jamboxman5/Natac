@@ -47,6 +47,11 @@ public class GameScreen implements Screen, InputProcessor {
     ShapeDrawer uiShapes;
 
     private Stage uiStage;
+    private State gameState;
+
+    public enum State {
+        CLAIM, WAIT, PLAY;
+    }
 
     public GameScreen(Player player, List<Player> others) {
         this.players = others;
@@ -81,7 +86,6 @@ public class GameScreen implements Screen, InputProcessor {
         batch.end();
 
         uiSprites.begin();
-        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, player.getUsername(), uiSprites, 20, 40);
         uiSprites.end();
 
         uiStage.draw();
@@ -121,6 +125,8 @@ public class GameScreen implements Screen, InputProcessor {
 
         shapes = new ShapeDrawer(batch, whitePixel);
         uiShapes = new ShapeDrawer(uiSprites, whitePixel);
+
+        gameState = State.CLAIM;
     }
 
     @Override
