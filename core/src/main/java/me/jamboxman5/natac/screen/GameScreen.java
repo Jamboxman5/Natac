@@ -48,7 +48,11 @@ public class GameScreen implements Screen, InputProcessor {
     ShapeDrawer uiShapes;
 
     private Stage uiStage;
-    private State gameState;
+
+    private static State gameState;
+
+    public static State getState() { return gameState; }
+    public static void setState(State newState) { gameState = newState; }
 
     public enum State {
         CLAIM, WAIT, PLAY;

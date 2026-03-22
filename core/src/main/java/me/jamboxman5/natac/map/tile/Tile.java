@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
@@ -87,6 +88,7 @@ public class Tile {
         owner = UUID.fromString(p.getID());
         p.giveTile(this);
         setState(TileState.CLAIMED);
+        if (GameScreen.getState() == GameScreen.State.CLAIM) GameScreen.setState(GameScreen.State.WAIT);
     }
 
     public void update(Vector2 touchPos) {
