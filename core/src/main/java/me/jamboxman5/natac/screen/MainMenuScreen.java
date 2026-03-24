@@ -57,17 +57,19 @@ public class MainMenuScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
 
-        TextButton button = new TextButton("Start Game", skin);
+        TextButton button1 = new TextButton("Host Game", skin);
+        TextButton button2 = new TextButton("Join Game", skin);
         TextField field = new TextField("", skin);
 
-        elements.add(field).fillX();
+        elements.add(field).fillX().center();
         elements.row();
-        elements.add(button).fillX();
+        elements.add(button1);
+        elements.add(button2);
         elements.row();
         field.setMessageText("Enter name: ");
 
         elements.setDebug(true);
-        button.addListener(new ChangeListener() {
+        button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
