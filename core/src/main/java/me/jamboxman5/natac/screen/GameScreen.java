@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
@@ -58,9 +59,15 @@ public class GameScreen implements Screen, InputProcessor {
         CLAIM, WAIT, PLAY;
     }
 
-    public GameScreen(Player player, List<Player> others) {
+    public GameScreen(Player player, List<Player> others, String hostIP) {
         this.players = others;
         GameScreen.player = player;
+
+        if (hostIP.equalsIgnoreCase("localhost")) {
+            Natac.instance.hostGame();
+        } else {
+            Natac.instance.joinGame(player, hostIP);
+        }
 
         map = MapBuilder.generateMap(3);
 

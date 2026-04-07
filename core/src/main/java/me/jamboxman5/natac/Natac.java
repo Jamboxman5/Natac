@@ -29,6 +29,7 @@ public class Natac extends Game {
         instance = this;
 
         clientManager = new ClientManager(this);
+
         this.setScreen(new MainMenuScreen());
 
         Fonts.initFonts();
@@ -44,5 +45,13 @@ public class Natac extends Game {
     @Override
     public void dispose() {
         Fonts.dispose();
+    }
+
+    public void hostGame() {
+        server = new DiscreteServer();
+    }
+
+    public void joinGame(Player player, String hostIP) {
+        clientManager.connect(player, hostIP);
     }
 }

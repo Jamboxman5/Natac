@@ -22,6 +22,7 @@ import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.util.Settings;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class MainMenuScreen implements Screen {
@@ -73,7 +74,16 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
-                Natac.instance.setScreen(new GameScreen(new Player(field.getText(), Color.RED), new ArrayList<>()));
+                Natac.instance.setScreen(new GameScreen(new Player(field.getText(), Color.RED), new ArrayList<>(), "localhost"));
+            }
+        });
+
+        button2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (field.getText().isEmpty()) return;
+                String ip = JOptionPane.showInputDialog("Enter host IP: ");
+                Natac.instance.setScreen(new GameScreen(new Player(field.getText(), Color.RED), new ArrayList<>(), ip));
             }
         });
     }
