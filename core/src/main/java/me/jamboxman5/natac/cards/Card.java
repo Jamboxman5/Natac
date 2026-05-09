@@ -1,7 +1,9 @@
 package me.jamboxman5.natac.cards;
 
-public abstract class Card {
+import me.jamboxman5.natac.player.Player;
 
-    public abstract void playCard();
+public interface Card {
+
+    void playCard(Player playing);
 
 }
