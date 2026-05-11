@@ -4,9 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import me.jamboxman5.natac.net.packet.PacketDisconnect;
-import me.jamboxman5.natac.net.packet.PacketLogin;
-import me.jamboxman5.natac.net.packet.PacketMove;
+import me.jamboxman5.natac.net.packet.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,6 +14,12 @@ public class DiscreteServer {
     private Server server;
 
     HashMap<Connection, PacketLogin> connections;
+
+    private enum GameState {
+        LOBBY, INGAME
+    }
+
+    private GameState state;
 
     public DiscreteServer() {
         server = new Server();
@@ -31,6 +35,14 @@ public class DiscreteServer {
         server.addListener(new Listener() {
             public void received(Connection conn, Object obj) {
                 if (obj instanceof PacketLogin) {
+                    if (state != GameState.LOBBY) {
+                        PacketLoginRejected rejection = new PacketLoginRejected();
+                        rejection.message = "The game has already started!";
+                        rejection.timestamp = System.currentTimeMillis();
+                        conn.sendTCP(rejection);
+                        conn.close();
+                        return;
+                    }
                     PacketLogin login = (PacketLogin) obj;
                     connections.put(conn, login);
                     System.out.println("User connected: " + login.username + " (" + login.uuid + ")");

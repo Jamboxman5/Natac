@@ -12,6 +12,7 @@ public class NetUtil {
         kryo.register(PacketLogin.class);
         kryo.register(PacketMove.class);
         kryo.register(PacketDisconnect.class);
+        kryo.register(PacketLoginRejected.class);
     }
 
     public static void registerListeners(Client client) {
