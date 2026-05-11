@@ -1,8 +1,6 @@
 package me.jamboxman5.natac.player;
 
-import com.badlogic.gdx.graphics.Color;
-
-public enum Class {
+public enum PlayerClass {
 
     HOLY_EMPIRE(1,2,2,0,1),
     MOLE_PEOPLE(1,2,2,0,1),
@@ -17,7 +15,7 @@ public enum Class {
     public final int status;
     public final int research;
 
-    Class(int attack, int defense, int status, int research, int gold) {
+    PlayerClass(int attack, int defense, int status, int research, int gold) {
         this.gold = gold;
         this.defense = defense;
         this.attack = attack;

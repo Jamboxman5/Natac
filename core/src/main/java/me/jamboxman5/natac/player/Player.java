@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class Player {
 
-    private Class playerClass;
+    private PlayerClass playerClass;
     List<Tile> territory;
     List inventory;
 
