@@ -30,7 +30,7 @@ public class ClientManager {
     }
     public void sendPacketUDP(Packet p) { client.sendUDP(p); }
 
-    public void connect(Player player, String address) {
+    public boolean connect(Player player, String address) {
         if (address.length() == 0) address = "localhost";
         client = new Client();
         Kryo kryo = client.getKryo();
@@ -44,9 +44,10 @@ public class ClientManager {
         try {
             client.connect(5000, address, 13331, 13331);
             sendLogin(player);
-
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
     }

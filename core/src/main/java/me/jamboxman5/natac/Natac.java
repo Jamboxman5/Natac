@@ -51,7 +51,7 @@ public class Natac extends Game {
         server = new DiscreteServer();
     }
 
-    public void joinGame(Player player, String hostIP) {
-        clientManager.connect(player, hostIP);
+    public boolean joinGame(Player player, String hostIP) {
+        return clientManager.connect(player, hostIP);
     }
 }
