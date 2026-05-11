@@ -13,6 +13,9 @@ import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
 
+import javax.swing.*;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,12 @@ public class Natac extends Game {
     }
 
     public boolean joinGame(Player player, String hostIP) {
-        return clientManager.connect(player, hostIP);
+        try {
+            clientManager.connect(player, hostIP);
+            return true;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return false;
+        }
     }
 }

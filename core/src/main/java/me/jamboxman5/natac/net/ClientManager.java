@@ -11,6 +11,7 @@ import me.jamboxman5.natac.player.Player;
 
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 public class ClientManager {
@@ -30,7 +31,7 @@ public class ClientManager {
     }
     public void sendPacketUDP(Packet p) { client.sendUDP(p); }
 
-    public boolean connect(Player player, String address) {
+    public void connect(Player player, String address) throws IOException {
         if (address.length() == 0) address = "localhost";
         client = new Client();
         Kryo kryo = client.getKryo();
@@ -41,14 +42,9 @@ public class ClientManager {
         NetUtil.registerPackets(kryo);
         NetUtil.registerListeners(client);
         client.start();
-        try {
-            client.connect(5000, address, 13331, 13331);
-            sendLogin(player);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+
+        client.connect(5000, address, 13331, 13331);
+        sendLogin(player);
 
     }
 
