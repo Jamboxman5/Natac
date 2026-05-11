@@ -44,6 +44,8 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen() {
 
+        Natac.instance.player = null;
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
 

@@ -42,12 +42,9 @@ public class LobbyScreen implements Screen {
 
     private final Viewport viewport;
 
-    private ArrayList<Player> players;
-
     public LobbyScreen(Player player) {
 
-        players = new ArrayList<>();
-        players.add(player);
+        Natac.instance.player = player;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
@@ -160,10 +157,13 @@ public class LobbyScreen implements Screen {
         Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Players: ", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT), 200);
 
         int y = 200;
+        Fonts.PLACEHOLDER_FONT.draw(spriteBatch, Natac.instance.player.getUsername(), Fonts.getXForCenteredText(Settings.screenWidth / 2, Natac.instance.player.getUsername(), Fonts.PLACEHOLDER_FONT) + 100, y);
 
-        for (Player p : players) {
-            Fonts.PLACEHOLDER_FONT.draw(spriteBatch, p.getUsername(), Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT) + 100, y);
+        for (String id : Natac.instance.getClientManager().getConnectedPlayers()) {
             y -= 30;
+            String name = Natac.instance.getClientManager().getConnectedPlayerName(id);
+            Fonts.PLACEHOLDER_FONT.draw(spriteBatch, name, Fonts.getXForCenteredText(Settings.screenWidth / 2, name, Fonts.PLACEHOLDER_FONT) + 100, y);
+
         }
 
         spriteBatch.end();

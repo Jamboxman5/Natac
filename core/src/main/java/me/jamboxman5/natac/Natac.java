@@ -26,6 +26,8 @@ public class Natac extends Game {
     DiscreteServer server;
     ClientManager clientManager;
 
+    public Player player;
+
     @Override
     public void create() {
 
@@ -63,4 +65,6 @@ public class Natac extends Game {
             return false;
         }
     }
+
+    public ClientManager getClientManager() { return clientManager; }
 }
