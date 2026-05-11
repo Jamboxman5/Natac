@@ -83,7 +83,11 @@ public class MainMenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
                 String ip = JOptionPane.showInputDialog("Enter host IP: ");
-                Natac.instance.setScreen(new GameScreen(new Player(field.getText(), Color.RED), new ArrayList<>(), ip));
+                Player player = new Player(field.getText(), Color.RED);
+
+                if (Natac.instance.joinGame(player, ip)) Natac.instance.setScreen(new LobbyScreen(player));
+                else System.out.println("INVALID ADDRESS!");
+
             }
         });
     }
