@@ -61,7 +61,11 @@ public class Natac extends Game {
             clientManager.connect(player, hostIP);
             return true;
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            String msg = e.getMessage() + " | ";
+            for (StackTraceElement s : e.getStackTrace()) {
+                msg += s.toString() + " \n";
+            }
+            JOptionPane.showMessageDialog(null, e.getMessage() + " | " + msg);
             return false;
         }
     }
