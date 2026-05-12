@@ -77,7 +77,7 @@ public class DiscreteServer {
             }
         });
 
-        server.bind(13331, 13331);
+        server.bind(13531, 13531);
         server.start();
         System.out.println("SERVER STARTED!");
     }

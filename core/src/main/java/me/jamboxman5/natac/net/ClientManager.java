@@ -43,7 +43,7 @@ public class ClientManager {
         NetUtil.registerListeners(client);
         client.start();
 
-        client.connect(5000, address, 13331, 13331);
+        client.connect(5000, address, 13531, 13531);
         sendLogin(player);
 
     }
