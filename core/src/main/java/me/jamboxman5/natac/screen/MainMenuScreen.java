@@ -76,6 +76,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
+                Natac.instance.hostGame();
                 Natac.instance.setScreen(new LobbyScreen(new Player(field.getText(), Color.RED)));
             }
         });
