@@ -19,6 +19,7 @@ public class NetUtil {
         client.addListener(new PacketDisconnectListener());
         client.addListener(new PacketMoveListener());
         client.addListener(new PacketLoginListener());
+        client.addListener(new PacketLoginRejectedListener());
     }
 
 }
