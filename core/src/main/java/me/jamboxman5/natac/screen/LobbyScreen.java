@@ -80,7 +80,7 @@ public class LobbyScreen implements Screen {
         button2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Natac.instance.getClientManager().disconnect();
+                Natac.instance.getClientManager().disconnect(player);
                 Natac.instance.setScreen(new MainMenuScreen());
             }
         });

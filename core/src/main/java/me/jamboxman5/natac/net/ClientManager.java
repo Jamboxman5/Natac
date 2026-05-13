@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.net.packet.Packet;
+import me.jamboxman5.natac.net.packet.PacketCloseGame;
 import me.jamboxman5.natac.net.packet.PacketDisconnect;
 import me.jamboxman5.natac.net.packet.PacketLogin;
 import me.jamboxman5.natac.player.Player;
@@ -82,7 +83,15 @@ public class ClientManager {
         else return "PLAYER NOT FOUND";
     }
 
-    public void disconnect() {
+    public void disconnect(Player p) {
+
+        if (game.isHosting()) {
+            PacketCloseGame packet = new PacketCloseGame();
+            packet.username = p.getUsername();
+            packet.message = "The host has closed the game!";
+            sendPacketTCP(packet);
+            game.stopGame();
+        }
 
         if (client == null) return;
         client.stop();

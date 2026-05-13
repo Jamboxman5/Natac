@@ -60,6 +60,10 @@ public class DiscreteServer {
                     PacketMove move = (PacketMove) obj;
                     server.sendToAllExceptUDP(conn.getID(), move);
                 }
+                if (obj instanceof PacketCloseGame) {
+                    PacketCloseGame close = (PacketCloseGame) obj;
+                    server.sendToAllExceptTCP(conn.getID(), close);
+                }
             }
         });
 

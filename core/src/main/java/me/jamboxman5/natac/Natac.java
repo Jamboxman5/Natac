@@ -65,6 +65,15 @@ public class Natac extends Game {
         }
     }
 
+    public void stopGame() {
+        if (!hosting) return;
+        try {
+            server.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean isHosting() { return hosting; }
 
     public boolean joinGame(Player player, String hostIP) {
