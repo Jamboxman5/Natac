@@ -52,10 +52,11 @@ public class Natac extends Game {
         Fonts.dispose();
     }
 
-    public void hostGame() {
+    public void hostGame(Player player) {
         server = new DiscreteServer();
         try {
             server.start();
+            joinGame(player, "localhost");
         } catch (IOException e) {
             e.printStackTrace();
         }

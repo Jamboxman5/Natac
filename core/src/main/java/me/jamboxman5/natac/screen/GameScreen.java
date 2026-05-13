@@ -64,7 +64,7 @@ public class GameScreen implements Screen, InputProcessor {
         GameScreen.player = player;
 
         if (hostIP.equalsIgnoreCase("localhost")) {
-            Natac.instance.hostGame();
+            Natac.instance.hostGame(player);
         } else {
             Natac.instance.joinGame(player, hostIP);
         }

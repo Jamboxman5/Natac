@@ -28,6 +28,8 @@ public class DiscreteServer {
     public void start() throws IOException {
         Kryo kryo = server.getKryo();
 
+        state = GameState.LOBBY;
+
         connections = new HashMap<Connection, PacketLogin>();
 
         NetUtil.registerPackets(kryo);
