@@ -63,11 +63,10 @@ public class ClientManager {
 //        game.getMapManager().removeOnlinePlayer(disconnect);
     }
 
-//    public void connectPlayer(OnlinePlayer joining) {
-//        game.getMapManager().addOnlinePlayer(joining);
-//        connectedPlayers.add(joining.getID());
-//        connectedPlayerNames.put(joining.getID(), joining.getName());
-//    }
+    public void connectPlayer(PacketLogin login) {
+        connectedPlayers.add(login.uuid);
+        connectedPlayerNames.put(login.uuid, login.username);
+    }
 
     public boolean isConnected() {
         return (client != null && client.isConnected());
