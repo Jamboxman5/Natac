@@ -65,7 +65,7 @@ public class LobbyScreen implements Screen {
         TextButton button1 = new TextButton("Start Game", skin);
         TextButton button2 = new TextButton("Quit Game", skin);
 
-        elements.add(button1);
+        if (Natac.instance.isHosting()) elements.add(button1);
         elements.add(button2);
         elements.row();
 

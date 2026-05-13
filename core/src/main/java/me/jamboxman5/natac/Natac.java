@@ -28,6 +28,8 @@ public class Natac extends Game {
 
     public Player player;
 
+    private boolean hosting = false;
+
     @Override
     public void create() {
 
@@ -57,14 +59,18 @@ public class Natac extends Game {
         try {
             server.start();
             joinGame(player, "localhost");
+            hosting = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public boolean isHosting() { return hosting; }
+
     public boolean joinGame(Player player, String hostIP) {
         try {
             clientManager.connect(player, hostIP);
+            hosting = false;
             return true;
         } catch (IOException e) {
             String msg = e.getMessage() + " | ";
