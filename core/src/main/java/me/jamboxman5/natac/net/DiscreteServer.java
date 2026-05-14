@@ -13,9 +13,9 @@ public class DiscreteServer {
 
     private Server server;
 
-    HashMap<Connection, PacketLogin> connections;
+    public HashMap<Connection, PacketLogin> connections;
 
-    private enum GameState {
+    public enum GameState {
         LOBBY, INGAME
     }
 
@@ -30,58 +30,11 @@ public class DiscreteServer {
 
         state = GameState.LOBBY;
 
-        connections = new HashMap<Connection, PacketLogin>();
+        connections = new HashMap<>();
 
         NetUtil.registerPackets(kryo);
 
-        server.addListener(new Listener() {
-            public void received(Connection conn, Object obj) {
-                if (obj instanceof PacketLogin) {
-                    if (state != GameState.LOBBY) {
-                        PacketLoginRejected rejection = new PacketLoginRejected();
-                        rejection.message = "The game has already started!";
-                        rejection.timestamp = System.currentTimeMillis();
-                        conn.sendTCP(rejection);
-                        conn.close();
-                        return;
-                    }
-                    PacketLogin login = (PacketLogin) obj;
-                    connections.put(conn, login);
-                    System.out.println("User connected: " + login.username + " (" + login.uuid + ")");
-                    server.sendToAllExceptTCP(conn.getID(), login);
-                    for (Connection c : getServer().getConnections()) {
-                        if (c.getID() != conn.getID()) {
-                            server.sendToTCP(conn.getID(), connections.get(c));
-                        }
-                    }
-
-                }
-                if (obj instanceof PacketMove) {
-                    PacketMove move = (PacketMove) obj;
-                    server.sendToAllExceptUDP(conn.getID(), move);
-                }
-                if (obj instanceof PacketCloseGame) {
-                    PacketCloseGame close = (PacketCloseGame) obj;
-                    server.sendToAllExceptTCP(conn.getID(), close);
-                }
-            }
-        });
-
-        server.addListener(new Listener() {
-            @Override
-            public void disconnected(Connection connection) {
-
-                PacketLogin login = connections.get(connection);
-
-                PacketDisconnect packet = new PacketDisconnect();
-                packet.uuid = login.uuid;
-                packet.username = login.username;
-
-                server.sendToAllExceptTCP(connection.getID(), packet);
-
-                System.out.println("Player " + login.username + " disconnected.");
-            }
-        });
+        NetUtil.registerListeners(this);
 
         server.bind(13531, 13531);
         server.start();
@@ -92,6 +45,8 @@ public class DiscreteServer {
         server.stop();
         server.dispose();
     }
+
+    public GameState getState() { return state; }
 
     public Server getServer() { return server; }
 

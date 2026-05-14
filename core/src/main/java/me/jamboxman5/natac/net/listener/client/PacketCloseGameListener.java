@@ -1,9 +1,8 @@
-package me.jamboxman5.natac.net.listener;
+package me.jamboxman5.natac.net.listener.client;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import me.jamboxman5.natac.net.packet.PacketCloseGame;
-import me.jamboxman5.natac.net.packet.PacketLoginRejected;
 
 public class PacketCloseGameListener implements Listener {
 

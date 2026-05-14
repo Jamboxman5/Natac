@@ -2,7 +2,10 @@ package me.jamboxman5.natac.net;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
-import me.jamboxman5.natac.net.listener.*;
+import me.jamboxman5.natac.net.listener.client.*;
+import me.jamboxman5.natac.net.listener.server.ServerCloseGameListener;
+import me.jamboxman5.natac.net.listener.server.ServerDisconnectListener;
+import me.jamboxman5.natac.net.listener.server.ServerLoginListener;
 import me.jamboxman5.natac.net.packet.*;
 
 public class NetUtil {
@@ -22,6 +25,12 @@ public class NetUtil {
         client.addListener(new PacketLoginListener());
         client.addListener(new PacketLoginRejectedListener());
         client.addListener(new PacketCloseGameListener());
+    }
+
+    public static void registerListeners(DiscreteServer server) {
+        server.getServer().addListener(new ServerCloseGameListener(server));
+        server.getServer().addListener(new ServerLoginListener(server));
+        server.getServer().addListener(new ServerDisconnectListener(server));
     }
 
 }
