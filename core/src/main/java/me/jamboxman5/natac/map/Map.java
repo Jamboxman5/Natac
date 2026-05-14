@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
 import me.jamboxman5.natac.screen.GameScreen;
@@ -38,7 +39,7 @@ public class Map {
             if (t.contains(pos)) {
                 switch (t.getState()) {
                     case SELECTABLE:
-                        t.claim(GameScreen.player);
+                        t.claim(Natac.instance.player);
                         return;
                     default:
                         return;
