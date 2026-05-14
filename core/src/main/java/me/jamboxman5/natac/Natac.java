@@ -52,6 +52,11 @@ public class Natac extends Game {
     @Override
     public void dispose() {
         Fonts.dispose();
+        try {
+            if (isHosting()) server.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void hostGame(Player player) {
