@@ -1,13 +1,14 @@
 package me.jamboxman5.natac.screen.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.screen.GameScreen;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class UIManager {
 
     public static void draw(SpriteBatch batch, ShapeDrawer shapes, GameScreen.State gameState) {
-        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, GameScreen.player.getUsername(), batch, 20, 40);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, Natac.instance.player.getUsername(), batch, 20, 40);
 
         switch(gameState) {
             case PLAY:
