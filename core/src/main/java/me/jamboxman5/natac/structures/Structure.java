@@ -8,9 +8,13 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public abstract class Structure {
     protected int buildCost;
     protected int revenuePerTurn;
-    protected Tile location;
+    protected transient Tile location;
 
     protected Vector2 position;
+
+    protected Structure() {
+
+    }
 
     protected Structure(int buildCost, int revenuePerTurn, Tile location) {
         this.buildCost = buildCost;

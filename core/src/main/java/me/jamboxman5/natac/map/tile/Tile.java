@@ -30,23 +30,21 @@ public class Tile {
     private int health;
     private int defense;
 
-    private Tile up;
-    private Tile down;
-    private Tile lu;
-    private Tile ld;
-    private Tile ru;
-    private Tile rd;
-
     private final List<Structure> buildings;
     private final List<Unit> occupants;
 
     private float currentScale = 1f;
 
+    public Tile() {
+        buildings = new ArrayList<>();
+        occupants = new ArrayList<>();
+        bounds = new Hexagon(0, 0);
+    }
 
     public Tile(float x, float y, TileState state) {
-        bounds = new Hexagon(x, y);
         this.state = state;
         this.type = getRandomType();
+        bounds = new Hexagon(x, y);
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
@@ -55,7 +53,7 @@ public class Tile {
     }
 
 
-    private final Hexagon bounds;
+    private final transient Hexagon bounds;
 
     private TileState state;
 
@@ -125,7 +123,7 @@ public class Tile {
     }
 
 
-    private static class Hexagon {
+    public static class Hexagon {
         private float currentScale = 1f;
 
         private final Polygon shape;

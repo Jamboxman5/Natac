@@ -9,6 +9,10 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Ruins extends Structure {
 
+    public Ruins() {
+        super();
+    }
+
     public Ruins(Tile location) {
         super(1, 1, location);
     }
