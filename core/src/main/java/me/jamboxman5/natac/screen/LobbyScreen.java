@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.util.Settings;
@@ -73,7 +74,7 @@ public class LobbyScreen implements Screen {
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Natac.instance.setScreen(new GameScreen(player, new ArrayList<>(), "localhost"));
+                Natac.instance.setScreen(new GameScreen(MapBuilder.generateMap(5)));
             }
         });
 
