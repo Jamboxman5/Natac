@@ -27,9 +27,6 @@ import java.util.Scanner;
 public class GameScreen implements Screen, InputProcessor {
 
     private Map map;
-    private List<Player> players;
-
-    public static Player player;
 
     private final OrthographicCamera gameCamera;
     private final OrthographicCamera uiCamera;
@@ -59,17 +56,9 @@ public class GameScreen implements Screen, InputProcessor {
         CLAIM, WAIT, PLAY;
     }
 
-    public GameScreen(Player player, List<Player> others, String hostIP) {
-        this.players = others;
-        GameScreen.player = player;
+    public GameScreen(Map map) {
 
-        if (hostIP.equalsIgnoreCase("localhost")) {
-            Natac.instance.hostGame(player);
-        } else {
-            Natac.instance.joinGame(player, hostIP);
-        }
-
-        map = MapBuilder.generateMap(3);
+        this.map = map;
 
         gameCamera = new OrthographicCamera();
         uiCamera = new OrthographicCamera(Settings.screenWidth, Settings.screenHeight);
@@ -94,7 +83,7 @@ public class GameScreen implements Screen, InputProcessor {
 
         batch.begin();
         map.draw(gameCamera, batch, shapes);
-        for (Player p : players) p.draw();
+//        for (Player p : Natac.instance.getClientManager().getConnectedPlayers()) p.draw();
         batch.end();
 
         uiSprites.begin();
