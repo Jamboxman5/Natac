@@ -40,7 +40,6 @@ public class Tile {
     private final List<Structure> buildings;
     private final List<Unit> occupants;
 
-    private Sprite sprite;
     private float currentScale = 1f;
 
 
@@ -51,8 +50,6 @@ public class Tile {
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
-
-        sprite = new Sprite(new Texture(Gdx.files.internal("tile/PlainsTileSprite.png")));
 
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
@@ -68,9 +65,11 @@ public class Tile {
 
         if (state == TileState.HIDDEN) return;
 
-        sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
-        sprite.setOriginCenter();
-        sprite.draw(batch);
+
+
+        type.sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
+        type.sprite.setOriginCenter();
+        type.sprite.draw(batch);
         shapes.setColor(state.tileColor);
         shapes.filledPolygon(bounds.shape);
 
@@ -99,7 +98,7 @@ public class Tile {
 
         currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
 
-        sprite.setScale(currentScale, currentScale);
+        type.sprite.setScale(currentScale, currentScale);
 
         for (Unit u : occupants) u.update();
         for (Structure s : buildings) s.update();
