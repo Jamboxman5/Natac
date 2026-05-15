@@ -34,7 +34,7 @@ public class ClientManager {
 
     public void connect(Player player, String address) throws IOException {
         if (address.length() == 0) address = "localhost";
-        client = new Client();
+        client = new Client(65536, 65536);
         Kryo kryo = client.getKryo();
 
         connectedPlayers = new Array<>();

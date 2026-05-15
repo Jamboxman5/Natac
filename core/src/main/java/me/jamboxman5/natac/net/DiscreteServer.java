@@ -22,7 +22,7 @@ public class DiscreteServer {
     private GameState state;
 
     public DiscreteServer() {
-        server = new Server();
+        server = new Server(65536, 65536);
     }
 
     public void start() throws IOException {
