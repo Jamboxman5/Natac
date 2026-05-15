@@ -35,10 +35,13 @@ public class Tile {
 
     private float currentScale = 1f;
 
+    private transient Sprite sprite;
+
+    private float x, y;
+
     public Tile() {
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
-        bounds = new Hexagon(0, 0);
     }
 
     public Tile(float x, float y, TileState state) {
@@ -49,11 +52,14 @@ public class Tile {
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
 
+        this.x = x;
+        this.y = y;
+
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
 
 
-    private final transient Hexagon bounds;
+    private transient Hexagon bounds;
 
     private TileState state;
 
@@ -61,13 +67,18 @@ public class Tile {
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
+        if (bounds == null) {
+            bounds = new Hexagon(x, y);
+        }
+
         if (state == TileState.HIDDEN) return;
 
+        if (sprite == null) sprite = new Sprite(type.texture);
 
 
-        type.sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
-        type.sprite.setOriginCenter();
-        type.sprite.draw(batch);
+        sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
+        sprite.setOriginCenter();
+        sprite.draw(batch);
         shapes.setColor(state.tileColor);
         shapes.filledPolygon(bounds.shape);
 
@@ -90,13 +101,19 @@ public class Tile {
 
     public void update(Vector2 touchPos) {
 
+        if (bounds == null) {
+            bounds = new Hexagon(x, y);
+        }
+
         bounds.update(touchPos);
+
+        if (sprite == null) sprite = new Sprite(type.texture);
 
         float targetScale = bounds.contains(touchPos) ? 1f : .9f;
 
         currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
 
-        type.sprite.setScale(currentScale, currentScale);
+        sprite.setScale(currentScale, currentScale);
 
         for (Unit u : occupants) u.update();
         for (Structure s : buildings) s.update();
