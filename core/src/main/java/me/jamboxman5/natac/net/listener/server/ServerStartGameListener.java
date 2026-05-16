@@ -21,7 +21,7 @@ public class ServerStartGameListener implements Listener {
             if (server.getState() != DiscreteServer.GameState.LOBBY) return;
             PacketStartGame packet = (PacketStartGame) obj;
 
-            System.out.println("Game started at " + packet.timestamp + ": " + packet.map.toString());
+            server.log("Game started at " + packet.timestamp + ": " + packet.map.toString());
             server.getServer().sendToAllTCP(packet);
 
         }

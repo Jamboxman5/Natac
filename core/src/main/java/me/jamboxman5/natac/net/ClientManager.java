@@ -107,4 +107,12 @@ public class ClientManager {
         connectedPlayers = null;
 
     }
+
+    public void log(String log) {
+        System.out.println("\u001B[32mCLIENT:: " + log + "\u001B[0m");
+    }
+    public void logSevere(String log) {
+        System.out.println("\u001B[31mCLIENT WARNING::  " + log + "\u001B[0m");
+    }
+
 }

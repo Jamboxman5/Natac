@@ -88,7 +88,7 @@ public class MainMenuScreen implements Screen {
                 Player player = new Player(field.getText(), Color.RED);
 
                 if (Natac.instance.joinGame(player, ip)) Natac.instance.setScreen(new LobbyScreen(player));
-                else System.out.println("INVALID ADDRESS!");
+                else Natac.instance.getClientManager().logSevere("INVALID ADDRESS!");
 
             }
         });

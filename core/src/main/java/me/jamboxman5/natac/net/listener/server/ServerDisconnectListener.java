@@ -27,7 +27,7 @@ public class ServerDisconnectListener implements Listener {
 
         server.getServer().sendToAllExceptTCP(connection.getID(), packet);
 
-        System.out.println("Player " + login.username + " disconnected.");
+        server.log("Player " + login.username + " disconnected.");
 
         server.removeUsername(login.uuid);
     }

@@ -41,7 +41,7 @@ public class DiscreteServer {
 
         server.bind(13531, 13531);
         server.start();
-        System.out.println("SERVER STARTED!");
+        log("Server started on port 13531!");
     }
 
     public void stop() throws IOException {
@@ -63,6 +63,14 @@ public class DiscreteServer {
 
     public String getUsername(String uuid) {
         return usernames.get(UUID.fromString(uuid));
+    }
+
+    public void log(String log) {
+        System.out.println("\u001B[33mSERVER::  " + log + "\u001B[0m");
+    }
+
+    public void logSevere(String log) {
+        System.out.println("\u001B[31mSERVER WARNING::  " + log + "\u001B[0m");
     }
 
 }

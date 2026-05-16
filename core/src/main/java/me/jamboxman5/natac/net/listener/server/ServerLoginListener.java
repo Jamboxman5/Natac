@@ -28,7 +28,7 @@ public class ServerLoginListener implements Listener {
             }
             PacketLogin login = (PacketLogin) obj;
             server.connections.put(conn, login);
-            System.out.println("User connected: " + login.username + " (" + login.uuid + ")");
+            server.log("User connected: " + login.username + " (" + login.uuid + ")");
             server.getServer().sendToAllExceptTCP(conn.getID(), login);
             for (Connection c : server.getServer().getConnections()) {
                 if (c.getID() != conn.getID()) {
