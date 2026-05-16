@@ -10,10 +10,7 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.net.listener.client.*;
-import me.jamboxman5.natac.net.listener.server.ServerCloseGameListener;
-import me.jamboxman5.natac.net.listener.server.ServerDisconnectListener;
-import me.jamboxman5.natac.net.listener.server.ServerLoginListener;
-import me.jamboxman5.natac.net.listener.server.ServerStartGameListener;
+import me.jamboxman5.natac.net.listener.server.*;
 import me.jamboxman5.natac.net.packet.*;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.generated.Ruins;
@@ -34,6 +31,7 @@ public class NetUtil {
         kryo.register(PacketLoginRejected.class);
         kryo.register(PacketCloseGame.class);
         kryo.register(PacketStartGame.class);
+        kryo.register(PacketClaimTile.class);
 
         kryo.register(Map.class);
         kryo.register(Tile.class);
@@ -59,6 +57,7 @@ public class NetUtil {
         client.addListener(new PacketLoginListener());
         client.addListener(new PacketLoginRejectedListener());
         client.addListener(new PacketCloseGameListener());
+        client.addListener(new PacketClaimTileListener());
     }
 
     public static void registerListeners(DiscreteServer server) {
@@ -66,6 +65,7 @@ public class NetUtil {
         server.getServer().addListener(new ServerLoginListener(server));
         server.getServer().addListener(new ServerDisconnectListener(server));
         server.getServer().addListener(new ServerStartGameListener(server));
+        server.getServer().addListener(new ServerClaimTileListener(server));
     }
 
 }
