@@ -35,6 +35,7 @@ public class ServerLoginListener implements Listener {
                     server.getServer().sendToTCP(conn.getID(), server.connections.get(c));
                 }
             }
+            server.addUsername(login.uuid, login.username);
 
         }
     }

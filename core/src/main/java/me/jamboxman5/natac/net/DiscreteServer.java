@@ -8,12 +8,14 @@ import me.jamboxman5.natac.net.packet.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class DiscreteServer {
 
     private Server server;
 
     public HashMap<Connection, PacketLogin> connections;
+    public HashMap<UUID, String> usernames;
 
     public enum GameState {
         LOBBY, INGAME
@@ -49,5 +51,13 @@ public class DiscreteServer {
     public GameState getState() { return state; }
 
     public Server getServer() { return server; }
+
+    public void addUsername(String uuid, String username) {
+        usernames.put(UUID.fromString(uuid), username);
+    }
+
+    public void removeUsername(String uuid) {
+        usernames.remove(UUID.fromString(uuid));
+    }
 
 }
