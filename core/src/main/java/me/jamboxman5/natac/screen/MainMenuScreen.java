@@ -5,8 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -78,7 +76,7 @@ public class MainMenuScreen implements Screen {
                 if (field.getText().isEmpty()) return;
                 Player player = new Player(field.getText(), Color.RED);
                 Natac.instance.hostGame(player);
-                Natac.instance.setScreen(new LobbyScreen(new Player(field.getText(), Color.RED)));
+                Natac.instance.setScreen(new LobbyScreen(player));
             }
         });
 
