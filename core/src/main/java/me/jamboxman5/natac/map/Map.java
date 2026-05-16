@@ -39,7 +39,7 @@ public class Map {
             if (t.contains(pos)) {
                 switch (t.getState()) {
                     case SELECTABLE:
-                        t.claim(Natac.instance.player);
+                        t.claim(Natac.instance.player.getID(), true);
                         return;
                     default:
                         return;

@@ -33,7 +33,7 @@ public class Player {
     }
 
     public String getUsername() { return username; }
-    public String getID() { return id.toString(); }
+    public UUID getID() { return id; }
 
     public void draw() {
 
