@@ -97,4 +97,9 @@ public class Natac extends Game {
     }
 
     public ClientManager getClientManager() { return clientManager; }
+
+    public GameScreen getGame() {
+        if (getScreen() instanceof GameScreen) return (GameScreen) getScreen();
+        return null;
+    }
 }
