@@ -14,14 +14,15 @@ import me.jamboxman5.natac.player.Player;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class ClientManager {
 
     Client client;
     Natac game;
 
-    Array<String> connectedPlayers;
-    HashMap<String, String> connectedPlayerNames;
+    Array<UUID> connectedPlayers;
+    HashMap<UUID, String> connectedPlayerNames;
 
     public ClientManager(Natac game) {
         this.game = game;
@@ -52,33 +53,33 @@ public class ClientManager {
     private void sendLogin(Player player) {
         PacketLogin login = new PacketLogin();
         login.username = player.getUsername();
-        login.uuid = player.getID();
+        login.uuid = player.getID().toString();
         client.sendTCP(login);
         connectedPlayers.add(player.getID());
         connectedPlayerNames.put(player.getID(), player.getUsername());
     }
 
     public void disconnectPlayer(PacketDisconnect disconnect) {
-        connectedPlayers.removeValue(disconnect.uuid, false);
-        connectedPlayerNames.remove(disconnect.uuid);
+        connectedPlayers.removeValue(UUID.fromString(disconnect.uuid), false);
+        connectedPlayerNames.remove(UUID.fromString(disconnect.uuid));
 //        game.getMapManager().removeOnlinePlayer(disconnect);
     }
 
     public void connectPlayer(PacketLogin login) {
-        connectedPlayers.add(login.uuid);
-        connectedPlayerNames.put(login.uuid, login.username);
+        connectedPlayers.add(UUID.fromString(login.uuid));
+        connectedPlayerNames.put(UUID.fromString(login.uuid), login.username);
     }
 
     public boolean isConnected() {
         return (client != null && client.isConnected());
     }
 
-    public Array<String> getConnectedPlayers() {
+    public Array<UUID> getConnectedPlayers() {
         if (connectedPlayers == null) return new Array<>();
         else return connectedPlayers;
     }
 
-    public String getConnectedPlayerName(String uuid) {
+    public String getConnectedPlayerName(UUID uuid) {
         if (connectedPlayerNames.containsKey(uuid)) return connectedPlayerNames.get(uuid);
         else return "PLAYER NOT FOUND";
     }

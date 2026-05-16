@@ -33,6 +33,7 @@ public class DiscreteServer {
         state = GameState.LOBBY;
 
         connections = new HashMap<>();
+        usernames = new HashMap<>();
 
         NetUtil.registerPackets(kryo);
 

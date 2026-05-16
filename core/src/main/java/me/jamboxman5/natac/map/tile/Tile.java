@@ -49,6 +49,7 @@ public class Tile {
     public Tile(float x, float y, TileState state) {
         this.state = state;
         this.type = getRandomType();
+
         bounds = new Hexagon(pos);
 
         buildings = new ArrayList<>();

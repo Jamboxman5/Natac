@@ -29,6 +29,7 @@ import me.jamboxman5.natac.util.Settings;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class LobbyScreen implements Screen {
 
@@ -162,7 +163,7 @@ public class LobbyScreen implements Screen {
         Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Players: ", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT), 200);
 
         int y = 200;
-        for (String id : Natac.instance.getClientManager().getConnectedPlayers()) {
+        for (UUID id : Natac.instance.getClientManager().getConnectedPlayers()) {
             String name = Natac.instance.getClientManager().getConnectedPlayerName(id);
             Fonts.PLACEHOLDER_FONT.draw(spriteBatch, name, Fonts.getXForCenteredText(Settings.screenWidth / 2, name, Fonts.PLACEHOLDER_FONT) + 100, y);
             y -= 30;
