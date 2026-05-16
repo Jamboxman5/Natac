@@ -37,7 +37,7 @@ public class Tile {
 
     private transient Sprite sprite;
 
-    private float x, y;
+    private Vector2 pos;
 
     public Tile() {
         buildings = new ArrayList<>();
@@ -47,13 +47,13 @@ public class Tile {
     public Tile(float x, float y, TileState state) {
         this.state = state;
         this.type = getRandomType();
-        bounds = new Hexagon(x, y);
+        bounds = new Hexagon(pos);
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
 
-        this.x = x;
-        this.y = y;
+        pos.x = x;
+        pos.y = y;
 
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
@@ -68,7 +68,7 @@ public class Tile {
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
 
         if (bounds == null) {
-            bounds = new Hexagon(x, y);
+            bounds = new Hexagon(pos);
         }
 
         if (state == TileState.HIDDEN) return;
@@ -102,7 +102,7 @@ public class Tile {
     public void update(Vector2 touchPos) {
 
         if (bounds == null) {
-            bounds = new Hexagon(x, y);
+            bounds = new Hexagon(pos);
         }
 
         bounds.update(touchPos);
@@ -146,7 +146,7 @@ public class Tile {
         private final Polygon shape;
 
 
-        public Hexagon(float x, float y) {
+        public Hexagon(Vector2 center) {
             float[] vertices = new float[12];
             for (int i = 0; i < 6; i++) {
                 float angle = i * MathUtils.PI / 3;
@@ -157,7 +157,7 @@ public class Tile {
                 vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
             }
             shape = new Polygon(vertices);
-            shape.setPosition(x, y);
+            shape.setPosition(center.x, center.y);
             shape.setOrigin(0,0);
         }
 
@@ -177,6 +177,10 @@ public class Tile {
         TileType[] types = TileType.values();
         int idx = (int) (Math.random() * types.length);
         return types[idx];
+    }
+
+    public boolean isAt(Vector2 pos) {
+        return this.pos.epsilonEquals(pos);
     }
 
 
