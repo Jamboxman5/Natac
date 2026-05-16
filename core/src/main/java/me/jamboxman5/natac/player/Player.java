@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Player {
 
     private PlayerClass playerClass;
-    List<Tile> territory;
+
     List inventory;
 
     private int money;
@@ -30,7 +30,6 @@ public class Player {
         this.tileColor = tileColor;
         this.id = UUID.randomUUID();
 
-        territory = new ArrayList<>();
     }
 
     public String getUsername() { return username; }
@@ -38,10 +37,6 @@ public class Player {
 
     public void draw() {
 
-    }
-
-    public void giveTile(Tile tile) {
-        territory.add(tile);
     }
 
     public int getMoney() {

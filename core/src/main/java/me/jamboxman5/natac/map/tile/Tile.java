@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.structures.Structure;
@@ -92,10 +94,17 @@ public class Tile {
 
     }
 
-    public void claim(Player p) {
-        owner = UUID.fromString(p.getID());
-        p.giveTile(this);
+    public void claim(UUID claimingPlayerID, boolean sendPacket) {
+        owner = claimingPlayerID;
         setState(TileState.CLAIMED);
+
+        if (sendPacket) {
+            PacketClaimTile packet = new PacketClaimTile();
+            packet.claimingID = claimingPlayerID.toString();
+            packet.tilePos = pos;
+            Natac.instance.getClientManager().sendPacketTCP(packet);
+        }
+
         if (GameScreen.getState() == GameScreen.State.CLAIM) GameScreen.setState(GameScreen.State.WAIT);
     }
 
