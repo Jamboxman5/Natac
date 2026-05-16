@@ -50,13 +50,11 @@ public class Tile {
         this.state = state;
         this.type = getRandomType();
 
+        pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
-
-        pos.x = x;
-        pos.y = y;
 
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
