@@ -6,4 +6,5 @@ import me.jamboxman5.natac.map.Map;
 public class PacketClaimTile extends Packet {
     public Vector2 tilePos;
     public String claimingID;
+    public boolean finalClaim = false;
 }

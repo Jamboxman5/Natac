@@ -29,9 +29,15 @@ public class Map {
 
     public void update(Vector2 touchPos) {
         for (Tile t : tiles) t.update(touchPos);
-        if (Natac.instance.getGame().getState() != GameScreen.State.CLAIM) {
-            for (Tile t : tiles)
-                if (t.getState() == TileState.SELECTABLE) t.setState(TileState.BLOCKED);
+//        if (Natac.instance.getGame().getState() != GameScreen.State.CLAIM) {
+//            for (Tile t : tiles)
+//                if (t.getState() == TileState.SELECTABLE) t.setState(TileState.BLOCKED);
+//        }
+    }
+
+    public void clearStartingTiles() {
+        for (Tile t : tiles) {
+            if (t.getState() == TileState.STARTING) t.setState(TileState.BLOCKED);
         }
     }
 
@@ -39,7 +45,7 @@ public class Map {
         for (Tile t : tiles) {
             if (t.contains(pos)) {
                 switch (t.getState()) {
-                    case SELECTABLE:
+                    case STARTING:
                         t.claim(Natac.instance.player.getID(), true);
                         return;
                     default:

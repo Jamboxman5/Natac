@@ -41,15 +41,15 @@ public class MapBuilder {
     private static TileState[][] getHexLayout(int radius) {
         return new TileState[][]
             {
-                {TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.SELECTABLE, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN},
+                {TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.STARTING, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN},
                 {TileState.HIDDEN, TileState.HIDDEN, TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.HIDDEN, TileState.HIDDEN},
-                {TileState.SELECTABLE,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.SELECTABLE},
+                {TileState.STARTING,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.STARTING},
                 {TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED},
                 {TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED},
                 {TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED},
-                {TileState.SELECTABLE,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.SELECTABLE},
+                {TileState.STARTING,  TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.STARTING},
                 {TileState.HIDDEN, TileState.BLOCKED,  TileState.BLOCKED,  TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED, TileState.BLOCKED,  TileState.BLOCKED,  TileState.HIDDEN},
-                {TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.BLOCKED, TileState.SELECTABLE, TileState.BLOCKED, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN},
+                {TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN, TileState.BLOCKED, TileState.STARTING, TileState.BLOCKED, TileState.HIDDEN, TileState.HIDDEN, TileState.HIDDEN},
             };
     }
 
