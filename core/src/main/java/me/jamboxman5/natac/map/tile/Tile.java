@@ -104,7 +104,7 @@ public class Tile {
             Natac.instance.getClientManager().sendPacketTCP(packet);
         }
 
-        if (GameScreen.getState() == GameScreen.State.CLAIM) GameScreen.setState(GameScreen.State.WAIT);
+        if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) Natac.instance.getGame().setState(GameScreen.State.WAIT);
     }
 
     public void update(Vector2 touchPos) {
@@ -146,6 +146,8 @@ public class Tile {
 
     public TileState getState() { return state;
     }
+
+    public UUID getOwner() { return owner; }
 
 
     public static class Hexagon {

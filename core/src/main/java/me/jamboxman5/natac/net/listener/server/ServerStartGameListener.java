@@ -6,6 +6,7 @@ import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.net.packet.PacketLogin;
 import me.jamboxman5.natac.net.packet.PacketLoginRejected;
 import me.jamboxman5.natac.net.packet.PacketStartGame;
+import me.jamboxman5.natac.net.packet.PacketStartTurn;
 
 public class ServerStartGameListener implements Listener {
 
@@ -23,6 +24,19 @@ public class ServerStartGameListener implements Listener {
 
             server.log("Game started at " + packet.timestamp + ": " + packet.map.toString());
             server.getServer().sendToAllTCP(packet);
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(100);
+                    PacketStartTurn turnPacket = new PacketStartTurn();
+                    turnPacket.turnPlayerID = server.playerTurnQueue.removeFirst().toString();
+                    server.getServer().sendToAllTCP(turnPacket);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
+
 
         }
     }

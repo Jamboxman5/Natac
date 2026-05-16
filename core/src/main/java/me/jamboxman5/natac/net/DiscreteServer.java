@@ -1,8 +1,8 @@
 package me.jamboxman5.natac.net;
 
+import com.badlogic.gdx.utils.Queue;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import me.jamboxman5.natac.net.packet.*;
 
@@ -16,6 +16,8 @@ public class DiscreteServer {
 
     public HashMap<Connection, PacketLogin> connections;
     public HashMap<UUID, String> usernames;
+
+    public Queue<UUID> playerTurnQueue;
 
     public enum GameState {
         LOBBY, INGAME
@@ -34,6 +36,7 @@ public class DiscreteServer {
 
         connections = new HashMap<>();
         usernames = new HashMap<>();
+        playerTurnQueue = new Queue<>();
 
         NetUtil.registerPackets(kryo);
 

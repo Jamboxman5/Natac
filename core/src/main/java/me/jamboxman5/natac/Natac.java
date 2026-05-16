@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import me.jamboxman5.natac.net.ClientManager;
 import me.jamboxman5.natac.net.DiscreteServer;
+import me.jamboxman5.natac.net.packet.PacketEndTurn;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.screen.MainMenuScreen;
@@ -29,6 +30,7 @@ public class Natac extends Game {
     public Player player;
 
     private boolean hosting = false;
+    private boolean isTurn = false;
 
     @Override
     public void create() {
@@ -101,5 +103,27 @@ public class Natac extends Game {
     public GameScreen getGame() {
         if (getScreen() instanceof GameScreen) return (GameScreen) getScreen();
         return null;
+    }
+
+    public void startTurn() {
+        if (getGame() == null) return;
+
+        GameScreen game = getGame();
+
+        if (game.getMap().hasTiles(player)) game.setState(GameScreen.State.PLAY);
+        else game.setState(GameScreen.State.CLAIM);
+
+        isTurn = true;
+    }
+    public void endTurn() {
+        if (getGame() == null) return;
+
+        PacketEndTurn packet = new PacketEndTurn();
+        packet.turnPlayerID = player.getID().toString();
+
+        getClientManager().sendPacketTCP(packet);
+        getGame().setState(GameScreen.State.PLAY);
+
+        isTurn = false;
     }
 }

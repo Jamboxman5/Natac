@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.units.army.Soldier;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -28,7 +29,7 @@ public class Map {
 
     public void update(Vector2 touchPos) {
         for (Tile t : tiles) t.update(touchPos);
-        if (GameScreen.getState() != GameScreen.State.CLAIM) {
+        if (Natac.instance.getGame().getState() != GameScreen.State.CLAIM) {
             for (Tile t : tiles)
                 if (t.getState() == TileState.SELECTABLE) t.setState(TileState.BLOCKED);
         }
@@ -60,4 +61,11 @@ public class Map {
 
     public void addTile(Tile t) { tiles.add(t); }
 
+    public boolean hasTiles(Player player) {
+        for (Tile t : tiles) {
+            if (t.getOwner() == null) continue;
+            if (t.getOwner().equals(player.getID())) return true;
+        }
+        return false;
+    }
 }

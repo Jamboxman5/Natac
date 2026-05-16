@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.MapBuilder;
+import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.screen.ui.UIManager;
@@ -47,10 +48,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     private Stage uiStage;
 
-    private static State gameState;
+    private State gameState;
 
-    public static State getState() { return gameState; }
-    public static void setState(State newState) { gameState = newState; }
 
     public enum State {
         CLAIM, WAIT, PLAY;
@@ -128,7 +127,8 @@ public class GameScreen implements Screen, InputProcessor {
         shapes = new ShapeDrawer(batch, whitePixel);
         uiShapes = new ShapeDrawer(uiSprites, whitePixel);
 
-        gameState = State.CLAIM;
+        gameState = State.WAIT;
+
     }
 
     @Override
@@ -242,4 +242,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     public Map getMap() { return map; }
+
+    public State getState() { return gameState; }
+    public void setState(State newState) { gameState = newState; }
 }
