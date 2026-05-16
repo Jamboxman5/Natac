@@ -50,6 +50,13 @@ public class Map {
         }
     }
 
+    public Tile findTile(Vector2 pos) {
+        for (Tile t : tiles) {
+            if (t.isAt(pos)) return t;
+        }
+        return null;
+    }
+
 
     public void addTile(Tile t) { tiles.add(t); }
 
