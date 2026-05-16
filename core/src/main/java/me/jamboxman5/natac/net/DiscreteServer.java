@@ -60,4 +60,8 @@ public class DiscreteServer {
         usernames.remove(UUID.fromString(uuid));
     }
 
+    public String getUsername(String uuid) {
+        return usernames.get(UUID.fromString(uuid));
+    }
+
 }
