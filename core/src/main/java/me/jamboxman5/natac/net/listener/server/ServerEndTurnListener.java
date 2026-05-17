@@ -27,7 +27,7 @@ public class ServerEndTurnListener implements Listener {
             server.getServer().sendToAllTCP(packet);
 
             PacketStartTurn turnPacket = new PacketStartTurn();
-            turnPacket.turnPlayerID = server.playerTurnQueue.first().toString();
+            turnPacket.turnPlayerID = server.popPlayer().toString();
             server.getServer().sendToAllTCP(turnPacket);
 
         }

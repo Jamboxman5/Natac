@@ -19,6 +19,8 @@ public class DiscreteServer {
 
     public Queue<UUID> playerTurnQueue;
 
+    public void setState(GameState gameState) { this.state = gameState; }
+
     public enum GameState {
         LOBBY, INGAME
     }
@@ -74,6 +76,16 @@ public class DiscreteServer {
 
     public void logSevere(String log) {
         System.out.println("\u001B[31mSERVER WARNING::  " + log + "\u001B[0m");
+    }
+
+    public UUID popPlayer() {
+        UUID player = playerTurnQueue.removeFirst();
+        playerTurnQueue.addLast(player);
+        return player;
+    }
+
+    public UUID peekPlayer() {
+        return playerTurnQueue.first();
     }
 
 }

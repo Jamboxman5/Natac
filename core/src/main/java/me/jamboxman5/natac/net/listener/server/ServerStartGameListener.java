@@ -24,12 +24,13 @@ public class ServerStartGameListener implements Listener {
 
             server.log("Game started at " + packet.timestamp + ": " + packet.map.toString());
             server.getServer().sendToAllTCP(packet);
+            server.setState(DiscreteServer.GameState.INGAME);
 
             new Thread(() -> {
                 try {
                     Thread.sleep(100);
                     PacketStartTurn turnPacket = new PacketStartTurn();
-                    turnPacket.turnPlayerID = server.playerTurnQueue.removeFirst().toString();
+                    turnPacket.turnPlayerID = server.popPlayer().toString();
                     server.getServer().sendToAllTCP(turnPacket);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
