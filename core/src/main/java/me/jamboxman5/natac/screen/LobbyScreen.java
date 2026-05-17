@@ -52,7 +52,7 @@ public class LobbyScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
 
-        viewport = new FitViewport(1280, 720, camera);
+        viewport = new FitViewport(Settings.screenWidth, Settings.screenHeight, camera);
         uiStage = new Stage(viewport);
 
         shapes = new ShapeRenderer();

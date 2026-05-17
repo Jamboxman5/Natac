@@ -3,8 +3,10 @@ package me.jamboxman5.natac.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -22,6 +25,7 @@ import me.jamboxman5.natac.util.Settings;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class MainMenuScreen implements Screen {
 
@@ -35,7 +39,6 @@ public class MainMenuScreen implements Screen {
     private ShapeRenderer shapes;
 
     private final Stage uiStage;
-    private final Table elements;
 
     private final Viewport viewport;
 
@@ -47,14 +50,13 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
 
-        viewport = new FitViewport(1280, 720, camera);
+        viewport = new FitViewport(Settings.screenWidth, Settings.screenHeight, camera);
         uiStage = new Stage(viewport);
 
         shapes = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
-        elements = new Table();
-        elements.setFillParent(true);
-        uiStage.addActor(elements);
+
+        Vector2 center = new Vector2((float) Settings.screenWidth /2, (float) Settings.screenHeight /2);
 
         Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
 
@@ -62,14 +64,22 @@ public class MainMenuScreen implements Screen {
         TextButton button2 = new TextButton("Join Game", skin);
         TextField field = new TextField("", skin);
 
-        elements.add(field).fillX().center();
-        elements.row();
-        elements.add(button1);
-        elements.add(button2);
-        elements.row();
+        uiStage.addActor(button1);
+        uiStage.addActor(button2);
+        uiStage.addActor(field);
+
+        field.setAlignment(Align.center);
+        field.setPosition(center.x - 100, center.y);
+        field.setSize(200, 40);
+
+        button1.setSize(90, 40);
+        button2.setSize(90, 40);
+
+        button1.setPosition(center.x - 100, center.y - 60);
+        button2.setPosition(center.x + 100 - button2.getWidth(), center.y - 60);
+
         field.setMessageText("Enter name: ");
 
-        elements.setDebug(false);
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
