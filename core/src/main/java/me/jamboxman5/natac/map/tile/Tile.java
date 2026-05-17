@@ -95,7 +95,9 @@ public class Tile {
 
     public void claim(UUID claimingPlayerID, boolean sendPacket) {
         owner = claimingPlayerID;
-        setState(TileState.CLAIMED);
+
+        if (Natac.instance.player.getID().equals(claimingPlayerID)) setState(TileState.CLAIMED);
+        else setState(TileState.ENEMY_CLAIMED);
 
         if (sendPacket) {
             PacketClaimTile packet = new PacketClaimTile();
