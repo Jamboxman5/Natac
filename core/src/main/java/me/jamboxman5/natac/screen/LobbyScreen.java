@@ -41,7 +41,6 @@ public class LobbyScreen implements Screen {
     private ShapeRenderer shapes;
 
     private final Stage uiStage;
-    private final Table elements;
 
     private final Viewport viewport;
 
@@ -58,21 +57,21 @@ public class LobbyScreen implements Screen {
         shapes = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
 
-        elements = new Table();
-        elements.setFillParent(true);
-
-        uiStage.addActor(elements);
-
         Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
 
         TextButton button1 = new TextButton("Start Game", skin);
         TextButton button2 = new TextButton("Quit Game", skin);
 
-        if (Natac.instance.isHosting()) elements.add(button1);
-        elements.add(button2);
-        elements.row();
+        button1.setSize(200,80);
+        button2.setSize(200,80);
+        button1.setPosition(Settings.screenWidth - 240, 140);
+        button2.setPosition(Settings.screenWidth - 240, 40);
 
-        elements.setDebug(false);
+        button1.getStyle().font.getData().setScale(2f);
+
+        if (Natac.instance.isHosting()) uiStage.addActor(button1);
+        uiStage.addActor(button2);
+
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -159,13 +158,13 @@ public class LobbyScreen implements Screen {
         drawTitle(spriteBatch);
         uiStage.draw();
         spriteBatch.begin();
-        Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Lobby", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT), 500);
-        Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Players: ", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT), 200);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 3f,  "Lobby", spriteBatch, 40f, Settings.screenHeight - 60);
+        Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Players: ", 40f, 250);
 
         int y = 200;
         for (UUID id : Natac.instance.getClientManager().getConnectedPlayers()) {
             String name = Natac.instance.getClientManager().getConnectedPlayerName(id);
-            Fonts.PLACEHOLDER_FONT.draw(spriteBatch, name, Fonts.getXForCenteredText(Settings.screenWidth / 2, name, Fonts.PLACEHOLDER_FONT) + 100, y);
+            Fonts.PLACEHOLDER_FONT.draw(spriteBatch, name, 40, y);
             y -= 30;
         }
 

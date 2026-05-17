@@ -71,6 +71,7 @@ public class MainMenuScreen implements Screen {
         field.setAlignment(Align.center);
         field.setPosition(center.x - 100, center.y);
         field.setSize(200, 40);
+        field.getStyle().font.getData().setScale(1.2f);
 
         button1.setSize(90, 40);
         button2.setSize(90, 40);
@@ -160,7 +161,7 @@ public class MainMenuScreen implements Screen {
         uiStage.draw();
 
         spriteBatch.begin();
-        Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT), 500);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 3f, "NATAC", spriteBatch, Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT, 3f), 550);
         spriteBatch.end();
     }
 

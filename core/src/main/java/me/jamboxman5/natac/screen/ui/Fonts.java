@@ -35,9 +35,9 @@ public class Fonts {
         font.getData().setScale(1f);
     }
 
-    public static float getXForCenteredText(int centeredX, String text, BitmapFont font) {
+    public static float getXForCenteredText(int centeredX, String text, BitmapFont font, float scale) {
         layout.setText(font, text);
-        float length = layout.width;
+        float length = layout.width * scale;
         return centeredX - length / 2;
     }
     public static float getXForRightAlignedText(int rightX, String text, BitmapFont font, Float scale) {
