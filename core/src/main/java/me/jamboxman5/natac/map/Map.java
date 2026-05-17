@@ -47,6 +47,7 @@ public class Map {
                 switch (t.getState()) {
                     case STARTING:
                         t.claim(Natac.instance.player.getID(), true);
+                        clearStartingTiles();
                         Natac.instance.endTurn();
                         return;
                     default:
