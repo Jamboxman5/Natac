@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -20,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.util.Settings;
 
@@ -69,9 +67,15 @@ public class MainMenuScreen implements Screen {
         uiStage.addActor(field);
 
         field.setAlignment(Align.center);
-        field.setPosition(center.x - 100, center.y);
-        field.setSize(200, 40);
+        field.setPosition(center.x - 160, center.y);
+        field.setSize(195, 40);
         field.getStyle().font.getData().setScale(1.2f);
+
+        SelectBox<PlayerClass> classSelectBox = new SelectBox<>(skin);
+        classSelectBox.setItems(PlayerClass.values());
+        classSelectBox.setSize(120, 40);
+        classSelectBox.setPosition(center.x + 40, center.y);
+        uiStage.addActor(classSelectBox);
 
         button1.setSize(90, 40);
         button2.setSize(90, 40);
@@ -85,7 +89,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
-                Player player = new Player(field.getText(), Color.RED);
+                Player player = new Player(field.getText(), classSelectBox.getSelected(), Color.RED);
                 Natac.instance.hostGame(player);
                 Natac.instance.setScreen(new LobbyScreen(player));
             }
@@ -96,7 +100,7 @@ public class MainMenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
                 String ip = JOptionPane.showInputDialog("Enter host IP: ");
-                Player player = new Player(field.getText(), Color.RED);
+                Player player = new Player(field.getText(), classSelectBox.getSelected(), Color.RED);
 
                 if (Natac.instance.joinGame(player, ip)) Natac.instance.setScreen(new LobbyScreen(player));
                 else Natac.instance.getClientManager().logSevere("INVALID ADDRESS!");

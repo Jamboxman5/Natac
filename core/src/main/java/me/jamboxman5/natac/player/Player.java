@@ -25,10 +25,11 @@ public class Player {
     private String username;
     private UUID id;
 
-    public Player(String username, Color tileColor) {
+    public Player(String username, PlayerClass playerClass, Color tileColor) {
         this.username = username;
         this.tileColor = tileColor;
         this.id = UUID.randomUUID();
+        this.playerClass = playerClass;
 
     }
 
