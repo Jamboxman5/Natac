@@ -40,6 +40,7 @@ public class MainMenuScreen implements Screen {
 
     private final Viewport viewport;
 
+    private final BitmapFont font = Fonts.createFont("placeholder", 76, Color.WHITE);
 
     public MainMenuScreen() {
 
@@ -165,7 +166,7 @@ public class MainMenuScreen implements Screen {
         uiStage.draw();
 
         spriteBatch.begin();
-        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 3f, "NATAC", spriteBatch, Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", Fonts.PLACEHOLDER_FONT, 3f), 550);
+        font.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", font, 1f), 550);
         spriteBatch.end();
     }
 

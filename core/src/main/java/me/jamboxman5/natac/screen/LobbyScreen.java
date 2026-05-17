@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +30,7 @@ import me.jamboxman5.natac.util.Settings;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.UUID;
 
 public class LobbyScreen implements Screen {
@@ -43,6 +45,8 @@ public class LobbyScreen implements Screen {
     private final Stage uiStage;
 
     private final Viewport viewport;
+    private final BitmapFont font = Fonts.createFont("placeholder", 76, Color.WHITE);
+
 
     public LobbyScreen(Player player) {
 
@@ -158,7 +162,7 @@ public class LobbyScreen implements Screen {
         drawTitle(spriteBatch);
         uiStage.draw();
         spriteBatch.begin();
-        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 3f,  "Lobby", spriteBatch, 40f, Settings.screenHeight - 60);
+        font.draw(spriteBatch, "Lobby", 40f, Settings.screenHeight - 40);
         Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Players: ", 40f, 250);
 
         int y = 200;
