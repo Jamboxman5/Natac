@@ -47,7 +47,7 @@ public class GameScreen implements Screen, InputProcessor {
     SpriteBatch uiSprites;
     ShapeDrawer uiShapes;
 
-    private Stage uiStage;
+    private PlayInputStage uiStage;
 
     private State gameState;
 
@@ -68,8 +68,8 @@ public class GameScreen implements Screen, InputProcessor {
 
 
         multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(this);
         multiplexer.addProcessor(uiStage);
+        multiplexer.addProcessor(this);
 
         Gdx.input.setInputProcessor(multiplexer);
 
@@ -97,6 +97,12 @@ public class GameScreen implements Screen, InputProcessor {
 
 
     private void update(float delta) {
+
+        if (gameState.equals(State.PLAY)) {
+            if (uiStage.isDisabled()) uiStage.enableInput();
+        } else {
+            if (!uiStage.isDisabled()) uiStage.disableInput();
+        }
 
         uiStage.act(delta);
 

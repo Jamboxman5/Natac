@@ -1,29 +1,36 @@
 package me.jamboxman5.natac.screen.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.screen.LobbyScreen;
 import me.jamboxman5.natac.util.Settings;
 
 import java.util.Set;
 
 public class PlayInputStage extends Stage {
 
+    Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
+
+    TextButton claimTileButton = new TextButton("Claim", skin);
+    TextButton shopButton = new TextButton("Shop", skin);
+    TextButton attackButton = new TextButton("Attack", skin);
+    TextButton scoutButton = new TextButton("Scout", skin);
+    TextButton tradeButton = new TextButton("Trade", skin);
+
     public PlayInputStage() {
+
         super(new FitViewport(Settings.screenWidth, Settings.screenHeight));
-
-        Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
-
-        TextButton claimTileButton = new TextButton("Claim", skin);
-        TextButton shopButton = new TextButton("Shop", skin);
-        TextButton attackButton = new TextButton("Attack", skin);
-        TextButton scoutButton = new TextButton("Scout", skin);
-        TextButton tradeButton = new TextButton("Trade", skin);
 
         claimTileButton.getStyle().font.getData().setScale(2f);
 
@@ -52,7 +59,31 @@ public class PlayInputStage extends Stage {
         addActor(scoutButton);
         addActor(tradeButton);
 
+//        claimTileButton.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                System.out.println("B");
+//            }
+//        });
     }
+
+    public void disableInput() {
+        claimTileButton.setDisabled(true);
+        shopButton.setDisabled(true);
+        attackButton.setDisabled(true);
+        scoutButton.setDisabled(true);
+        tradeButton.setDisabled(true);
+    }
+
+    public void enableInput() {
+        claimTileButton.setDisabled(false);
+        shopButton.setDisabled(false);
+        attackButton.setDisabled(false);
+        scoutButton.setDisabled(false);
+        tradeButton.setDisabled(false);
+    }
+
+    public boolean isDisabled() { return claimTileButton.isDisabled(); }
 
 
 
