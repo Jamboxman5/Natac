@@ -16,6 +16,7 @@ import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.screen.ui.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
@@ -63,7 +64,7 @@ public class GameScreen implements Screen, InputProcessor {
         uiCamera = new OrthographicCamera(Settings.screenWidth, Settings.screenHeight);
         uiCamera.setToOrtho(false);
         viewport = new FitViewport(1280, 720, gameCamera);
-        uiStage = new Stage(viewport);
+        uiStage = new PlayInputStage();
 
 
         multiplexer = new InputMultiplexer();
