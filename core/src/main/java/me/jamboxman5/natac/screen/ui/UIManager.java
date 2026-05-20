@@ -13,7 +13,8 @@ public class UIManager {
 
         int statStart = Settings.screenHeight - 40;
 
-        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Money: $" + Natac.instance.player.getMoney(), batch, 20, statStart);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Gold: $" + Natac.instance.player.getGold(), batch, 20, statStart);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Resources: " + Natac.instance.player.getResources(), batch, 20, statStart - 40);
 
         switch(gameState) {
             case PLAY:

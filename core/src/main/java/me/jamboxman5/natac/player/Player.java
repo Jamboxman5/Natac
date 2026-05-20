@@ -1,9 +1,7 @@
 package me.jamboxman5.natac.player;
 
 import com.badlogic.gdx.graphics.Color;
-import me.jamboxman5.natac.map.tile.Tile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,8 +11,9 @@ public class Player {
 
     List inventory;
 
-    private int money;
+    private int gold;
     private int resources;
+
     private int research;
     private int status;
     private int attack;
@@ -31,6 +30,14 @@ public class Player {
         this.id = UUID.randomUUID();
         this.playerClass = playerClass;
 
+        this.attack = playerClass.attack;
+        this.defense = playerClass.defense;
+        this.gold = playerClass.gold;
+        this.status = playerClass.status;
+        this.research = playerClass.research;
+
+        this.resources = 100;
+
     }
 
     public String getUsername() { return username; }
@@ -40,12 +47,12 @@ public class Player {
 
     }
 
-    public int getMoney() {
-        return money;
+    public int getGold() {
+        return gold;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public int getResources() {
