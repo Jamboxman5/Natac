@@ -2,14 +2,19 @@ package me.jamboxman5.natac.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -22,10 +27,8 @@ import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.util.Settings;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Set;
 
-public class MainMenuScreen implements Screen {
+public class SettingsScreen implements Screen {
 
     Texture menuBKG;
 
@@ -42,7 +45,7 @@ public class MainMenuScreen implements Screen {
 
     private final BitmapFont font = Fonts.createFont("placeholder", 76, Color.WHITE);
 
-    public MainMenuScreen() {
+    public SettingsScreen() {
 
         Natac.instance.player = null;
 
@@ -59,66 +62,42 @@ public class MainMenuScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
 
-        TextButton button1 = new TextButton("Host Game", skin);
-        TextButton button2 = new TextButton("Join Game", skin);
-        TextButton button3 = new TextButton("Settings", skin);
-        TextField field = new TextField("", skin);
+        TextButton button1 = new TextButton("< Back", skin);
+        TextButton button2 = new TextButton("Apply", skin);
+        button1.getStyle().font.getData().setScale(1.2f);
 
         uiStage.addActor(button1);
         uiStage.addActor(button2);
-        uiStage.addActor(button3);
-        uiStage.addActor(field);
 
-        field.setAlignment(Align.center);
-        field.setPosition(center.x - 160, center.y);
-        field.setSize(195, 40);
-        field.getStyle().font.getData().setScale(1.2f);
-
-        SelectBox<PlayerClass> classSelectBox = new SelectBox<>(skin);
-        classSelectBox.setItems(PlayerClass.values());
-        classSelectBox.setSize(120, 40);
-        classSelectBox.setPosition(center.x + 40, center.y);
-        uiStage.addActor(classSelectBox);
+        SelectBox<Vector2> resolutions = new SelectBox<>(skin);
+        resolutions.setItems(Settings.resolutions);
+        resolutions.setSize(120, 40);
+        resolutions.setPosition(center.x + 40, center.y);
+        resolutions.setSelected(Settings.getResolution());
+        uiStage.addActor(resolutions);
 
         button1.setSize(90, 40);
         button2.setSize(90, 40);
-        button3.setSize(90, 40);
 
-        button1.setPosition(center.x - 100, center.y - 60);
-        button2.setPosition(center.x + 100 - button2.getWidth(), center.y - 60);
-        button3.setPosition(center.x - (button3.getWidth() / 2), center.y - 60 - 40 - 20);
-
-        field.setMessageText("Enter name: ");
+        button1.setPosition(40, 40);
+        button2.setPosition(Settings.screenWidth - 40 - button2.getWidth(), 40);
 
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (field.getText().isEmpty()) return;
-                Player player = new Player(field.getText(), classSelectBox.getSelected(), Color.RED);
-                Natac.instance.hostGame(player);
-                Natac.instance.setScreen(new LobbyScreen(player));
+                Natac.instance.setScreen(new MainMenuScreen());
             }
         });
 
         button2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (field.getText().isEmpty()) return;
-                String ip = JOptionPane.showInputDialog("Enter host IP: ");
-                Player player = new Player(field.getText(), classSelectBox.getSelected(), Color.RED);
-
-                if (Natac.instance.joinGame(player, ip)) Natac.instance.setScreen(new LobbyScreen(player));
-                else Natac.instance.getClientManager().logSevere("INVALID ADDRESS!");
-
-            }
-        });
-
-        button3.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
+                Settings.setResolution(resolutions.getSelected());
                 Natac.instance.setScreen(new SettingsScreen());
             }
         });
+
+
     }
 
     @Override
@@ -177,7 +156,7 @@ public class MainMenuScreen implements Screen {
         uiStage.draw();
 
         spriteBatch.begin();
-        font.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", font, 1f), 550);
+        font.draw(spriteBatch, "Settings", 40f, Settings.screenHeight - 40);
         spriteBatch.end();
     }
 

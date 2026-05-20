@@ -15,9 +15,6 @@ public class Settings {
     public static int screenHeight = 768;
     public static float guiScale = 1.5f;
 
-    public static float minZoom = 300 * guiScale;
-    public static float maxZoom = 200 * guiScale;
-
     public static float hudMargin = 20;
 
     public static Array<Vector2> resolutions = getAllResolutions();
