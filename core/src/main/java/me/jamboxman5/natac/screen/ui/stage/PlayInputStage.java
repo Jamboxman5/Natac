@@ -1,9 +1,12 @@
 package me.jamboxman5.natac.screen.ui.stage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.util.Settings;
 
@@ -23,6 +26,7 @@ public class PlayInputStage extends Stage {
         super(new FitViewport(Settings.screenWidth, Settings.screenHeight));
 
         claimTileButton.getStyle().font.getData().setScale(2f);
+        claimTileButton.getStyle().disabledFontColor = Color.GRAY;
 
         int width = Settings.screenWidth / 10;
         int height = Settings.screenHeight / 10;
@@ -51,6 +55,8 @@ public class PlayInputStage extends Stage {
         addActor(attackButton);
         addActor(scoutButton);
         addActor(tradeButton);
+
+        disableInput();
 
 //        claimTileButton.addListener(new ChangeListener() {
 //            @Override
