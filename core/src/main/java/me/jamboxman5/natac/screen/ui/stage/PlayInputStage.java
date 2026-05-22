@@ -1,22 +1,11 @@
-package me.jamboxman5.natac.screen.ui;
+package me.jamboxman5.natac.screen.ui.stage;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import me.jamboxman5.natac.Natac;
-import me.jamboxman5.natac.player.Player;
-import me.jamboxman5.natac.screen.LobbyScreen;
 import me.jamboxman5.natac.util.Settings;
-
-import java.util.Set;
 
 public class PlayInputStage extends Stage {
 
@@ -24,6 +13,7 @@ public class PlayInputStage extends Stage {
 
     TextButton claimTileButton = new TextButton("Claim", skin);
     TextButton shopButton = new TextButton("Shop", skin);
+    TextButton buildButton = new TextButton("Build", skin);
     TextButton attackButton = new TextButton("Attack", skin);
     TextButton scoutButton = new TextButton("Scout", skin);
     TextButton tradeButton = new TextButton("Trade", skin);
@@ -43,18 +33,21 @@ public class PlayInputStage extends Stage {
 
         claimTileButton.setPosition(x, y);
         shopButton.setPosition(x, y - (height) - (margin));
-        attackButton.setPosition(x, y - (height * 2) - (margin * 2));
-        scoutButton.setPosition(x, y - (height * 3) - (margin * 3));
-        tradeButton.setPosition(x, y - (height * 4) - (margin * 4));
+        buildButton.setPosition(x, y - (height * 2) - (margin * 2));
+        attackButton.setPosition(x, y - (height * 3) - (margin * 3));
+        scoutButton.setPosition(x, y - (height * 4) - (margin * 4));
+        tradeButton.setPosition(x, y - (height * 5) - (margin * 5));
 
         claimTileButton.setSize(width, height);
         shopButton.setSize(width, height);
+        buildButton.setSize(width, height);
         attackButton.setSize(width, height);
         scoutButton.setSize(width, height);
         tradeButton.setSize(width, height);
 
         addActor(claimTileButton);
         addActor(shopButton);
+        addActor(buildButton);
         addActor(attackButton);
         addActor(scoutButton);
         addActor(tradeButton);
@@ -70,6 +63,7 @@ public class PlayInputStage extends Stage {
     public void disableInput() {
         claimTileButton.setDisabled(true);
         shopButton.setDisabled(true);
+        buildButton.setDisabled(true);
         attackButton.setDisabled(true);
         scoutButton.setDisabled(true);
         tradeButton.setDisabled(true);
@@ -78,6 +72,7 @@ public class PlayInputStage extends Stage {
     public void enableInput() {
         claimTileButton.setDisabled(false);
         shopButton.setDisabled(false);
+        buildButton.setDisabled(false);
         attackButton.setDisabled(false);
         scoutButton.setDisabled(false);
         tradeButton.setDisabled(false);

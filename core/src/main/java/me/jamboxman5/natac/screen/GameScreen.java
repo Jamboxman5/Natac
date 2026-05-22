@@ -6,25 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
-import me.jamboxman5.natac.map.MapBuilder;
-import me.jamboxman5.natac.net.DiscreteServer;
-import me.jamboxman5.natac.player.Player;
-import me.jamboxman5.natac.screen.ui.Fonts;
-import me.jamboxman5.natac.screen.ui.PlayInputStage;
+import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
 import me.jamboxman5.natac.util.Settings;
-import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
-
-import javax.swing.*;
-import java.util.List;
-import java.util.Scanner;
 
 public class GameScreen implements Screen, InputProcessor {
 
