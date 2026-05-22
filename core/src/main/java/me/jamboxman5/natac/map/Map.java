@@ -3,6 +3,7 @@ package me.jamboxman5.natac.map;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
@@ -61,9 +62,37 @@ public class Map {
 
     public Tile findTile(Vector2 pos) {
         for (Tile t : tiles) {
-            if (t.isAt(pos)) return t;
+            if (t.contains(pos)) return t;
         }
         return null;
+    }
+
+    public List<Tile> getNeighbors(Tile t) {
+        List<Tile> neighbors = new ArrayList<>();
+        Vector2 pos = t.getTilePosition();
+
+        Tile candidate;
+
+        candidate = findTile(pos.cpy().add(150, 75));
+        if (candidate != null) neighbors.add(candidate);
+
+        candidate = findTile(pos.cpy().add(-150, 75));
+        if (candidate != null) neighbors.add(candidate);
+
+        candidate = findTile(pos.cpy().add(0, 100));
+        if (candidate != null) neighbors.add(candidate);
+
+        candidate = findTile(pos.cpy().add(0, -100));
+        if (candidate != null) neighbors.add(candidate);
+
+        candidate = findTile(pos.cpy().add(-150, -75));
+        if (candidate != null) neighbors.add(candidate);
+
+        candidate = findTile(pos.cpy().add(150, -75));
+        if (candidate != null) neighbors.add(candidate);
+
+        return neighbors;
+
     }
 
 

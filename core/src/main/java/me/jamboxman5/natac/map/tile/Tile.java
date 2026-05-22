@@ -38,12 +38,14 @@ public class Tile {
     private float currentScale = 1f;
 
     private transient Sprite sprite;
+    private transient boolean isFogged;
 
     private Vector2 pos;
 
     public Tile() {
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
+        isFogged = true;
     }
 
     public Tile(float x, float y, TileState state) {
@@ -55,6 +57,8 @@ public class Tile {
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
+
+        isFogged = true;
 
         if (Math.random() > 0.8) buildings.add(new Ruins(this));
     }
@@ -76,10 +80,12 @@ public class Tile {
 
         if (sprite == null) sprite = new Sprite(type.texture);
 
+        if (!isFogged) {
+            sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
+            sprite.setOriginCenter();
+            sprite.draw(batch);
+        }
 
-        sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
-        sprite.setOriginCenter();
-        sprite.draw(batch);
         shapes.setColor(state.tileColor);
         shapes.filledPolygon(bounds.shape);
 
@@ -87,16 +93,37 @@ public class Tile {
         shapes.setColor(Color.WHITE);
         shapes.polygon(bounds.shape, JoinType.POINTY);
 
-        for (Unit u : occupants) u.draw(batch, shapes);
-        for (Structure s : buildings) s.draw(batch, shapes);
+        if (!isFogged) {
+            for (Unit u : occupants) u.draw(batch, shapes);
+            for (Structure s : buildings) s.draw(batch, shapes);
+        }
 
 
+
+    }
+
+    private void defogNeighbors() {
+        for (Tile t : getNeighbors()) t.defog();
+    }
+
+    public List<Tile> getNeighbors() {
+        return Natac.instance.getGame().getMap().getNeighbors(this);
+    }
+
+
+    private void defog() {
+        System.out.println("DEFOGGED");
+        if (state != TileState.HIDDEN) isFogged = false;
     }
 
     public void claim(UUID claimingPlayerID, boolean sendPacket) {
         owner = claimingPlayerID;
 
-        if (Natac.instance.player.getID().equals(claimingPlayerID)) setState(TileState.CLAIMED);
+        if (Natac.instance.player.getID().equals(claimingPlayerID)) {
+            setState(TileState.CLAIMED);
+            defog();
+            defogNeighbors();
+        }
         else setState(TileState.ENEMY_CLAIMED);
 
         if (sendPacket) {
