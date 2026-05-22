@@ -19,6 +19,9 @@ public class Settings {
 
     public static Array<Vector2> resolutions = getAllResolutions();
 
+    //GAME SETTINGS
+    public static int defogTileRadius = 3;
+
     public static void getAvailableResolutions(Vector2 screenRes) {
         Array<Vector2> allResolutions = getAllResolutions();
         resolutions = new Array<>();

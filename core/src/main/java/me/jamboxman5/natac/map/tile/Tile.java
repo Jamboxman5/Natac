@@ -17,6 +17,7 @@ import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
+import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -103,8 +104,15 @@ public class Tile {
 
     }
 
-    private void defogNeighbors() {
-        for (Tile t : getNeighbors()) t.defog();
+    private void defogNeighbors(int radius) {
+        if (radius == 0) {
+            defog();
+            return;
+        }
+
+        radius--;
+        defog();
+        for (Tile t : getNeighbors()) t.defogNeighbors(radius);
     }
 
     public List<Tile> getNeighbors() {
@@ -122,7 +130,7 @@ public class Tile {
         if (Natac.instance.player.getID().equals(claimingPlayerID)) {
             setState(TileState.CLAIMED);
             defog();
-            defogNeighbors();
+            defogNeighbors(Settings.defogTileRadius);
         }
         else setState(TileState.ENEMY_CLAIMED);
 
