@@ -69,7 +69,7 @@ public class SettingsScreen implements Screen {
         uiStage.addActor(button1);
         uiStage.addActor(button2);
 
-        SelectBox<Vector2> resolutions = new SelectBox<>(skin);
+        SelectBox<Settings.Resolution> resolutions = new SelectBox<>(skin);
         resolutions.setItems(Settings.resolutions);
         resolutions.setSize(120, 40);
         resolutions.setPosition(center.x + 40, center.y);

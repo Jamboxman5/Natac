@@ -17,63 +17,87 @@ public class Settings {
 
     public static float hudMargin = 20;
 
-    public static Array<Vector2> resolutions = getAllResolutions();
+    public static Array<Resolution> resolutions = getAllResolutions();
 
     //GAME SETTINGS
     public static int defogTileRadius = 3;
 
     public static void getAvailableResolutions(Vector2 screenRes) {
-        Array<Vector2> allResolutions = getAllResolutions();
+        Array<Resolution> allResolutions = getAllResolutions();
         resolutions = new Array<>();
-        for (Vector2 res : allResolutions) {
-            if (res.x <= screenRes.x && res.y <= screenRes.y) resolutions.add(res);
+        for (Resolution res : allResolutions) {
+            if (res.fits(screenRes)) resolutions.add(res);
         }
     }
 
-    private static Array<Vector2> getAllResolutions() {
-        return new Array<>(new Vector2[]{
-                new Vector2(1024, 768),
-                new Vector2(1280, 720),
-                new Vector2(1280, 800),
-                new Vector2(1280, 960),
-                new Vector2(1366, 768),
-                new Vector2(1440, 900),
-                new Vector2(1600, 900),
-                new Vector2(1600, 1200),
-                new Vector2(1680, 1050),
-                new Vector2(1920, 1080),
-                new Vector2(1920, 1200),
-                new Vector2(2560, 1080),
-                new Vector2(2560, 1440),
-                new Vector2(2560, 1600),
-                new Vector2(3200, 1800),
-                new Vector2(3280, 2160),
-                new Vector2(3440, 1440),
-                new Vector2(3840, 1080),
-                new Vector2(3840, 1600),
-                new Vector2(5120, 1440),
-                new Vector2(5120, 2160),
-                new Vector2(5120, 2880),
-                new Vector2(7680, 4320),
+    private static Array<Resolution> getAllResolutions() {
+        return new Array<>(new Resolution[]{
+                new Resolution(1024, 768),
+                new Resolution(1280, 720),
+                new Resolution(1280, 800),
+                new Resolution(1280, 960),
+                new Resolution(1366, 768),
+                new Resolution(1440, 900),
+                new Resolution(1600, 900),
+                new Resolution(1600, 1200),
+                new Resolution(1680, 1050),
+                new Resolution(1920, 1080),
+                new Resolution(1920, 1200),
+                new Resolution(2560, 1080),
+                new Resolution(2560, 1440),
+                new Resolution(2560, 1600),
+                new Resolution(3200, 1800),
+                new Resolution(3280, 2160),
+                new Resolution(3440, 1440),
+                new Resolution(3840, 1080),
+                new Resolution(3840, 1600),
+                new Resolution(5120, 1440),
+                new Resolution(5120, 2160),
+                new Resolution(5120, 2880),
+                new Resolution(7680, 4320),
         });
     }
 
-    public static Vector2 getResolution() {
-        for (Vector2 res : resolutions) {
-            if (res.x == screenWidth && res.y == screenHeight) return res;
+    public static Resolution getResolution() {
+        for (Resolution res : resolutions) {
+            if (res.fits(new Vector2(screenWidth, screenHeight))) return res;
         }
-        return new Vector2(-1, -1);
+        return new Resolution(-1, -1);
     }
 
-    public static void setResolution(Vector2 res) {
-        if ((screenWidth == res.x && screenHeight == res.y) && (Gdx.graphics.getWidth() == res.x && Gdx.graphics.getHeight() == res.y)) return;
+    public static void setResolution(Resolution res) {
+        if (res.equals(new Vector2(Settings.screenWidth, Settings.screenHeight))) return;
         Gdx.graphics.setUndecorated(false);
-        screenWidth = Math.round(res.x);
-        screenHeight = Math.round(res.y);
+        screenWidth = Math.round(res.getX());
+        screenHeight = Math.round(res.getY());
         Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
         if (Gdx.graphics.getWidth() != screenWidth || Gdx.graphics.getHeight() != screenHeight) {
             Gdx.graphics.setUndecorated(true);
             Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+        }
+    }
+
+    public static class Resolution {
+
+        private Vector2 res;
+
+        public Resolution(int x, int y) {
+            this.res = new Vector2(x, y);
+        }
+
+        public boolean fits(Vector2 screenRes) {
+            return (res.x <= screenRes.x && res.y <= screenRes.y);
+        }
+
+        public boolean equals(Vector2 otherRes) {
+            return ((otherRes.x == res.x && otherRes.y == res.y) && (Gdx.graphics.getWidth() == res.x && Gdx.graphics.getHeight() == res.y));
+        }
+
+        public float getX() { return res.x; }
+        public float getY() { return res.y; }
+
+        public String toString() {
+            return ((int) res.x) + "x" + ((int)res.y);
         }
     }
 }
