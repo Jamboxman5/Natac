@@ -96,4 +96,5 @@ public class Player {
     }
 
 
+    public PlayerClass getPlayerClass() { return playerClass; }
 }

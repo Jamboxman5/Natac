@@ -14,6 +14,7 @@ import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
 import space.earlygrey.shapedrawer.JoinType;
@@ -112,7 +113,6 @@ public class Tile {
 
 
     private void defog() {
-        System.out.println("DEFOGGED");
         if (state != TileState.HIDDEN) isFogged = false;
     }
 
@@ -133,7 +133,11 @@ public class Tile {
             Natac.instance.getClientManager().sendPacketTCP(packet);
         }
 
-        if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) Natac.instance.getGame().setState(GameScreen.State.WAIT);
+        if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
+            System.out.println("STRUCT");
+            addStructure(new TownHall(Natac.instance.player.getPlayerClass(), this));
+            Natac.instance.getGame().setState(GameScreen.State.WAIT);
+        }
     }
 
     public void update(Vector2 touchPos) {

@@ -1,20 +1,23 @@
-package me.jamboxman5.natac.structures.generated;
+package me.jamboxman5.natac.structures.constructed;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.Rectangle;
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.structures.Structure;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class Ruins extends Structure {
+public class TownHall extends Structure {
 
-    public Ruins() {
-        super();
-    }
+    protected PlayerClass type;
 
-    public Ruins(Tile location) {
-        super(1, 1, 1, location);
+    public TownHall() {}
+
+    public TownHall(PlayerClass playerClass, Tile location) {
+        super(0, 50, 0, location);
+        this.type = playerClass;
     }
 
     @Override
@@ -24,7 +27,7 @@ public class Ruins extends Structure {
 
     @Override
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
-        shapes.setColor(Color.WHITE);
+        shapes.setColor(Color.PINK);
         shapes.filledRectangle(new Rectangle(position.x, position.y, 5, 5));
     }
 }
