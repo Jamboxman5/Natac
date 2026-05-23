@@ -24,6 +24,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.screen.ui.stage.SettingsStage;
 import me.jamboxman5.natac.util.Settings;
 
 import javax.swing.*;
@@ -41,8 +42,6 @@ public class SettingsScreen implements Screen {
 
     private final Stage uiStage;
 
-    private final Viewport viewport;
-
     private final BitmapFont font = Fonts.createFont("placeholder", 76, Color.WHITE);
 
     public SettingsScreen() {
@@ -52,51 +51,10 @@ public class SettingsScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Settings.screenWidth, Settings.screenHeight);
 
-        viewport = new FitViewport(Settings.screenWidth, Settings.screenHeight, camera);
-        uiStage = new Stage(viewport);
+        uiStage = new SettingsStage();
 
         shapes = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
-
-        Vector2 center = new Vector2((float) Settings.screenWidth /2, (float) Settings.screenHeight /2);
-
-        Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
-
-        TextButton button1 = new TextButton("< Back", skin);
-        TextButton button2 = new TextButton("Apply", skin);
-        button1.getStyle().font.getData().setScale(1.2f);
-
-        uiStage.addActor(button1);
-        uiStage.addActor(button2);
-
-        SelectBox<Settings.Resolution> resolutions = new SelectBox<>(skin);
-        resolutions.setItems(Settings.resolutions);
-        resolutions.setSize(120, 40);
-        resolutions.setPosition(center.x + 40, center.y);
-        resolutions.setSelected(Settings.getResolution());
-        uiStage.addActor(resolutions);
-
-        button1.setSize(90, 40);
-        button2.setSize(90, 40);
-
-        button1.setPosition(40, 40);
-        button2.setPosition(Settings.screenWidth - 40 - button2.getWidth(), 40);
-
-        button1.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Natac.instance.setScreen(new MainMenuScreen());
-            }
-        });
-
-        button2.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Settings.setResolution(resolutions.getSelected());
-                Natac.instance.setScreen(new SettingsScreen());
-            }
-        });
-
 
     }
 
