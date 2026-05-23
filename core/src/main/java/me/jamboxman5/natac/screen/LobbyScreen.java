@@ -61,7 +61,7 @@ public class LobbyScreen implements Screen {
         shapes = new ShapeRenderer();
         spriteBatch = new SpriteBatch();
 
-        Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
         TextButton button1 = new TextButton("Start Game", skin);
         TextButton button2 = new TextButton("Quit Game", skin);

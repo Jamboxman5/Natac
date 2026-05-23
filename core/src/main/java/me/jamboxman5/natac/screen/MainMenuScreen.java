@@ -57,7 +57,7 @@ public class MainMenuScreen implements Screen {
 
         Vector2 center = new Vector2((float) Settings.screenWidth /2, (float) Settings.screenHeight /2);
 
-        Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
         TextButton button1 = new TextButton("Host Game", skin);
         TextButton button2 = new TextButton("Join Game", skin);

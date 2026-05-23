@@ -13,7 +13,7 @@ import me.jamboxman5.natac.util.Settings;
 
 public class PlayInputStage extends Stage {
 
-    Skin skin = new Skin(Gdx.files.internal("ui/skins/expee/expee-ui.json"));
+    Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
     TextButton claimTileButton = new TextButton("Claim", skin);
     TextButton shopButton = new TextButton("Shop", skin);
