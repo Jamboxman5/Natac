@@ -60,7 +60,7 @@ public class Settings {
 
     public static Resolution getResolution() {
         for (Resolution res : resolutions) {
-            if (res.fits(new Vector2(screenWidth, screenHeight))) return res;
+            if (res.equals(new Vector2(screenWidth, screenHeight))) return res;
         }
         return new Resolution(-1, -1);
     }
