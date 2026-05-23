@@ -36,6 +36,7 @@ public class NetUtil {
         kryo.register(PacketClaimTile.class);
         kryo.register(PacketStartTurn.class);
         kryo.register(PacketEndTurn.class);
+        kryo.register(PacketPlayerModify.class);
 
         kryo.register(Player.class);
         kryo.register(PlayerClass.class);
@@ -65,6 +66,7 @@ public class NetUtil {
         client.addListener(new PacketCloseGameListener());
         client.addListener(new PacketClaimTileListener());
         client.addListener(new PacketStartTurnListener());
+        client.addListener(new PacketPlayerModifyListener());
     }
 
     public static void registerListeners(DiscreteServer server) {
@@ -74,6 +76,7 @@ public class NetUtil {
         server.getServer().addListener(new ServerStartGameListener(server));
         server.getServer().addListener(new ServerClaimTileListener(server));
         server.getServer().addListener(new ServerEndTurnListener(server));
+        server.getServer().addListener(new ServerPlayerModifyListener(server));
     }
 
 }
