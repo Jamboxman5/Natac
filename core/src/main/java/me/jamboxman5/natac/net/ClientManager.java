@@ -11,6 +11,7 @@ import me.jamboxman5.natac.net.packet.PacketLogin;
 import me.jamboxman5.natac.player.Player;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -48,6 +49,26 @@ public class ClientManager {
         client.connect(5000, address, 13531, 13531);
         sendLogin(player);
 
+    }
+
+    public UUID selectFromConnectedPlayers() {
+        String[] names = connectedPlayerNames.values().toArray(new String[0]);
+        String selected = (String) JOptionPane.showInputDialog(
+            null,
+            "Choose a player:",
+            "Player Selector",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            names,
+            names[0]
+        );
+
+        for (UUID id : connectedPlayers) {
+            if (connectedPlayerNames.get(id) == null) continue;
+            if (connectedPlayerNames.get(id).equals(selected)) return id;
+        }
+
+        return null;
     }
 
     private void sendLogin(Player player) {

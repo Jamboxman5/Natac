@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.util.Settings;
 
 public class PlayInputStage extends Stage {
@@ -61,7 +62,7 @@ public class PlayInputStage extends Stage {
 //        claimTileButton.addListener(new ChangeListener() {
 //            @Override
 //            public void changed(ChangeEvent event, Actor actor) {
-//                System.out.println("B");
+//                Natac.instance.getClientManager().selectFromConnectedPlayers();
 //            }
 //        });
     }
