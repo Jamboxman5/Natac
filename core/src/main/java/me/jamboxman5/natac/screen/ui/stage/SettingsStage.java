@@ -87,9 +87,15 @@ public class SettingsStage extends Stage {
             public void changed(ChangeEvent event, Actor actor) {
                 Settings.setResolution(resolutionSelector.getSelected());
                 Settings.defogTileRadius = (int) defogRadiusSlider.getValue();
+                Settings.musVolume = musVolumeSlider.getValue();
+                Settings.sfxVolume = sfxVolumeSlider.getValue();
                 Natac.instance.setScreen(new SettingsScreen());
             }
         });
+
+        sfxVolumeSlider.setValue(Settings.sfxVolume);
+        musVolumeSlider.setValue(Settings.musVolume);
+        defogRadiusSlider.setValue(Settings.defogTileRadius);
     }
 
     public void draw(SpriteBatch batch) {
