@@ -5,10 +5,10 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.Player;
 
 public class SuperiorSoldiers implements Card {
-    //This is an example card, nothing it does is important
+    //Card that increases attack
 
     //Instance variables (stats/relevant data)
-    int exampleValue = 1;
+    int AttkBoost = 1;
 
     @Override
     public void playCard(Player player, Map currentMap) {
@@ -16,6 +16,6 @@ public class SuperiorSoldiers implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's attack value by 'exampleValue'
-        player.setAttack(player.getAttack() + exampleValue);
+        player.setAttack(player.getAttack() + AttkBoost);
     }
 }

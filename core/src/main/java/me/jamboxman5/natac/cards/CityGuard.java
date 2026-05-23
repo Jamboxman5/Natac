@@ -5,17 +5,17 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.Player;
 
 public class CityGuard implements Card {
-    //This is an example card, nothing it does is important
+    //Card that increases defense
 
     //Instance variables (stats/relevant data)
-    int exampleValue = 1;
+    int DefBoost = 1;
 
     @Override
     public void playCard(Player player, Map currentMap) {
         //Define effects to happen when card is played
         //Player variable is the instance of the player who is playing this card
 
-        //Increase the player's attack value by 'exampleValue'
-        player.setDefense(player.getDefense() + exampleValue);
+        //Increase the player's defense value
+        player.setDefense(player.getDefense() + DefBoost);
     }
 }
