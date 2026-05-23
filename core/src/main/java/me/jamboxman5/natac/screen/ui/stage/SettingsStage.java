@@ -27,11 +27,11 @@ public class SettingsStage extends Stage {
     TextButton button1 = new TextButton("< Back", skin);
     TextButton button2 = new TextButton("Apply", skin);
 
-    Slider musVolumeSlider = new Slider(0f, 1f, 0.01f, false, skin);
-    Slider sfxVolumeSlider = new Slider(0f, 1f, 0.01f, false, skin);
+    Slider musVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
+    Slider sfxVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
+    Slider defogRadiusSlider = new Slider(1, 3, 1, false, skin);
 
     SelectBox<Settings.Resolution> resolutionSelector = new SelectBox<>(skin);
-    SelectBox<Integer> fowRadiusSelector = new SelectBox<>(skin);
 
     BitmapFont labelFont = Fonts.createFont("placeholder", 40, Color.WHITE);
 
@@ -46,6 +46,7 @@ public class SettingsStage extends Stage {
 
         addActor(musVolumeSlider);
         addActor(sfxVolumeSlider);
+        addActor(defogRadiusSlider);
 
         float yStart = center.y + (40 * ((getActors().size-2)/2f));
 
@@ -57,22 +58,17 @@ public class SettingsStage extends Stage {
 
         yStart-=50;
 
-        fowRadiusSelector.setItems(1, 2, 3);
-        fowRadiusSelector.setSize(120, 40);
-        fowRadiusSelector.setPosition(center.x + 300 - fowRadiusSelector.getWidth(), yStart);
-        fowRadiusSelector.setSelected(Settings.defogTileRadius);
-        addActor(fowRadiusSelector);
-        yStart-=50;
-
         button1.setSize(90, 40);
         button2.setSize(90, 40);
 
-        sfxVolumeSlider.setSize(200, 40);
-        musVolumeSlider.setSize(200, 40);
+        sfxVolumeSlider.setSize(200, 20);
+        musVolumeSlider.setSize(200, 20);
+        defogRadiusSlider.setSize(200, 20);
 
         button1.setPosition(40, 40);
-        yStart-=50;
         button2.setPosition(Settings.screenWidth - 40 - button2.getWidth(), 40);
+
+        defogRadiusSlider.setPosition(center.x + 300 - defogRadiusSlider.getWidth(), yStart);
         yStart-=50;
 
         sfxVolumeSlider.setPosition(center.x + 300 - sfxVolumeSlider.getWidth(), yStart);
@@ -90,7 +86,7 @@ public class SettingsStage extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Settings.setResolution(resolutionSelector.getSelected());
-                Settings.defogTileRadius = fowRadiusSelector.getSelected();
+                Settings.defogTileRadius = (int) defogRadiusSlider.getValue();
                 Natac.instance.setScreen(new SettingsScreen());
             }
         });
@@ -100,7 +96,9 @@ public class SettingsStage extends Stage {
         super.draw();
 
         labelFont.draw(batch, "Resolution: ", center.x - 300, resolutionSelector.getY() + Fonts.getTextHeight("Resolution: ", labelFont, 1f));
-        labelFont.draw(batch, "Defog Radius: ", center.x - 300, fowRadiusSelector.getY() + Fonts.getTextHeight("Defog Radius: ", labelFont, 1f));
+        labelFont.draw(batch, "Defog Radius: ", center.x - 300, defogRadiusSlider.getY() + Fonts.getTextHeight("Defog Radius: ", labelFont, 1f));
+        labelFont.draw(batch, "Music Volume: ", center.x - 300, musVolumeSlider.getY() + Fonts.getTextHeight("Music Volume:", labelFont, 1f));
+        labelFont.draw(batch, "SFX Volume: ", center.x - 300, sfxVolumeSlider.getY() + Fonts.getTextHeight("SFX Volume: ", labelFont, 1f));
 
     }
 
