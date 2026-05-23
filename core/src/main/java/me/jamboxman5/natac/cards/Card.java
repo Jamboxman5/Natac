@@ -1,7 +1,9 @@
 package me.jamboxman5.natac.cards;
 
 import com.badlogic.gdx.utils.Array;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
+import me.jamboxman5.natac.net.packet.PacketPlayerModify;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 
@@ -63,6 +65,29 @@ public interface Card {
         //Return a random card from the deck
         return cards.random();
 
+    }
+
+    static void generateStatChangePacket(Player target, int diffResearch,
+                                                        int diffStatus,
+                                                        int diffAttack,
+                                                        int diffDefense,
+
+                                                        int diffGold,
+                                                        int diffResources) {
+
+        PacketPlayerModify packet = new PacketPlayerModify();
+
+        packet.sendPlayerID = Natac.instance.player.getID();
+        packet.modPlayerID = target.getID();
+
+        packet.diffAttack = diffAttack;
+        packet.diffStatus = diffStatus;
+        packet.diffResources = diffResources;
+        packet.diffGold = diffGold;
+        packet.diffResearch = diffResearch;
+        packet.diffDefense = diffDefense;
+
+        Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
 }
