@@ -1,10 +1,9 @@
 package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.map.Map;
-import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.Player;
 
-public class Pacifism implements Card {
+public class PacifismCard implements Card {
     //Card reduces attack value to 0 then boosts defense by 3 + original attack
 
     //Instance variables (stats/relevant data)

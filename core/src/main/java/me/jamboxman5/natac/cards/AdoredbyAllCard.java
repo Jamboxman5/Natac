@@ -1,10 +1,9 @@
 package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.map.Map;
-import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.Player;
 
-public class AdoredbyAll implements Card {
+public class AdoredbyAllCard implements Card {
     //Card that increases status
 
     //Instance variables (stats/relevant data)

@@ -1,21 +1,20 @@
 package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.map.Map;
-import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.Player;
 
-public class SuperiorSoldiers implements Card {
-    //Card that increases attack
+public class GoldRushCard implements Card {
+    //Card that gives player gold
 
     //Instance variables (stats/relevant data)
-    int AttkBoost = 1;
+    int GoldBoost = 3;
 
     @Override
     public void playCard(Player player, Map currentMap) {
         //Define effects to happen when card is played
         //Player variable is the instance of the player who is playing this card
 
-        //Increase the player's attack value by 'exampleValue'
-        player.setAttack(player.getAttack() + AttkBoost);
+        //Increase the player's gold
+        player.setGold(player.getGold() + GoldBoost);
     }
 }

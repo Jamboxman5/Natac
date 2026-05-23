@@ -3,7 +3,7 @@ package me.jamboxman5.natac.cards;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.player.Player;
 
-public class DivineFavor implements Card {
+public class DivineFavorCard implements Card {
     //Holy Empire Research Card
 
     //Instance variables (stats/relevant data)

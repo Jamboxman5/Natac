@@ -1,21 +1,20 @@
 package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.map.Map;
-import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.Player;
 
-public class CityGuard implements Card {
-    //Card that increases defense
+public class BountifulHarvestCard implements Card {
+    //Card that boosts resources
 
     //Instance variables (stats/relevant data)
-    int DefBoost = 1;
+    int ResourceBoost = 10;
 
     @Override
     public void playCard(Player player, Map currentMap) {
         //Define effects to happen when card is played
         //Player variable is the instance of the player who is playing this card
 
-        //Increase the player's defense value
-        player.setDefense(player.getDefense() + DefBoost);
+        //Increase the player's resources
+        player.setResources(player.getResources() + ResourceBoost);
     }
 }

@@ -18,18 +18,18 @@ public interface Card {
         Array<Card> cards = new Array<>();
 
         //Cards that can be pulled by anyone
-        cards.add(new AdoredbyAll());
-        cards.add(new BountifulHarvest());
-        cards.add(new CityGuard());
-        cards.add(new GoldRush());
-        cards.add(new LibraryofAlexandria());
-        cards.add(new Pacifism());
-        cards.add(new SuperiorSoldiers());
+        cards.add(new AdoredbyAllCard());
+        cards.add(new BountifulHarvestCard());
+        cards.add(new CityGuardCard());
+        cards.add(new GoldRushCard());
+        cards.add(new LibraryOfAlexandriaCard());
+        cards.add(new PacifismCard());
+        cards.add(new SuperiorSoldiersCard());
 
         //Example of random chance for card inclusion
         //Math.random() generates a random decimal between 0, 1 - this would be a 50% chance of inclusion in the deck
         //Increase chances of certain cards by restricting others in this way or by adding duplicates to the deck
-        if (Math.random() > 0.5) cards.add(new GoldRush());
+        if (Math.random() > 0.5) cards.add(new GoldRushCard());
 
         //Cards which are class dependent
         switch(pClass) {
@@ -51,12 +51,12 @@ public interface Card {
                 break;
             case HOLY_EMPIRE:
                 //Holy Empire cards
-                cards.add(new DivineFavor());
+                cards.add(new DivineFavorCard());
                 break;
             case MOLE_PEOPLE:
                 //Mole People cards
-                cards.add(new AllSeeingEye());
-                cards.add(new MechaMoles());
+                cards.add(new AllSeeingEyeCard());
+                cards.add(new MechaMolesCard());
                 break;
         }
 
