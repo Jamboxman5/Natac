@@ -22,14 +22,12 @@ public class ServerDisconnectListener implements Listener {
         PacketLogin login = server.connections.get(connection);
 
         PacketDisconnect packet = new PacketDisconnect();
-        packet.uuid = login.uuid;
-        packet.username = login.username;
+        packet.uuid = login.connectingPlayer.getID();
 
         server.getServer().sendToAllExceptTCP(connection.getID(), packet);
 
-        server.log("Player " + login.username + " disconnected.");
+        server.log("Player " + login.connectingPlayer.getUsername() + " disconnected.");
 
-        server.removeUsername(login.uuid);
     }
 
 }

@@ -19,7 +19,7 @@ public class ServerClaimTileListener implements Listener {
     public void received(Connection conn, Object obj) {
         if (obj instanceof PacketClaimTile) {
             PacketClaimTile packet = (PacketClaimTile) obj;
-            server.log("Tile claimed at " + packet.tilePos.x + ", " + packet.tilePos.y + " by " + server.getUsername(packet.claimingID) + ".");
+            server.log("Tile claimed at " + packet.tilePos.x + ", " + packet.tilePos.y + " by " + server.findPlayer(packet.claimingID) + ".");
 
 
 

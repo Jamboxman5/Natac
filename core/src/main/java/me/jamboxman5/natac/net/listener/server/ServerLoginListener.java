@@ -34,10 +34,10 @@ public class ServerLoginListener implements Listener {
             PacketLogin login = (PacketLogin) obj;
 
             server.connections.put(conn, login);
-            server.addUsername(login.uuid, login.username);
-            server.playerTurnQueue.addLast(UUID.fromString(login.uuid));
+            server.playerTurnQueue.addLast(login.connectingPlayer);
+            server.connectedPlayers.add(login.connectingPlayer);
 
-            server.log("User connected: " + login.username + " (" + login.uuid + ")");
+            server.log("User connected: " + login.connectingPlayer.getUsername() + " (" + login.connectingPlayer.getID() + ")");
             server.getServer().sendToAllExceptTCP(conn.getID(), login);
 
             for (Connection c : server.getServer().getConnections()) {

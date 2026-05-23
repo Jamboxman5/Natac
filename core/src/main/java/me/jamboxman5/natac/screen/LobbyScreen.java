@@ -166,9 +166,8 @@ public class LobbyScreen implements Screen {
         Fonts.PLACEHOLDER_FONT.draw(spriteBatch, "Players: ", 40f, 250);
 
         int y = 200;
-        for (UUID id : Natac.instance.getClientManager().getConnectedPlayers()) {
-            String name = Natac.instance.getClientManager().getConnectedPlayerName(id);
-            Fonts.PLACEHOLDER_FONT.draw(spriteBatch, name, 40, y);
+        for (Player p : Natac.instance.getClientManager().getConnectedPlayers()) {
+            Fonts.PLACEHOLDER_FONT.draw(spriteBatch, p.getUsername(), 40, y);
             y -= 30;
         }
 

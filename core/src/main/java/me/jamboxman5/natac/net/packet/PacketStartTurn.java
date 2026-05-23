@@ -5,5 +5,5 @@ import me.jamboxman5.natac.map.Map;
 import java.util.UUID;
 
 public class PacketStartTurn extends Packet {
-    public String turnPlayerID;
+    public UUID turnPlayerID;
 }

@@ -22,8 +22,7 @@ public class ClientManager {
     Client client;
     Natac game;
 
-    Array<UUID> connectedPlayers;
-    HashMap<UUID, String> connectedPlayerNames;
+    Array<Player> connectedPlayers;
 
     public ClientManager(Natac game) {
         this.game = game;
@@ -40,7 +39,6 @@ public class ClientManager {
         Kryo kryo = client.getKryo();
 
         connectedPlayers = new Array<>();
-        connectedPlayerNames = new HashMap<>();
 
         NetUtil.registerPackets(kryo);
         NetUtil.registerListeners(client);
@@ -51,9 +49,12 @@ public class ClientManager {
 
     }
 
-    public UUID selectFromConnectedPlayers() {
-        String[] names = connectedPlayerNames.values().toArray(new String[0]);
-        String selected = (String) JOptionPane.showInputDialog(
+    public Player selectFromConnectedPlayers() {
+        Player[] names = new Player[connectedPlayers.size];
+        for (int i = 0; i < connectedPlayers.size; i++) {
+            names[i] = connectedPlayers.get(i);
+        }
+        return (Player) JOptionPane.showInputDialog(
             null,
             "Choose a player:",
             "Player Selector",
@@ -62,47 +63,34 @@ public class ClientManager {
             names,
             names[0]
         );
-
-        for (UUID id : connectedPlayers) {
-            if (connectedPlayerNames.get(id) == null) continue;
-            if (connectedPlayerNames.get(id).equals(selected)) return id;
-        }
-
-        return null;
     }
 
     private void sendLogin(Player player) {
         PacketLogin login = new PacketLogin();
-        login.username = player.getUsername();
-        login.uuid = player.getID().toString();
+        login.connectingPlayer = player;
         client.sendTCP(login);
-        connectedPlayers.add(player.getID());
-        connectedPlayerNames.put(player.getID(), player.getUsername());
+        connectedPlayers.add(player);
     }
 
     public void disconnectPlayer(PacketDisconnect disconnect) {
-        connectedPlayers.removeValue(UUID.fromString(disconnect.uuid), false);
-        connectedPlayerNames.remove(UUID.fromString(disconnect.uuid));
-//        game.getMapManager().removeOnlinePlayer(disconnect);
+        Player removing = null;
+        for (Player p : connectedPlayers) {
+            if (p.getID().equals(disconnect.uuid)) removing = p;
+        }
+        connectedPlayers.removeValue(removing, false);
     }
 
     public void connectPlayer(PacketLogin login) {
-        connectedPlayers.add(UUID.fromString(login.uuid));
-        connectedPlayerNames.put(UUID.fromString(login.uuid), login.username);
+        connectedPlayers.add(login.connectingPlayer);
     }
 
     public boolean isConnected() {
         return (client != null && client.isConnected());
     }
 
-    public Array<UUID> getConnectedPlayers() {
+    public Array<Player> getConnectedPlayers() {
         if (connectedPlayers == null) return new Array<>();
         else return connectedPlayers;
-    }
-
-    public String getConnectedPlayerName(UUID uuid) {
-        if (connectedPlayerNames.containsKey(uuid)) return connectedPlayerNames.get(uuid);
-        else return "PLAYER NOT FOUND";
     }
 
     public void disconnect(Player p) {
@@ -124,7 +112,6 @@ public class ClientManager {
             e.printStackTrace();
         }
         client = null;
-        connectedPlayerNames = null;
         connectedPlayers = null;
 
     }

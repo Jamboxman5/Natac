@@ -9,7 +9,7 @@ public class Player {
 
     private PlayerClass playerClass;
 
-    List inventory;
+    private transient List inventory;
 
     private int gold;
     private int resources;
@@ -19,14 +19,13 @@ public class Player {
     private int attack;
     private int defense;
 
-    private Color tileColor;
-
     private String username;
     private UUID id;
 
+    public Player() {}
+
     public Player(String username, PlayerClass playerClass, Color tileColor) {
         this.username = username;
-        this.tileColor = tileColor;
         this.id = UUID.randomUUID();
         this.playerClass = playerClass;
 
@@ -97,4 +96,6 @@ public class Player {
 
 
     public PlayerClass getPlayerClass() { return playerClass; }
+
+    public String toString() { return username; }
 }

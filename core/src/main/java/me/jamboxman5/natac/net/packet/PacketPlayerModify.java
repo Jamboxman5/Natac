@@ -1,8 +1,10 @@
 package me.jamboxman5.natac.net.packet;
 
+import java.util.UUID;
+
 public class PacketPlayerModify extends Packet {
-    public String sendPlayerID;
-    public String modPlayerID;
+    public UUID sendPlayerID;
+    public UUID modPlayerID;
 
     public int diffResearch;
     public int diffStatus;

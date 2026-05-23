@@ -119,7 +119,7 @@ public class Natac extends Game {
         if (getGame() == null) return;
 
         PacketEndTurn packet = new PacketEndTurn();
-        packet.turnPlayerID = player.getID().toString();
+        packet.turnPlayerID = player.getID();
 
         getClientManager().sendPacketTCP(packet);
         getGame().setState(GameScreen.State.WAIT);

@@ -12,6 +12,8 @@ import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.net.listener.client.*;
 import me.jamboxman5.natac.net.listener.server.*;
 import me.jamboxman5.natac.net.packet.*;
+import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
@@ -35,6 +37,8 @@ public class NetUtil {
         kryo.register(PacketStartTurn.class);
         kryo.register(PacketEndTurn.class);
 
+        kryo.register(Player.class);
+        kryo.register(PlayerClass.class);
         kryo.register(Map.class);
         kryo.register(Tile.class);
         kryo.register(TileType.class);

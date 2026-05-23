@@ -30,7 +30,7 @@ public class ServerStartGameListener implements Listener {
                 try {
                     Thread.sleep(100);
                     PacketStartTurn turnPacket = new PacketStartTurn();
-                    turnPacket.turnPlayerID = server.popPlayer().toString();
+                    turnPacket.turnPlayerID = server.popPlayer().getID();
                     server.getServer().sendToAllTCP(turnPacket);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

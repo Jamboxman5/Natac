@@ -23,11 +23,11 @@ public class ServerEndTurnListener implements Listener {
             if (server.getState() != DiscreteServer.GameState.INGAME) return;
             PacketEndTurn packet = (PacketEndTurn) obj;
 
-            server.log("Player " + server.usernames.get(UUID.fromString(packet.turnPlayerID)) + " (" + packet.turnPlayerID + ") ended their turn at " + packet.timestamp + ". ");
+            server.log("Player " + server.findPlayer(packet.turnPlayerID) + " (" + packet.turnPlayerID + ") ended their turn at " + packet.timestamp + ". ");
             server.getServer().sendToAllTCP(packet);
 
             PacketStartTurn turnPacket = new PacketStartTurn();
-            turnPacket.turnPlayerID = server.popPlayer().toString();
+            turnPacket.turnPlayerID = server.popPlayer().getID();
             server.getServer().sendToAllTCP(turnPacket);
 
         }

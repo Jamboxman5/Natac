@@ -15,7 +15,7 @@ public class PacketClaimTileListener implements Listener {
     public void received(Connection conn, Object obj) {
         if (obj instanceof PacketClaimTile) {
             PacketClaimTile packet = (PacketClaimTile) obj;
-            Natac.instance.getGame().getMap().findTile(packet.tilePos).claim(UUID.fromString(packet.claimingID), false);
+            Natac.instance.getGame().getMap().findTile(packet.tilePos).claim(packet.claimingID, false);
         }
     }
 }

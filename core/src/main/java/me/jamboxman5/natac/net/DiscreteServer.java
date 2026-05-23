@@ -1,10 +1,12 @@
 package me.jamboxman5.natac.net;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import me.jamboxman5.natac.net.packet.*;
+import me.jamboxman5.natac.player.Player;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,11 +17,18 @@ public class DiscreteServer {
     private Server server;
 
     public HashMap<Connection, PacketLogin> connections;
-    public HashMap<UUID, String> usernames;
+    public Array<Player> connectedPlayers;
 
-    public Queue<UUID> playerTurnQueue;
+    public Queue<Player> playerTurnQueue;
 
     public void setState(GameState gameState) { this.state = gameState; }
+
+    public Player findPlayer(UUID id) {
+        for (Player p : connectedPlayers) {
+            if (p.getID().equals(id)) return p;
+        }
+        return null;
+    }
 
     public enum GameState {
         LOBBY, INGAME
@@ -37,7 +46,7 @@ public class DiscreteServer {
         state = GameState.LOBBY;
 
         connections = new HashMap<>();
-        usernames = new HashMap<>();
+        connectedPlayers = new Array<>();
         playerTurnQueue = new Queue<>();
 
         NetUtil.registerPackets(kryo);
@@ -58,18 +67,6 @@ public class DiscreteServer {
 
     public Server getServer() { return server; }
 
-    public void addUsername(String uuid, String username) {
-        usernames.put(UUID.fromString(uuid), username);
-    }
-
-    public void removeUsername(String uuid) {
-        usernames.remove(UUID.fromString(uuid));
-    }
-
-    public String getUsername(String uuid) {
-        return usernames.get(UUID.fromString(uuid));
-    }
-
     public void log(String log) {
         System.out.println("\u001B[33mSERVER::  " + log + "\u001B[0m");
     }
@@ -78,13 +75,13 @@ public class DiscreteServer {
         System.out.println("\u001B[31mSERVER WARNING::  " + log + "\u001B[0m");
     }
 
-    public UUID popPlayer() {
-        UUID player = playerTurnQueue.removeFirst();
+    public Player popPlayer() {
+        Player player = playerTurnQueue.removeFirst();
         playerTurnQueue.addLast(player);
         return player;
     }
 
-    public UUID peekPlayer() {
+    public Player peekPlayer() {
         return playerTurnQueue.first();
     }
 

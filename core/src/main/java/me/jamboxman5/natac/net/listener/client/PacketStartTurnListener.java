@@ -16,7 +16,7 @@ public class PacketStartTurnListener implements Listener {
         if (obj instanceof PacketStartTurn) {
             PacketStartTurn packet = (PacketStartTurn) obj;
 
-            if (UUID.fromString(packet.turnPlayerID).equals(Natac.instance.player.getID())) {
+            if (packet.turnPlayerID.equals(Natac.instance.player.getID())) {
                 Natac.instance.startTurn();
             }
         }

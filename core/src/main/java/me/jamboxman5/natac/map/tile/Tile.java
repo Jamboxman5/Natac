@@ -136,7 +136,7 @@ public class Tile {
 
         if (sendPacket) {
             PacketClaimTile packet = new PacketClaimTile();
-            packet.claimingID = claimingPlayerID.toString();
+            packet.claimingID = claimingPlayerID;
             packet.tilePos = pos;
             Natac.instance.getClientManager().sendPacketTCP(packet);
         }
