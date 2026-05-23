@@ -142,7 +142,6 @@ public class Tile {
         }
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
-            System.out.println("STRUCT");
             addStructure(new TownHall(Natac.instance.player.getPlayerClass(), this));
             Natac.instance.getGame().setState(GameScreen.State.WAIT);
         }

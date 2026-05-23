@@ -40,7 +40,7 @@ public class SettingsScreen implements Screen {
     private SpriteBatch spriteBatch;
     private ShapeRenderer shapes;
 
-    private final Stage uiStage;
+    private final SettingsStage uiStage;
 
     private final BitmapFont font = Fonts.createFont("placeholder", 76, Color.WHITE);
 
@@ -111,9 +111,9 @@ public class SettingsScreen implements Screen {
     }
 
     public void draw() {
-        uiStage.draw();
 
         spriteBatch.begin();
+        uiStage.draw(spriteBatch);
         font.draw(spriteBatch, "Settings", 40f, Settings.screenHeight - 40);
         spriteBatch.end();
     }
