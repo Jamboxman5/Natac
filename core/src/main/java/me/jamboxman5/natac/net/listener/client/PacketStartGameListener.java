@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Listener;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.net.packet.PacketStartGame;
 import me.jamboxman5.natac.screen.GameScreen;
+import me.jamboxman5.natac.util.Settings;
 
 public class PacketStartGameListener implements Listener {
     @Override
@@ -14,7 +15,7 @@ public class PacketStartGameListener implements Listener {
             PacketStartGame packet = (PacketStartGame) obj;
             Gdx.app.postRunnable(() -> {
                 Natac.instance.setScreen(new GameScreen(packet.map));
-
+                Settings.defogTileRadius = packet.defogRadius;
             });
         }
     }
