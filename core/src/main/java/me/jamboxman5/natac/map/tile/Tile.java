@@ -72,7 +72,9 @@ public class Tile {
 
     private float highlightWidth = 1f;
 
-    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
+    private transient float opacity = 0;
+
+    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionState tileSelectState) {
 
         if (bounds == null) {
             bounds = new Hexagon(pos);
@@ -88,8 +90,24 @@ public class Tile {
             sprite.draw(batch);
         }
 
-        shapes.setColor(state.tileColor);
-        shapes.filledPolygon(bounds.shape);
+        if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
+            if (opacity <= 0) opacity = 1;
+            Color fill = new Color(state.tileColor);
+            fill.a = opacity;
+            shapes.setColor(fill);
+            shapes.filledPolygon(bounds.shape);
+            opacity -= 0.005f;
+        } else if (tileSelectState == GameScreen.SelectionState.OWNED && state == TileState.CLAIMED) {
+            if (opacity <= 0) opacity = 1;
+            Color fill = new Color(state.tileColor);
+            fill.a = opacity;
+            shapes.setColor(fill);
+            shapes.filledPolygon(bounds.shape);
+            opacity -= 0.005f;
+        } else {
+            shapes.setColor(state.tileColor);
+            shapes.filledPolygon(bounds.shape);
+        }
 
         shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
@@ -99,8 +117,6 @@ public class Tile {
             for (Unit u : occupants) u.draw(batch, shapes);
             for (Structure s : buildings) s.draw(batch, shapes);
         }
-
-
 
     }
 

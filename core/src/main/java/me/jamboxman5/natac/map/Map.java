@@ -24,8 +24,8 @@ public class Map {
 
     }
 
-    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes) {
-        for (Tile t : tiles) t.draw(camera, batch, shapes);
+    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionState tileSelectState) {
+        for (Tile t : tiles) t.draw(camera, batch, shapes, tileSelectState);
     }
 
     public void update(Vector2 touchPos) {

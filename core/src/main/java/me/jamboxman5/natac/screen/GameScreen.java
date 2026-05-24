@@ -39,10 +39,18 @@ public class GameScreen implements Screen, InputProcessor {
     private PlayInputStage uiStage;
 
     private State gameState;
-
+    private SelectionState tileSelectState;
 
     public enum State {
         CLAIM, WAIT, PLAY;
+    }
+
+    public enum SelectionState {
+        OWNED, NEIGHBORING, NONE, BASE,
+    }
+
+    public void setTileSelectState(SelectionState state) {
+        this.tileSelectState = state;
     }
 
     public GameScreen(Map map) {
@@ -71,7 +79,7 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
         batch.begin();
-        map.draw(gameCamera, batch, shapes);
+        map.draw(gameCamera, batch, shapes, tileSelectState);
 //        for (Player p : Natac.instance.getClientManager().getConnectedPlayers()) p.draw();
         batch.end();
 
@@ -124,6 +132,7 @@ public class GameScreen implements Screen, InputProcessor {
         uiShapes = new ShapeDrawer(uiSprites, whitePixel);
 
         gameState = State.WAIT;
+        tileSelectState = SelectionState.BASE;
 
     }
 
