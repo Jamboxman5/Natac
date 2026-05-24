@@ -88,6 +88,11 @@ public class Tile {
         sprite.setOriginCenter();
         sprite.draw(batch);
 
+        if (!isFogged) {
+            for (Unit u : occupants) u.draw(batch, shapes);
+            for (Structure s : buildings) s.draw(batch, shapes);
+        }
+
         if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
             if (opacity <= 0) opacity = 0.7f;
             Color fill = new Color(state.tileColor);
@@ -116,14 +121,9 @@ public class Tile {
             opacity = 1f;
         }
 
-            shapes.setDefaultLineWidth(highlightWidth);
+        shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
         shapes.polygon(bounds.shape, JoinType.POINTY);
-
-        if (!isFogged) {
-            for (Unit u : occupants) u.draw(batch, shapes);
-            for (Structure s : buildings) s.draw(batch, shapes);
-        }
 
     }
 
