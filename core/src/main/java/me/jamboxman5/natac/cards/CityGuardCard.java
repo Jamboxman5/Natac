@@ -15,6 +15,6 @@ public class CityGuardCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's defense value
-        player.setDefense(player.getDefense() + DefBoost);
+        Card.generateStatChangePacket(player,0,0,0,DefBoost,0,0);
     }
 }

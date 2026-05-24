@@ -15,6 +15,6 @@ public class GoldRushCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's gold
-        player.setGold(player.getGold() + GoldBoost);
+        Card.generateStatChangePacket(player,0,0,0,0,GoldBoost,0);
     }
 }

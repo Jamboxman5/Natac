@@ -16,8 +16,6 @@ public class DivineFavorCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the attk def and resources of the player
-        player.setAttack(player.getAttack() + StatBoost);
-        player.setDefense(player.getDefense() + StatBoost);
-        player.setResources(player.getResources() + ResourceIncrease);
+        Card.generateStatChangePacket(player,0,0,StatBoost,StatBoost,0,ResourceIncrease);
     }
 }

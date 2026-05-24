@@ -15,6 +15,6 @@ public class LibraryOfAlexandriaCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's attack value by 'exampleValue'
-        player.setResearch(player.getResearch() + ResearchBoost);
+        Card.generateStatChangePacket(player,ResearchBoost,0,0,0,0,0);
     }
 }

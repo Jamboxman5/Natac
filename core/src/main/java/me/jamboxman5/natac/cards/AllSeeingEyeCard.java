@@ -15,7 +15,6 @@ public class AllSeeingEyeCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's defense and research
-        player.setDefense(player.getDefense() + StatBoost);
-        player.setResearch(player.getResearch() + StatBoost);
+        Card.generateStatChangePacket(player,StatBoost,0,0,StatBoost,0,0);
     }
 }

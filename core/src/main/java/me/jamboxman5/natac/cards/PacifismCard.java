@@ -14,7 +14,6 @@ public class PacifismCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         int originalAttack = player.getAttack();
-        player.setAttack(player.getAttack() - originalAttack);
-        player.setDefense(player.getDefense() + (3 + originalAttack));
+        Card.generateStatChangePacket(player,0,0,(-originalAttack),(3+originalAttack),0,0);
     }
 }

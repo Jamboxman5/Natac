@@ -15,6 +15,6 @@ public class MechaMolesCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's attack value
-        player.setStatus(player.getStatus() + AttackBoost);
+        Card.generateStatChangePacket(player,0,0,AttackBoost,0,0,0);
     }
 }

@@ -15,7 +15,7 @@ public class AdoredbyAllCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's status value
-        player.setStatus(player.getStatus() + StatusBoost);
+        Card.generateStatChangePacket(player,0,StatusBoost,0,0,0,0);
     }
 }
 

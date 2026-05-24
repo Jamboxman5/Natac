@@ -15,6 +15,6 @@ public class SuperiorSoldiersCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's attack value by 'exampleValue'
-        player.setAttack(player.getAttack() + AttkBoost);
+        Card.generateStatChangePacket(player,1,0,AttkBoost,0,0,0);
     }
 }

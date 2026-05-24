@@ -15,6 +15,6 @@ public class BountifulHarvestCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's resources
-        player.setResources(player.getResources() + ResourceBoost);
+        Card.generateStatChangePacket(player,0,0,0,0,0,ResourceBoost);
     }
 }
