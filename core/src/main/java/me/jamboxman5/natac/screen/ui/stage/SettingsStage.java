@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.data.SettingsData;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.SettingsScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
@@ -90,6 +91,8 @@ public class SettingsStage extends Stage {
                 Settings.musVolume = musVolumeSlider.getValue();
                 Settings.sfxVolume = sfxVolumeSlider.getValue();
                 Natac.instance.setScreen(new SettingsScreen());
+
+                SettingsData.updateSettings();
             }
         });
 

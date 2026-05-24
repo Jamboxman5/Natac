@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.data.SettingsData;
 import me.jamboxman5.natac.util.Settings;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -19,6 +20,7 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
+        boolean generateNewSettings = SettingsData.loadSettings();
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
         configuration.setTitle("Natac");
         //// Vsync limits the frames per second to what your hardware can display, and helps eliminate
@@ -49,7 +51,9 @@ public class Lwjgl3Launcher {
         //// are not intended for games that use GL30 (which is compatibility with OpenGL ES 3.0).
         //// Know that it might not work well in some cases.
 //        configuration.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0);
-
+        if (generateNewSettings) {
+            SettingsData.loadSettings();
+        }
         return configuration;
     }
 }
