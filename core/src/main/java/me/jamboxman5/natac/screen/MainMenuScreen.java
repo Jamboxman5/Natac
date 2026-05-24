@@ -188,7 +188,7 @@ public class MainMenuScreen implements Screen {
         uiStage.draw();
 
         spriteBatch.begin();
-        font.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", font, 1f), 550);
+        font.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", font, 1f), ((float) Settings.screenHeight /2) + 160);
         spriteBatch.end();
     }
 
