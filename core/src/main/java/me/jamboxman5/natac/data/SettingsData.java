@@ -26,15 +26,15 @@ public class SettingsData {
             jsonString = DataManager.load(is);
             JsonObject settingsOBJ = JsonParser.parseString(jsonString).getAsJsonObject();
             bindSettings(settingsOBJ);
-            return true;
-        } catch (IOException e) {
             return false;
+        } catch (IOException e) {
+            return true;
         }
 
     }
 
     @SuppressWarnings("NewApi")
-    private static void generateNewSettingsFile() {
+    public static void generateNewSettingsFile() {
         try {
             Files.createDirectories(Paths.get(dataPath));
             InputStream defaultInput = Gdx.files.internal("data/settings/settings.json/").read();
