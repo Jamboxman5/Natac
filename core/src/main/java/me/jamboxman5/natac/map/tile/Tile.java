@@ -84,11 +84,9 @@ public class Tile {
 
         if (sprite == null) sprite = new Sprite(type.texture);
 
-        if (!isFogged) {
-            sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
-            sprite.setOriginCenter();
-            sprite.draw(batch);
-        }
+        sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
+        sprite.setOriginCenter();
+        sprite.draw(batch);
 
         if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
             if (opacity <= 0) opacity = 0.7f;
@@ -107,9 +105,18 @@ public class Tile {
         } else {
             shapes.setColor(state.tileColor);
             shapes.filledPolygon(bounds.shape);
+            if (opacity > 0) opacity -= 0.0025f;
+            Color fog = Color.BLACK;
+            fog.a = opacity;
+            shapes.setColor(fog);
+            shapes.filledPolygon(bounds.shape);
         }
 
-        shapes.setDefaultLineWidth(highlightWidth);
+        if (isFogged) {
+            opacity = 1f;
+        }
+
+            shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
         shapes.polygon(bounds.shape, JoinType.POINTY);
 
