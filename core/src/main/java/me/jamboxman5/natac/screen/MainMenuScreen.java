@@ -62,11 +62,13 @@ public class MainMenuScreen implements Screen {
         TextButton button1 = new TextButton("Host Game", skin);
         TextButton button2 = new TextButton("Join Game", skin);
         TextButton button3 = new TextButton("Settings", skin);
+        TextButton button4 = new TextButton("Quit Game", skin);
         TextField field = new TextField("", skin);
 
         uiStage.addActor(button1);
         uiStage.addActor(button2);
         uiStage.addActor(button3);
+        uiStage.addActor(button4);
         uiStage.addActor(field);
 
         field.setAlignment(Align.center);
@@ -83,10 +85,12 @@ public class MainMenuScreen implements Screen {
         button1.setSize(90, 40);
         button2.setSize(90, 40);
         button3.setSize(90, 40);
+        button4.setSize(90, 40);
 
         button1.setPosition(center.x - 100, center.y - 60);
         button2.setPosition(center.x + 100 - button2.getWidth(), center.y - 60);
-        button3.setPosition(center.x - (button3.getWidth() / 2), center.y - 60 - 40 - 20);
+        button3.setPosition(center.x - 100, center.y - 120);
+        button4.setPosition(center.x + 100 - button2.getWidth(), center.y - 120);
 
         field.setMessageText("Enter name: ");
 
@@ -117,6 +121,13 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Natac.instance.setScreen(new SettingsScreen());
+            }
+        });
+
+        button4.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
             }
         });
     }
