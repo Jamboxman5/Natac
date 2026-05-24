@@ -84,11 +84,12 @@ public class Tile {
 
         if (sprite == null) sprite = new Sprite(type.texture);
 
-        sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
-        sprite.setOriginCenter();
-        sprite.draw(batch);
-
         if (!isFogged) {
+
+            sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
+            sprite.setOriginCenter();
+            sprite.draw(batch);
+
             for (Unit u : occupants) u.draw(batch, shapes);
             for (Structure s : buildings) s.draw(batch, shapes);
         }
