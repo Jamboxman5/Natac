@@ -154,7 +154,7 @@ public class Tile {
         if (Natac.instance.player.getID().equals(claimingPlayerID)) {
             setState(TileState.CLAIMED);
             defog();
-            defogNeighbors(Settings.defogTileRadius);
+            defogNeighbors(Natac.instance.getGame().getMap().getDefogTileRadius());
         }
         else setState(TileState.ENEMY_CLAIMED);
 

@@ -11,6 +11,7 @@ import me.jamboxman5.natac.map.tile.TileState;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.units.army.Soldier;
+import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class Map {
     private List<Tile> tiles;
+    private int defogRadius = Settings.defogTileRadius;
 
     public Map() {
         tiles = new ArrayList<>();
@@ -104,5 +106,8 @@ public class Map {
             if (t.getOwner().equals(player.getID())) return true;
         }
         return false;
+    }
+
+    public int getDefogTileRadius() { return defogRadius;
     }
 }

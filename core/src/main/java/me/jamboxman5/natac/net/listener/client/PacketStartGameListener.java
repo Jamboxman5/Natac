@@ -15,7 +15,6 @@ public class PacketStartGameListener implements Listener {
             PacketStartGame packet = (PacketStartGame) obj;
             Gdx.app.postRunnable(() -> {
                 Natac.instance.setScreen(new GameScreen(packet.map));
-                Settings.defogTileRadius = packet.defogRadius;
             });
         }
     }
