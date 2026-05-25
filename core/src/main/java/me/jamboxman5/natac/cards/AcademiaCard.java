@@ -3,8 +3,8 @@ package me.jamboxman5.natac.cards;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.player.Player;
 
-public class AllSeeingEyeCard implements Card {
-    //Steel City specific Research Card
+public class AcademiaCard implements Card {
+    //Card that increases status
 
     //Instance variables (stats/relevant data)
     int StatBoost = 2;
@@ -14,7 +14,7 @@ public class AllSeeingEyeCard implements Card {
         //Define effects to happen when card is played
         //Player variable is the instance of the player who is playing this card
 
-        //Increase the player's defense and research
-        Card.generateStatChangePacket(player,StatBoost,0,0,StatBoost,0,0);
+        //Increase the player's status and research value
+        Card.generateStatChangePacket(player,StatBoost,StatBoost,0,0,0,0);
     }
 }
