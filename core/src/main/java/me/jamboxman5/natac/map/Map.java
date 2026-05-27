@@ -21,6 +21,8 @@ public class Map {
     private List<Tile> tiles;
     private int defogRadius = Settings.defogTileRadius;
 
+    private transient Tile selectedTile = null;
+
     public Map() {
         tiles = new ArrayList<>();
 
@@ -53,6 +55,8 @@ public class Map {
                         clearStartingTiles();
                         Natac.instance.endTurn();
                         return;
+                    case CLAIMED:
+                        selectedTile = t;
                     default:
                         return;
 
@@ -110,4 +114,6 @@ public class Map {
 
     public int getDefogTileRadius() { return defogRadius;
     }
+
+    public boolean isSelectedTile(Tile tile) { return selectedTile == tile; }
 }
