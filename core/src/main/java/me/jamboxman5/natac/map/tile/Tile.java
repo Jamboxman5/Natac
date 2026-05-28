@@ -184,7 +184,6 @@ public class Tile {
         if (sprite == null) sprite = new Sprite(type.texture);
 
         float targetScale = bounds.contains(touchPos) ? 1f : .9f;
-        targetScale = Natac.instance.getGame().getMap().isSelectedTile(this) ? targetScale * 1.5f : targetScale;
 
         currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
 
@@ -216,6 +215,7 @@ public class Tile {
 
     public UUID getOwner() { return owner; }
 
+    public Sprite getSprite() { return sprite; }
 
     public static class Hexagon {
         private float currentScale = 1f;

@@ -116,4 +116,8 @@ public class Map {
     }
 
     public boolean isSelectedTile(Tile tile) { return selectedTile == tile; }
+
+    public Tile getSelectedTile() { return selectedTile; }
+
+    public void deselectTile() {selectedTile = null;}
 }

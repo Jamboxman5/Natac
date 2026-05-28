@@ -2,6 +2,7 @@ package me.jamboxman5.natac.screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,8 +11,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.jamboxman5.natac.map.Map;
+import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
+import me.jamboxman5.natac.screen.ui.stage.SelectedTileStage;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -33,13 +36,19 @@ public class GameScreen implements Screen, InputProcessor {
     SpriteBatch batch;
     ShapeDrawer shapes;
 
+    SpriteBatch modalBatch;
+    ShapeDrawer modalShapes;
+
     SpriteBatch uiSprites;
     ShapeDrawer uiShapes;
 
     private PlayInputStage uiStage;
+    private SelectedTileStage tileStage;
 
     private State gameState;
     private SelectionState tileSelectState;
+
+    private Sprite selectedTileSprite = null;
 
     public enum State {
         CLAIM, WAIT, PLAY;
@@ -62,10 +71,12 @@ public class GameScreen implements Screen, InputProcessor {
         uiCamera.setToOrtho(false);
         viewport = new FitViewport(1280, 720, gameCamera);
         uiStage = new PlayInputStage();
+        tileStage = new SelectedTileStage();
 
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage);
+        multiplexer.addProcessor(tileStage);
         multiplexer.addProcessor(this);
 
         Gdx.input.setInputProcessor(multiplexer);
@@ -75,19 +86,32 @@ public class GameScreen implements Screen, InputProcessor {
     private void draw() {
         batch.setProjectionMatrix(gameCamera.combined);
         uiSprites.setProjectionMatrix(uiCamera.combined);
+        modalBatch.setProjectionMatrix(uiCamera.combined);
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
+
         batch.begin();
         map.draw(gameCamera, batch, shapes, tileSelectState);
-//        for (Player p : Natac.instance.getClientManager().getConnectedPlayers()) p.draw();
+
+
+
         batch.end();
+
+        if (map.getSelectedTile() == null) uiStage.draw();
+        else tileStage.draw();
+
 
         uiSprites.begin();
         UIManager.draw(uiSprites, uiShapes, gameState);
         uiSprites.end();
 
-        uiStage.draw();
+        if (map.getSelectedTile() != null) {
+            modalBatch.begin();
+            drawSelectedTileMenu(map.getSelectedTile());
+            modalBatch.end();
+        } else selectedTileSprite = null;
+
 
 
     }
@@ -101,7 +125,8 @@ public class GameScreen implements Screen, InputProcessor {
             if (!uiStage.isDisabled()) uiStage.disableInput();
         }
 
-        uiStage.act(delta);
+        if (map.getSelectedTile() == null) uiStage.act(delta);
+        else tileStage.act(delta);
 
         gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
         gameCamera.position.x = MathUtils.clamp(MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f), 0, 1280);
@@ -110,16 +135,21 @@ public class GameScreen implements Screen, InputProcessor {
         gameCamera.update();
         uiCamera.update();
 
-        mousePos.set(Gdx.input.getX(), Gdx.input.getY());
-        viewport.unproject(mousePos);
+        if (map.getSelectedTile() == null) {
+            mousePos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(mousePos);
 
-        map.update(mousePos);
+            map.update(mousePos);
+        }
+
+
     }
 
     @Override
     public void show() {
         batch = new SpriteBatch();
         uiSprites = new SpriteBatch();
+        modalBatch = new SpriteBatch();
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -130,6 +160,7 @@ public class GameScreen implements Screen, InputProcessor {
 
         shapes = new ShapeDrawer(batch, whitePixel);
         uiShapes = new ShapeDrawer(uiSprites, whitePixel);
+        modalShapes = new ShapeDrawer(modalBatch, whitePixel);
 
         gameState = State.WAIT;
         tileSelectState = SelectionState.BASE;
@@ -191,6 +222,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (map.getSelectedTile() != null) return false;
         lastMousePos.set(screenX, screenY);
         viewport.unproject(lastMousePos);
 
@@ -210,6 +242,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if (map.getSelectedTile() != null) return false;
 
         Vector2 newTouchPos = new Vector2(screenX, screenY);
         viewport.unproject(newTouchPos);
@@ -233,6 +266,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
+        if (map.getSelectedTile() != null) return false;
         float worldMouseXBefore = mousePos.x;
         float worldMouseYBefore = mousePos.y;
 
@@ -250,4 +284,14 @@ public class GameScreen implements Screen, InputProcessor {
 
     public State getState() { return gameState; }
     public void setState(State newState) { gameState = newState; }
+
+    private void drawSelectedTileMenu(Tile t) {
+        if (selectedTileSprite == null) selectedTileSprite = new Sprite(t.getSprite());
+
+        selectedTileSprite.setCenter(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
+        selectedTileSprite.setScale(5f, 5f);
+        selectedTileSprite.draw(modalBatch);
+
+    }
+
 }
