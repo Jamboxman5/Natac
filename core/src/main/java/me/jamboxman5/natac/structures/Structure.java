@@ -12,7 +12,7 @@ public abstract class Structure {
     protected int revenuePerTurn;
     protected int resourcesPerTurn;
 
-    protected transient Tile location;
+    protected Vector2 tilePos;
 
     protected Vector2 position;
 
@@ -20,13 +20,13 @@ public abstract class Structure {
 
     }
 
-    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Tile location) {
+    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos) {
         this.buildCost = buildCost;
         this.revenuePerTurn = revenuePerTurn;
         this.resourcesPerTurn = resourcesPerTurn;
-        this.location = location;
 
-        this.position = location.getTilePosition();
+        this.tilePos = tilePos;
+        this.position = tilePos;
     }
 
     public abstract void update();

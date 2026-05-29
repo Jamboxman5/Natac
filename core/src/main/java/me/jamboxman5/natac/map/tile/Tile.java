@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.net.packet.PacketBuildStructure;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
@@ -62,7 +63,7 @@ public class Tile {
 
         isFogged = true;
 
-        if (Math.random() > 0.8) buildings.add(new Ruins(this));
+        if (Math.random() > 0.8) buildings.add(new Ruins(pos));
     }
 
 
@@ -166,7 +167,14 @@ public class Tile {
         }
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
-            addStructure(new TownHall(Natac.instance.player.getPlayerClass(), this));
+            Structure townHall = new TownHall(Natac.instance.player.getPlayerClass(), pos);
+            PacketBuildStructure packet = new PacketBuildStructure();
+            packet.builderID = owner;
+            packet.tilePos = pos;
+            packet.structure = townHall;
+
+            Natac.instance.getClientManager().sendPacketTCP(packet);
+
             Natac.instance.getGame().setState(GameScreen.State.WAIT);
         }
     }
