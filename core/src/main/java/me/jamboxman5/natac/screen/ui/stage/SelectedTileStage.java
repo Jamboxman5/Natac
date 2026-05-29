@@ -29,12 +29,12 @@ public class SelectedTileStage extends Stage {
 
         int width = Settings.screenWidth / 10;
         int height = Settings.screenHeight / 10;
-        int margin = 20;
+        int margin = 40;
 
         float x = (Settings.screenWidth / 2f) - (margin / 2f) - width;
 
-        backButton.setPosition(x, margin);
-        buildButton.setPosition(x + width + margin, margin);
+        backButton.setPosition(x, margin * 2.5f);
+        buildButton.setPosition(x + width + margin, margin * 2.5f);
 
         buildButton.setSize(width, height);
         backButton.setSize(width, height);
