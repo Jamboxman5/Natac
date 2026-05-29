@@ -15,6 +15,7 @@ import me.jamboxman5.natac.net.packet.*;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.units.army.Soldier;
@@ -37,6 +38,7 @@ public class NetUtil {
         kryo.register(PacketStartTurn.class);
         kryo.register(PacketEndTurn.class);
         kryo.register(PacketPlayerModify.class);
+        kryo.register(PacketBuildStructure.class);
 
         kryo.register(Player.class);
         kryo.register(PlayerClass.class);
@@ -48,6 +50,7 @@ public class NetUtil {
         kryo.register(ArrayList.class);
         kryo.register(Structure.class);
         kryo.register(Ruins.class);
+        kryo.register(TownHall.class);
         kryo.register(Unit.class);
         kryo.register(Soldier.class);
         kryo.register(Tile.Hexagon.class);
@@ -67,6 +70,7 @@ public class NetUtil {
         client.addListener(new PacketClaimTileListener());
         client.addListener(new PacketStartTurnListener());
         client.addListener(new PacketPlayerModifyListener());
+        client.addListener(new PacketBuildStructureListener());
     }
 
     public static void registerListeners(DiscreteServer server) {
@@ -77,6 +81,7 @@ public class NetUtil {
         server.getServer().addListener(new ServerClaimTileListener(server));
         server.getServer().addListener(new ServerEndTurnListener(server));
         server.getServer().addListener(new ServerPlayerModifyListener(server));
+        server.getServer().addListener(new ServerBuildStructureListener(server));
     }
 
 }
