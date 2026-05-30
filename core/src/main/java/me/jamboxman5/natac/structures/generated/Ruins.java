@@ -16,6 +16,11 @@ public class Ruins extends Structure {
 
     public Ruins(Vector2 tilePos) {
         super(1, 1, 1, tilePos);
+        float xDiff = (float) (Math.random() * 50f);
+        float yDiff = (float) (Math.random() * 50f);
+        if (Math.random() > .5) xDiff = -xDiff;
+        if (Math.random() > .5) yDiff = -yDiff;
+        position.add(xDiff, yDiff);
     }
 
     @Override
