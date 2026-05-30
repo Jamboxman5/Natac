@@ -26,9 +26,10 @@ public abstract class Structure {
         this.resourcesPerTurn = resourcesPerTurn;
 
         this.tilePos = tilePos;
-        this.position = tilePos;
+        this.position = new Vector2(0, 0);
     }
 
     public abstract void update();
     public abstract void draw(SpriteBatch batch, ShapeDrawer shapes);
+    public abstract void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center);
 }

@@ -18,6 +18,7 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
 import me.jamboxman5.natac.screen.ui.stage.SelectedTileStage;
+import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -319,6 +320,11 @@ public class GameScreen implements Screen, InputProcessor {
         modalShapes.setDefaultLineWidth(10f);
         modalShapes.setColor(Color.WHITE);
         modalShapes.polygon(selectedTileHighlight, JoinType.POINTY);
+
+        for (Structure structure : t.getStructures()) {
+            structure.drawModal(modalBatch, modalShapes, new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50));
+        }
+
     }
 
     private Polygon generateHighlight() {

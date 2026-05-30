@@ -225,6 +225,8 @@ public class Tile {
 
     public Sprite getSprite() { return sprite; }
 
+    public List<Structure> getStructures() { return buildings; }
+
     public static class Hexagon {
         private float currentScale = 1f;
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class TownHall extends Structure {
@@ -29,6 +30,14 @@ public class TownHall extends Structure {
     @Override
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
         shapes.setColor(Color.PINK);
-        shapes.filledRectangle(new Rectangle(position.x, position.y, 5, 5));
+        Vector2 drawPos = tilePos.cpy().add(position);
+        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 5, 5));
+    }
+
+    @Override
+    public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
+        shapes.setColor(Color.PINK);
+        Vector2 drawPos = center.cpy().add(position);
+        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 25, 25));
     }
 }

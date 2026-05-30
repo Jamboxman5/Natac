@@ -28,4 +28,9 @@ public class Ruins extends Structure {
         shapes.setColor(Color.WHITE);
         shapes.filledRectangle(new Rectangle(position.x, position.y, 5, 5));
     }
+
+    @Override
+    public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
+
+    }
 }
