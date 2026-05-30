@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.GaussianBlurEffect;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
@@ -43,6 +45,9 @@ public class GameScreen implements Screen, InputProcessor {
 
     SpriteBatch uiSprites;
     ShapeDrawer uiShapes;
+
+    GaussianBlurEffect blur;
+    VfxManager vfxManager;
 
     private PlayInputStage uiStage;
     private SelectedTileStage tileStage;
@@ -93,13 +98,18 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
+        if (map.getSelectedTile() != null) vfxManager.beginInputCapture();
+        else vfxManager.cleanUpBuffers();
 
         batch.begin();
         map.draw(gameCamera, batch, shapes, tileSelectState);
-
-
-
         batch.end();
+
+        if (map.getSelectedTile() != null) {
+            vfxManager.endInputCapture();
+            vfxManager.applyEffects();
+            vfxManager.renderToScreen();
+        }
 
         if (map.getSelectedTile() == null) uiStage.draw();
         else tileStage.draw();
@@ -167,6 +177,14 @@ public class GameScreen implements Screen, InputProcessor {
 
         gameState = State.WAIT;
         tileSelectState = SelectionState.BASE;
+
+        vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
+
+        blur = new GaussianBlurEffect();
+        blur.setAmount(3);
+        blur.setPasses(4);
+
+        vfxManager.addEffect(blur);
 
     }
 
