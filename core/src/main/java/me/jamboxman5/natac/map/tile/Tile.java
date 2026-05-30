@@ -63,7 +63,7 @@ public class Tile {
 
         isFogged = true;
 
-        if (Math.random() > 0.8) buildings.add(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) buildings.add(new Ruins(pos));
     }
 
 
