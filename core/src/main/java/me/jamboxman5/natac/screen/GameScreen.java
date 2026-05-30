@@ -2,11 +2,9 @@ package me.jamboxman5.natac.screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -14,14 +12,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.GaussianBlurEffect;
 import me.jamboxman5.natac.map.Map;
-import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
-import me.jamboxman5.natac.screen.ui.stage.SelectedTileStage;
-import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.util.Settings;
-import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameScreen implements Screen, InputProcessor {
@@ -52,7 +46,6 @@ public class GameScreen implements Screen, InputProcessor {
     VfxManager vfxManager;
 
     private PlayInputStage uiStage;
-    private SelectedTileStage tileStage;
 
     private State gameState;
     private SelectionState tileSelectState;
@@ -80,12 +73,10 @@ public class GameScreen implements Screen, InputProcessor {
         uiCamera.setToOrtho(false);
         viewport = new FitViewport(1280, 720, gameCamera);
         uiStage = new PlayInputStage();
-        tileStage = new SelectedTileStage();
 
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(uiStage);
-        multiplexer.addProcessor(tileStage);
         multiplexer.addProcessor(this);
 
         Gdx.input.setInputProcessor(multiplexer);
@@ -113,8 +104,6 @@ public class GameScreen implements Screen, InputProcessor {
         }
 
         if (map.getSelectedTile() == null) uiStage.draw();
-        else tileStage.draw();
-
 
         uiSprites.begin();
         UIManager.draw(uiSprites, uiShapes, gameState);
@@ -140,7 +129,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
 
         if (map.getSelectedTile() == null) uiStage.act(delta);
-        else tileStage.act(delta);
+        else if (tileModal != null) tileModal.act(delta);
 
         gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
         gameCamera.position.x = MathUtils.clamp(MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f), 0, 1280);
@@ -157,9 +146,15 @@ public class GameScreen implements Screen, InputProcessor {
         }
 
         if (map.getSelectedTile() != null) {
-            if (tileModal == null) tileModal = new SelectedTileModal(map.getSelectedTile());
+            if (tileModal == null) {
+                tileModal = new SelectedTileModal(map.getSelectedTile());
+                multiplexer.addProcessor(1, tileModal);
+            }
         } else {
-            if (tileModal != null) tileModal = null;
+            if (tileModal != null) {
+                multiplexer.removeProcessor(tileModal);
+                tileModal = null;
+            }
         }
 
     }
