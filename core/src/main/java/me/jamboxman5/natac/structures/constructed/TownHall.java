@@ -15,7 +15,9 @@ public class TownHall extends Structure {
 
     protected PlayerClass type;
 
-    public TownHall() {}
+    public TownHall() {
+        this.drawColor = Color.PINK;
+    }
 
     public TownHall(PlayerClass playerClass, Vector2 tilePos) {
         super(0, 50, 0, tilePos);
@@ -27,17 +29,4 @@ public class TownHall extends Structure {
 
     }
 
-    @Override
-    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
-        shapes.setColor(Color.PINK);
-        Vector2 drawPos = tilePos.cpy().add(position);
-        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 5, 5));
-    }
-
-    @Override
-    public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
-        shapes.setColor(Color.PINK);
-        Vector2 drawPos = center.cpy().add(position);
-        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 25, 25));
-    }
 }

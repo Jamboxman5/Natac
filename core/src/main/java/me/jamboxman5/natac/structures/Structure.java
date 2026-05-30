@@ -1,6 +1,8 @@
 package me.jamboxman5.natac.structures;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.map.tile.Tile;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -16,8 +18,10 @@ public abstract class Structure {
 
     protected Vector2 position;
 
-    protected Structure() {
+    protected transient Color drawColor;
 
+    protected Structure() {
+        this.drawColor = Color.WHITE;
     }
 
     protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos) {
@@ -27,9 +31,20 @@ public abstract class Structure {
 
         this.tilePos = tilePos;
         this.position = new Vector2(0, 0);
+        this.drawColor = Color.WHITE;
     }
 
     public abstract void update();
-    public abstract void draw(SpriteBatch batch, ShapeDrawer shapes);
-    public abstract void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center);
+
+    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
+        shapes.setColor(drawColor);
+        Vector2 drawPos = tilePos.cpy().add(position);
+        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 5, 5));
+    }
+
+    public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
+        shapes.setColor(drawColor);
+        Vector2 drawPos = center.cpy().add(position);
+        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 25, 25));
+    }
 }

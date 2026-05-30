@@ -11,7 +11,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public class Ruins extends Structure {
 
     public Ruins() {
-        super();
+        this.drawColor = Color.BROWN;
     }
 
     public Ruins(Vector2 tilePos) {
@@ -23,14 +23,4 @@ public class Ruins extends Structure {
 
     }
 
-    @Override
-    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
-        shapes.setColor(Color.WHITE);
-        shapes.filledRectangle(new Rectangle(position.x, position.y, 5, 5));
-    }
-
-    @Override
-    public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
-
-    }
 }
