@@ -15,6 +15,7 @@ import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.GaussianBlurEffect;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
 import me.jamboxman5.natac.screen.ui.stage.SelectedTileStage;
@@ -56,8 +57,7 @@ public class GameScreen implements Screen, InputProcessor {
     private State gameState;
     private SelectionState tileSelectState;
 
-    private Sprite selectedTileSprite = null;
-    private Polygon selectedTileHighlight = null;
+    private SelectedTileModal tileModal = null;
 
     public enum State {
         CLAIM, WAIT, PLAY;
@@ -120,11 +120,11 @@ public class GameScreen implements Screen, InputProcessor {
         UIManager.draw(uiSprites, uiShapes, gameState);
         uiSprites.end();
 
-        if (map.getSelectedTile() != null) {
+        if (tileModal != null) {
             modalBatch.begin();
-            drawSelectedTileMenu(map.getSelectedTile());
+            tileModal.drawSelectedTileMenu(modalBatch, modalShapes);
             modalBatch.end();
-        } else selectedTileSprite = null;
+        }
 
 
 
@@ -156,6 +156,11 @@ public class GameScreen implements Screen, InputProcessor {
             map.update(mousePos);
         }
 
+        if (map.getSelectedTile() != null) {
+            if (tileModal == null) tileModal = new SelectedTileModal(map.getSelectedTile());
+        } else {
+            if (tileModal != null) tileModal = null;
+        }
 
     }
 
@@ -307,40 +312,6 @@ public class GameScreen implements Screen, InputProcessor {
     public State getState() { return gameState; }
     public void setState(State newState) { gameState = newState; }
 
-    private void drawSelectedTileMenu(Tile t) {
-        if (selectedTileSprite == null) {
-            selectedTileSprite = new Sprite(t.getSprite());
-            selectedTileHighlight = generateHighlight();
-        }
 
-        selectedTileSprite.setCenter(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
-        selectedTileSprite.setScale(5f * 0.9f, 5f * 0.9f);
-        selectedTileSprite.draw(modalBatch);
-
-        modalShapes.setDefaultLineWidth(10f);
-        modalShapes.setColor(Color.WHITE);
-        modalShapes.polygon(selectedTileHighlight, JoinType.POINTY);
-
-        for (Structure structure : t.getStructures()) {
-            structure.drawModal(modalBatch, modalShapes, new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50));
-        }
-
-    }
-
-    private Polygon generateHighlight() {
-        float[] vertices = new float[12];
-        for (int i = 0; i < 6; i++) {
-            float angle = i * MathUtils.PI / 3;
-            // Multiply the X-offset by the stretch factor
-            float stretchFactor = 1.5f;
-            int radius = 250;
-            vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
-            vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
-        }
-        Polygon shape = new Polygon(vertices);
-        shape.setPosition(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
-        shape.setOrigin(0,0);
-        return shape;
-    }
 
 }
