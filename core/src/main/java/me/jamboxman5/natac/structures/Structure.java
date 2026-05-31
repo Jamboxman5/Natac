@@ -45,7 +45,7 @@ public abstract class Structure {
 
     public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
         shapes.setColor(drawColor);
-        Vector2 drawPos = center.cpy().add(position);
+        Vector2 drawPos = center.cpy().add(position.cpy().scl(5));
         shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 25, 25));
     }
 }

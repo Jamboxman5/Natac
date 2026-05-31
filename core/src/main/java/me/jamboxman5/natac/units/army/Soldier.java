@@ -16,20 +16,16 @@ public class Soldier extends Unit {
     protected int damage;
     protected int defense;
 
-    public Soldier() {}
+    public Soldier() {
+        this.color = Color.CYAN;
+    }
 
     public Soldier(Vector2 tilePos, Vector2 position, UUID owner) {
-        super(1, 1, tilePos, position, owner);
+        super(1, 1, tilePos, position, Color.CYAN, owner);
     }
 
     @Override
     public void update() {
 
-    }
-
-    @Override
-    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
-        shapes.setColor(Color.BLUE);
-        shapes.filledCircle(tilePos.cpy().add(position.cpy().scl(Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale())), 5);
     }
 }

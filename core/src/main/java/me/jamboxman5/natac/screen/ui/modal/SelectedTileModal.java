@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -83,6 +84,10 @@ public class SelectedTileModal extends Stage {
 
         for (Structure structure : selectedTile.getStructures()) {
             structure.drawModal(batch, shapes, new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50));
+        }
+
+        for (Unit unit : selectedTile.getUnits()) {
+            unit.drawModal(batch, shapes, new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50));
         }
 
         draw();

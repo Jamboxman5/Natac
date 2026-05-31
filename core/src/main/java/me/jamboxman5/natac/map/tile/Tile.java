@@ -232,6 +232,8 @@ public class Tile {
 
     public List<Structure> getStructures() { return buildings; }
 
+    public List<Unit> getUnits() { return occupants; }
+
     public static class Hexagon {
         private float currentScale = 1f;
 
