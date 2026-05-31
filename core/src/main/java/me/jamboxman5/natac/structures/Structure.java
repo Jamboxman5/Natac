@@ -25,13 +25,13 @@ public abstract class Structure {
         this.drawColor = Color.WHITE;
     }
 
-    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos) {
+    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos, Vector2 position) {
         this.buildCost = buildCost;
         this.revenuePerTurn = revenuePerTurn;
         this.resourcesPerTurn = resourcesPerTurn;
 
         this.tilePos = tilePos;
-        this.position = new Vector2(0, 0);
+        this.position = position;
         this.drawColor = Color.WHITE;
     }
 
@@ -47,5 +47,13 @@ public abstract class Structure {
         shapes.setColor(drawColor);
         Vector2 drawPos = center.cpy().add(position.cpy().scl(5));
         shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 25, 25));
+    }
+
+    protected static Vector2 getRandomPosition() {
+        float xDiff = (float) (Math.random() * 50f);
+        float yDiff = (float) (Math.random() * 50f);
+        if (Math.random() > .5) xDiff = -xDiff;
+        if (Math.random() > .5) yDiff = -yDiff;
+        return new Vector2(xDiff, yDiff);
     }
 }
