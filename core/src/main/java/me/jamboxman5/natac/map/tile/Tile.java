@@ -14,6 +14,7 @@ import me.jamboxman5.natac.net.packet.PacketBuildStructure;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
+import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
@@ -42,6 +43,7 @@ public class Tile {
 
     private transient Sprite sprite;
     private transient boolean isFogged;
+    private transient boolean soundPlayed = false;
 
     private Vector2 pos;
 
@@ -192,6 +194,15 @@ public class Tile {
         if (sprite == null) sprite = new Sprite(type.texture);
 
         float targetScale = bounds.contains(touchPos) ? 1f : .9f;
+
+        if (bounds.contains(touchPos) && state != TileState.HIDDEN) {
+            if (!soundPlayed) {
+                Sounds.TILE_HOVER.play();
+                soundPlayed = true;
+            }
+        } else {
+            soundPlayed = false;
+        }
 
         currentScale = MathUtils.lerp(currentScale, targetScale, 0.1f);
 
