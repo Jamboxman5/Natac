@@ -1,6 +1,7 @@
 package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.map.Map;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
 public class CityGuardCard implements Card {
@@ -15,6 +16,6 @@ public class CityGuardCard implements Card {
         //Player variable is the instance of the player who is playing this card
 
         //Increase the player's defense value
-        Card.generateStatChangePacket(player,0,0,0,DefBoost,0,0);
+        PacketUtil.createStatChange(player,0,0,0,DefBoost,0,0);
     }
 }

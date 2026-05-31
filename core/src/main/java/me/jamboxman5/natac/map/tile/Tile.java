@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.net.packet.PacketBuildStructure;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.sfx.Sounds;
@@ -169,13 +170,9 @@ public class Tile {
         }
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
-            Structure townHall = new TownHall(Natac.instance.player.getPlayerClass(), pos);
-            PacketBuildStructure packet = new PacketBuildStructure();
-            packet.builderID = owner;
-            packet.tilePos = pos;
-            packet.structure = townHall;
 
-            Natac.instance.getClientManager().sendPacketTCP(packet);
+            PacketUtil.createBuilding(new TownHall(Natac.instance.player.getPlayerClass(), pos), pos);
+
 
             Natac.instance.getGame().setState(GameScreen.State.WAIT);
         }

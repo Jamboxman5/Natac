@@ -2,6 +2,7 @@ package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
 public class ViciousRumorsCard implements Card {
@@ -16,6 +17,6 @@ public class ViciousRumorsCard implements Card {
         //Player variable is the instance of the player who is playing this card
         //Increase the player's status value
         Player p = Natac.instance.getClientManager().selectFromConnectedPlayers();
-        Card.generateStatChangePacket(p,0,StatusDrop,0,0,0,0);
+        PacketUtil.createStatChange(p,0,StatusDrop,0,0,0,0);
     }
 }

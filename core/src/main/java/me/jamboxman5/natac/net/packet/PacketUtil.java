@@ -1,0 +1,40 @@
+package me.jamboxman5.natac.net.packet;
+
+import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.structures.Structure;
+
+public class PacketUtil {
+
+    public static void createBuilding(Structure s, Vector2 tilePos) {
+        PacketBuildStructure packet = new PacketBuildStructure();
+        packet.builderID = Natac.instance.player.getID();
+        packet.tilePos = tilePos;
+        packet.structure = s;
+        Natac.instance.getClientManager().sendPacketTCP(packet);
+    }
+
+    public static void createStatChange(Player target, int diffResearch,
+                                        int diffStatus,
+                                        int diffAttack,
+                                        int diffDefense,
+
+                                        int diffGold,
+                                        int diffResources) {
+
+        PacketPlayerModify packet = new PacketPlayerModify();
+
+        packet.sendPlayerID = Natac.instance.player.getID();
+        packet.modPlayerID = target.getID();
+
+        packet.diffAttack = diffAttack;
+        packet.diffStatus = diffStatus;
+        packet.diffResources = diffResources;
+        packet.diffGold = diffGold;
+        packet.diffResearch = diffResearch;
+        packet.diffDefense = diffDefense;
+
+        Natac.instance.getClientManager().sendPacketTCP(packet);
+    }
+}

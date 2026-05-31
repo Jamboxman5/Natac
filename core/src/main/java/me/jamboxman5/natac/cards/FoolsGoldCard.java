@@ -2,6 +2,7 @@ package me.jamboxman5.natac.cards;
 
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
 public class FoolsGoldCard implements Card {
@@ -16,6 +17,6 @@ public class FoolsGoldCard implements Card {
         //Player variable is the instance of the player who is playing this card
         //Decrease the gold stat of another player by 3
         Player p = Natac.instance.getClientManager().selectFromConnectedPlayers();
-        Card.generateStatChangePacket(p,0,0,0,0,GoldDrop,0);
+        PacketUtil.createStatChange(p,0,0,0,0,GoldDrop,0);
     }
 }
