@@ -1,26 +1,22 @@
 package me.jamboxman5.natac.map.tile;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
-import me.jamboxman5.natac.net.packet.PacketBuildStructure;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
-import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
-import me.jamboxman5.natac.util.Settings;
+import me.jamboxman5.natac.units.army.Soldier;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -171,8 +167,9 @@ public class Tile {
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
 
-            PacketUtil.createBuilding(new TownHall(Natac.instance.player.getPlayerClass(), pos), pos);
-
+            PacketUtil.buildStructure(new TownHall(Natac.instance.player.getPlayerClass(), pos), pos);
+            PacketUtil.spawnUnit(new Soldier(pos, new Vector2(-20, -20), owner), pos);
+            PacketUtil.spawnUnit(new Soldier(pos, new Vector2(20, -20), owner), pos);
 
             Natac.instance.getGame().setState(GameScreen.State.WAIT);
         }

@@ -4,14 +4,22 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.units.Unit;
 
 public class PacketUtil {
 
-    public static void createBuilding(Structure s, Vector2 tilePos) {
+    public static void buildStructure(Structure s, Vector2 tilePos) {
         PacketBuildStructure packet = new PacketBuildStructure();
         packet.builderID = Natac.instance.player.getID();
         packet.tilePos = tilePos;
         packet.structure = s;
+        Natac.instance.getClientManager().sendPacketTCP(packet);
+    }
+
+    public static void spawnUnit(Unit unit, Vector2 tilePos) {
+        PacketSpawnUnit packet = new PacketSpawnUnit();
+        packet.tilePos = tilePos;
+        packet.unit = unit;
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
