@@ -8,8 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
+import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.units.army.Soldier;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -120,4 +122,18 @@ public class Map {
     public Tile getSelectedTile() { return selectedTile; }
 
     public void deselectTile() {selectedTile = null;}
+
+    public void collectRevenues() {
+        int resourcesCollected = 0;
+        int goldCollected = 0;
+        for (Tile t : tiles) {
+            if (t.getOwner() == null) continue;
+            if (!t.getOwner().equals(Natac.instance.player.getID())) continue;
+            for (Structure s : t.getStructures()) {
+                resourcesCollected += s.getResourcesPerTurn();
+                goldCollected += s.getRevenuePerTurn();
+            }
+        }
+        PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, goldCollected, resourcesCollected);
+    }
 }

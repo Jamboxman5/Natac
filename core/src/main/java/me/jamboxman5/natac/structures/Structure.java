@@ -56,4 +56,7 @@ public abstract class Structure {
         if (Math.random() > .5) yDiff = -yDiff;
         return new Vector2(xDiff, yDiff);
     }
+
+    public int getRevenuePerTurn() { return revenuePerTurn; }
+    public int getResourcesPerTurn() { return resourcesPerTurn; }
 }

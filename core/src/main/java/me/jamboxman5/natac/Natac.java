@@ -110,7 +110,10 @@ public class Natac extends Game {
 
         GameScreen game = getGame();
 
-        if (game.getMap().hasTiles(player)) game.setState(GameScreen.State.PLAY);
+        if (game.getMap().hasTiles(player)) {
+            game.setState(GameScreen.State.PLAY);
+            game.getMap().collectRevenues();
+        }
         else game.setState(GameScreen.State.CLAIM);
 
         isTurn = true;
