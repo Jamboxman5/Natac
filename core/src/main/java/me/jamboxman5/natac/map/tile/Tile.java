@@ -275,6 +275,8 @@ public class Tile {
         return this.pos.epsilonEquals(pos);
     }
 
+    public float getCurrentScale() { return currentScale; }
+
 
 }
 

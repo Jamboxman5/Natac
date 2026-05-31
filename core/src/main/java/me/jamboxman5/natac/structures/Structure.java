@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -38,7 +39,7 @@ public abstract class Structure {
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
         shapes.setColor(drawColor);
-        Vector2 drawPos = tilePos.cpy().add(position);
+        Vector2 drawPos = tilePos.cpy().add(position.cpy().scl(Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale()));
         shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 5, 5));
     }
 
