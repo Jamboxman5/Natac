@@ -132,8 +132,14 @@ public class GameScreen implements Screen, InputProcessor {
         else if (tileModal != null) tileModal.act(delta);
 
         gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
-        gameCamera.position.x = MathUtils.clamp(MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f), 0, 1280);
-        gameCamera.position.y = MathUtils.clamp(MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f), 0, 720);
+
+        targetPos.x = MathUtils.clamp(targetPos.x, 0, 1280);
+        targetPos.y = MathUtils.clamp(targetPos.y, 0, 1080);
+
+        gameCamera.position.x = MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f);
+        gameCamera.position.y = MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f);
+
+        System.out.println(gameCamera.position);
 
         gameCamera.update();
         uiCamera.update();
