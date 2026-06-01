@@ -139,8 +139,6 @@ public class GameScreen implements Screen, InputProcessor {
         gameCamera.position.x = MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f);
         gameCamera.position.y = MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f);
 
-        System.out.println(gameCamera.position);
-
         gameCamera.update();
         uiCamera.update();
 
