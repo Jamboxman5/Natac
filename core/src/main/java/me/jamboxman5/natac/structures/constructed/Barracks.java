@@ -9,10 +9,11 @@ public class Barracks extends Structure {
 
     public Barracks() {
         this.drawColor = Color.CHARTREUSE;
+        this.structureName = "Barracks";
     }
 
     public Barracks(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(50, 0, 0, tilePos, pos);
+        super(50, 0, 0, tilePos, pos, "Barracks");
     }
 
     @Override

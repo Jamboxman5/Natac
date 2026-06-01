@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -16,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.constructed.Barracks;
+import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
@@ -30,8 +34,11 @@ public class SelectedTileModal extends Stage {
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
-    TextButton buildButton = new TextButton("Build", skin);
-    TextButton backButton = new TextButton("Back", skin);
+    Button buildButton;
+    Button backButton;
+
+    SelectBox<Structure> buildSelector;
+    Button buildConfirmButton;
 
     public SelectedTileModal(Tile t) {
 
@@ -41,34 +48,24 @@ public class SelectedTileModal extends Stage {
         selectedTileSprite = new Sprite(selectedTile.getSprite());
         selectedTileHighlight = generateHighlight();
 
-
-        buildButton.getStyle().font.getData().setScale(2f);
-        buildButton.getStyle().disabledFontColor = Color.GRAY;
-
         int width = Settings.screenWidth / 10;
         int height = Settings.screenHeight / 10;
         int margin = 40;
 
         float x = (Settings.screenWidth / 2f) - (margin / 2f) - width;
 
-        backButton.setPosition(x, margin * 2.5f);
-        buildButton.setPosition(x + width + margin, margin * 2.5f);
-
-        buildButton.setSize(width, height);
-        backButton.setSize(width, height);
+        backButton = getButton("Back", getBackAction(), width, height, x, margin * 2.5f);
+        buildButton = getButton("Build", getBuildAction(), width, height, x + width + margin, margin * 2.5f);
 
         addActor(buildButton);
         addActor(backButton);
 
-        backButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Natac.instance.getGame().getMap().deselectTile();
-            }
-        });
+        buildSelector = new SelectBox<>(skin);
+        buildSelector.setItems(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), new Vector2(0,0)));
+        buildSelector.setSize(width, height);
+        buildSelector.setPosition(x + (width) + (margin), margin * 2.5f);
 
-        buildButton.setDisabled(false);
-        backButton.setDisabled(false);
+        buildConfirmButton = getButton("Confirm", getBuildConfirmAction(), width, height, x + (width * 2) + (margin * 2), margin * 2.5f);
 
     }
 
@@ -108,5 +105,50 @@ public class SelectedTileModal extends Stage {
         shape.setPosition(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
         shape.setOrigin(0,0);
         return shape;
+
+    }
+
+    private Button getButton(String txt, ChangeListener clickAction, int w, int h, float x, float y) {
+        TextButton button = new TextButton(txt, skin);
+        button.setPosition(x, y);
+        button.setSize(w, h);
+
+        button.addListener(clickAction);
+
+        button.getStyle().font.getData().setScale(2f);
+        button.getStyle().disabledFontColor = Color.GRAY;
+
+        return button;
+    }
+
+    public ChangeListener getBackAction() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Natac.instance.getGame().getMap().deselectTile();
+            }
+        };
+    }
+
+    public ChangeListener getBuildAction() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                buildButton.remove();
+                addActor(buildSelector);
+                addActor(buildConfirmButton);
+            }
+        };
+    }
+
+    public ChangeListener getBuildConfirmAction() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                buildSelector.remove();
+                buildConfirmButton.remove();
+                addActor(buildButton);
+            }
+        };
     }
 }

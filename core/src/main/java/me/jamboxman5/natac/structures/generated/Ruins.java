@@ -15,7 +15,7 @@ public class Ruins extends Structure {
     }
 
     public Ruins(Vector2 tilePos) {
-        super(1, 1, 1, tilePos, getRandomPosition());
+        super(1, 1, 1, tilePos, getRandomPosition(), "Ruins");
     }
 
     @Override

@@ -21,11 +21,13 @@ public abstract class Structure {
 
     protected transient Color drawColor;
 
+    protected String structureName = "Structure";
+
     protected Structure() {
         this.drawColor = Color.WHITE;
     }
 
-    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos, Vector2 position) {
+    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos, Vector2 position, String name) {
         this.buildCost = buildCost;
         this.revenuePerTurn = revenuePerTurn;
         this.resourcesPerTurn = resourcesPerTurn;
@@ -33,6 +35,7 @@ public abstract class Structure {
         this.tilePos = tilePos;
         this.position = position;
         this.drawColor = Color.WHITE;
+        this.structureName = name;
     }
 
     public abstract void update();
@@ -59,4 +62,8 @@ public abstract class Structure {
 
     public int getRevenuePerTurn() { return revenuePerTurn; }
     public int getResourcesPerTurn() { return resourcesPerTurn; }
+
+    public String toString() {
+        return structureName;
+    }
 }
