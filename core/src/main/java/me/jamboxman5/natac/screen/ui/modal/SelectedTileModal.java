@@ -179,9 +179,11 @@ public class SelectedTileModal extends Stage {
     private enum StructureSelection {
 
         NONE("Select..."),
-        BARRACKS("Barracks");
+        BARRACKS(Barracks.name + " ($" + Barracks.goldCost + ")");
 
         public final String label;
+
+        public String toString() { return label; }
 
         StructureSelection(String label) {
             this.label = label;
