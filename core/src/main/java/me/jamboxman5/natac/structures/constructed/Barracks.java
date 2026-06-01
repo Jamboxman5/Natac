@@ -7,13 +7,17 @@ import me.jamboxman5.natac.structures.Structure;
 
 public class Barracks extends Structure {
 
+    public static final String name = "Barracks";
+    public static final int goldCost = 50;
+    public static final int resourceCost = 0;
+
     public Barracks() {
         this.drawColor = Color.CHARTREUSE;
-        this.structureName = "Barracks";
+        this.structureName = name;
     }
 
     public Barracks(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(50, 0, 0, tilePos, pos, "Barracks");
+        super(goldCost, 0, 0, tilePos, pos, name);
     }
 
     @Override

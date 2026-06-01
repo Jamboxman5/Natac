@@ -15,6 +15,7 @@ import me.jamboxman5.natac.net.packet.*;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
@@ -52,6 +53,7 @@ public class NetUtil {
         kryo.register(Structure.class);
         kryo.register(Ruins.class);
         kryo.register(TownHall.class);
+        kryo.register(Barracks.class);
         kryo.register(Unit.class);
         kryo.register(Soldier.class);
         kryo.register(Tile.Hexagon.class);

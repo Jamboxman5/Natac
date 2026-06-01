@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
@@ -37,7 +38,7 @@ public class SelectedTileModal extends Stage {
     Button buildButton;
     Button backButton;
 
-    SelectBox<Structure> buildSelector;
+    SelectBox<StructureSelection> buildSelector;
     Button buildConfirmButton;
 
     public SelectedTileModal(Tile t) {
@@ -61,7 +62,7 @@ public class SelectedTileModal extends Stage {
         addActor(backButton);
 
         buildSelector = new SelectBox<>(skin);
-        buildSelector.setItems(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), new Vector2(0,0)));
+        buildSelector.setItems(StructureSelection.NONE, StructureSelection.BARRACKS);
         buildSelector.setSize(width, height);
         buildSelector.setPosition(x + (width) + (margin), margin * 2.5f);
 
@@ -145,10 +146,45 @@ public class SelectedTileModal extends Stage {
         return new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
+                StructureSelection building = buildSelector.getSelected();
+
+                int cost = 0;
+                Structure toBuild = null;
+
+                switch(building) {
+                    case NONE:
+                        buildSelector.remove();
+                        buildConfirmButton.remove();
+                        addActor(buildButton);
+                        break;
+                    case BARRACKS:
+                        cost = Barracks.goldCost;
+                        toBuild = new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), new Vector2());
+                        break;
+                }
+
+                if (toBuild == null || Natac.instance.player.getGold() < cost) return;
+
                 buildSelector.remove();
                 buildConfirmButton.remove();
                 addActor(buildButton);
+
+                PacketUtil.buildStructure(toBuild, selectedTile.getTilePosition());
+                PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -cost, 0);
             }
         };
+    }
+
+    private enum StructureSelection {
+
+        NONE("Select..."),
+        BARRACKS("Barracks");
+
+        public final String label;
+
+        StructureSelection(String label) {
+            this.label = label;
+        }
     }
 }

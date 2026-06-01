@@ -64,6 +64,8 @@ public abstract class Structure {
     public int getResourcesPerTurn() { return resourcesPerTurn; }
 
     public String toString() {
-        return structureName;
+        return structureName + " ($" + buildCost + ")";
     }
+
+    public int getBuildCost() { return buildCost; }
 }
