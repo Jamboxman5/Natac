@@ -205,7 +205,7 @@ public class Tile {
         for (Unit u : occupants) u.update();
         for (Structure s : buildings) s.update();
 
-        float targetHighlightWidth = bounds.contains(touchPos) ? 3f : 1.0f;
+        float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
         highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
 
     }
