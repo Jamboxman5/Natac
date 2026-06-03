@@ -44,7 +44,7 @@ public class Tile {
     private transient boolean isFogged;
     private transient boolean soundPlayed = false;
 
-    private final static Texture mountainsLayer = new Texture(Gdx.files.internal("tile/MountainTileSprite_3.png"));
+    public final static Texture mountainsLayer = new Texture(Gdx.files.internal("tile/MountainTileSprite_3.png"));
 
     private Vector2 pos;
 
@@ -248,6 +248,10 @@ public class Tile {
     public List<Structure> getStructures() { return buildings; }
 
     public List<Unit> getUnits() { return occupants; }
+
+    public TileType getType() {
+        return type;
+    }
 
     public static class Hexagon {
         private float currentScale = 1f;

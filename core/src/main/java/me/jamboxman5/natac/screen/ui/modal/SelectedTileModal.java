@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.Barracks;
@@ -70,7 +71,15 @@ public class SelectedTileModal extends Stage {
 
     }
 
+    private float bgAlpha = 0f;
+    private final float bgTargetAlpha = 0.5f;
+
     public void drawSelectedTileMenu(SpriteBatch batch, ShapeDrawer shapes) {
+
+        bgAlpha = MathUtils.lerp(bgAlpha, bgTargetAlpha, 0.02f);
+
+        shapes.setColor(new Color(0,0,0, bgAlpha));
+        shapes.filledRectangle(0, 0, Settings.screenWidth, Settings.screenHeight);
 
         selectedTileSprite.setCenter(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
         selectedTileSprite.setScale(5f * 0.9f, 5f * 0.9f);
@@ -79,6 +88,13 @@ public class SelectedTileModal extends Stage {
         shapes.setDefaultLineWidth(10f);
         shapes.setColor(Color.WHITE);
         shapes.polygon(selectedTileHighlight, JoinType.POINTY);
+
+        if (selectedTile.getType() == TileType.MOUNTAINS) {
+            Sprite layer = new Sprite(Tile.mountainsLayer);
+            layer.setScale(5f * 0.9f);
+            layer.setCenter(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
+            layer.draw(batch);
+        }
 
         for (Structure structure : selectedTile.getStructures()) {
             structure.drawModal(batch, shapes, new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50));
