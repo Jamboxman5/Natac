@@ -1,7 +1,9 @@
 package me.jamboxman5.natac.map.tile;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -41,6 +43,8 @@ public class Tile {
     private transient Sprite sprite;
     private transient boolean isFogged;
     private transient boolean soundPlayed = false;
+
+    private final static Texture mountainsLayer = new Texture(Gdx.files.internal("tile/MountainTileSprite_3.png"));
 
     private Vector2 pos;
 
@@ -125,6 +129,17 @@ public class Tile {
         shapes.setDefaultLineWidth(highlightWidth);
         shapes.setColor(Color.WHITE);
         shapes.polygon(bounds.shape, JoinType.POINTY);
+
+        if (isFogged) return;
+        if (type != TileType.MOUNTAINS) return;
+
+        batch.flush();
+
+        Sprite layer = new Sprite(mountainsLayer);
+        layer.setScale(currentScale);
+        layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
+        layer.setOriginCenter();
+        layer.draw(batch);
 
     }
 
