@@ -17,10 +17,10 @@ import me.jamboxman5.natac.util.Settings;
 public class StructureSelector extends Selector {
 
     public StructureSelector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds) {
-        super(parent, selectedTile, selectedTileBounds, tileCenter, bounds);
+        super(parent, selectedTile, selectedTileBounds, tileCenter, bounds, true);
 
         Button bb = new TextButton(Selection.BARRACKS.toString(), skin);
-        buttonOrganizer.add(bb).width(290).height(200).pad(5).row();
+        addButton(bb, 290, 200, 5);
 
         dragAndDrop.addSource(new DragAndDrop.Source(bb) {
             @Override
@@ -58,10 +58,6 @@ public class StructureSelector extends Selector {
                 PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
             }
         });
-
-        setSize(bounds.width, bounds.height);
-        setPosition(bounds.x, bounds.y);
-        setScrollingDisabled(true, false);
 
     }
 

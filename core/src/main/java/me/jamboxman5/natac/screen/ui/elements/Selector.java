@@ -26,10 +26,11 @@ public class Selector extends ScrollPane {
     protected Vector2 tileCenter;
 
     protected SelectedTileModal parent;
+    protected boolean isVertical;
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
-    protected Selector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds) {
+    protected Selector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds, boolean isVertical) {
         super(new Table());
 
         this.parent = parent;
@@ -37,6 +38,8 @@ public class Selector extends ScrollPane {
         this.selectedTile = selectedTile;
         this.selectedTileBounds = selectedTileBounds;
         this.tileCenter = tileCenter;
+
+        this.isVertical = isVertical;
 
         buttonOrganizer = (Table) getActor();
         dragAndDrop = new DragAndDrop();
@@ -50,11 +53,11 @@ public class Selector extends ScrollPane {
                 parent.closeSelector();
             }
         });
-        buttonOrganizer.add(back).width(290).height(100).pad(5).row();
+        addButton(back, 290, 100, 5);
 
         setSize(bounds.width, bounds.height);
         setPosition(bounds.x, bounds.y);
-        setScrollingDisabled(true, false);
+        setScrollingDisabled(isVertical, !isVertical);
 
     }
 
@@ -85,5 +88,10 @@ public class Selector extends ScrollPane {
             this.goldCost = goldCost;
             this.resourceCost = resourceCost;
         }
+    }
+
+    protected void addButton(Button b, float w, float h, float pad) {
+        buttonOrganizer.add(b).width(w).height(h).pad(pad);
+        if (isVertical) buttonOrganizer.row();
     }
 }

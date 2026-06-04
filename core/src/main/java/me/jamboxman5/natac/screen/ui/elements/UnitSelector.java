@@ -20,10 +20,10 @@ import me.jamboxman5.natac.util.Settings;
 public class UnitSelector extends Selector {
 
     public UnitSelector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds) {
-        super(parent, selectedTile, selectedTileBounds, tileCenter, bounds);
+        super(parent, selectedTile, selectedTileBounds, tileCenter, bounds, true);
 
         Button bb = new TextButton(Selection.SOLDIER.toString(), skin);
-        buttonOrganizer.add(bb).width(290).height(200).pad(5).row();
+        addButton(bb, 290, 200, 5);
 
         dragAndDrop.addSource(new DragAndDrop.Source(bb) {
             @Override
