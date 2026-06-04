@@ -43,6 +43,7 @@ public abstract class Structure {
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
         shapes.setColor(drawColor);
         Vector2 drawPos = tilePos.cpy().add(position.cpy().scl(Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale()));
+        drawPos.sub(5f/2f, 5f/2f);
         shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 5, 5));
     }
 

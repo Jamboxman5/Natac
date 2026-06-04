@@ -202,7 +202,7 @@ public class Tile {
 
         if (sprite == null) sprite = new Sprite(type.texture);
 
-        float targetScale = bounds.contains(touchPos) ? 1f : .9f;
+        float targetScale = bounds.contains(touchPos) ? 1.1f : 1f;
 
         if (bounds.contains(touchPos) && state != TileState.HIDDEN) {
             if (!soundPlayed) {
@@ -265,7 +265,7 @@ public class Tile {
                 float angle = i * MathUtils.PI / 3;
                 // Multiply the X-offset by the stretch factor
                 float stretchFactor = 1.5f;
-                int radius = 50;
+                int radius = 55;
                 vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
                 vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
             }

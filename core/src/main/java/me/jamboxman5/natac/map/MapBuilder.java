@@ -14,7 +14,7 @@ public class MapBuilder {
         float startX = 200;
         float startY = 200;
 
-        float gap = 10.0f;
+        float gap = 20.0f;
         float stretchFactor = 1.5f;
 
         float verticalStep = (float) ((Math.sqrt(3) * hexRadius) + gap);
