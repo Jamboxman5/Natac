@@ -104,6 +104,9 @@ public class SelectedTileModal extends Stage {
                 float y,
                 int pointer) {
 
+                if (Natac.instance.player.getGold() < StructureSelection.BARRACKS.goldCost) return null;
+                if (Natac.instance.player.getResources() < StructureSelection.BARRACKS.resourceCost) return null;
+
                 DragAndDrop.Payload payload = new DragAndDrop.Payload();
                 payload.setObject(StructureSelection.BARRACKS);
 
