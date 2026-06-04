@@ -17,10 +17,10 @@ public class PlayInputStage extends Stage {
 
     TextButton claimTileButton = new TextButton("Claim", skin);
     TextButton shopButton = new TextButton("Shop", skin);
-    TextButton buildButton = new TextButton("Build", skin);
     TextButton attackButton = new TextButton("Attack", skin);
     TextButton scoutButton = new TextButton("Scout", skin);
     TextButton tradeButton = new TextButton("Trade", skin);
+    TextButton endButton = new TextButton("End Turn", skin);
 
     public PlayInputStage() {
 
@@ -38,51 +38,51 @@ public class PlayInputStage extends Stage {
 
         claimTileButton.setPosition(x, y);
         shopButton.setPosition(x, y - (height) - (margin));
-        buildButton.setPosition(x, y - (height * 2) - (margin * 2));
-        attackButton.setPosition(x, y - (height * 3) - (margin * 3));
-        scoutButton.setPosition(x, y - (height * 4) - (margin * 4));
-        tradeButton.setPosition(x, y - (height * 5) - (margin * 5));
+        attackButton.setPosition(x, y - (height * 2) - (margin * 2));
+        scoutButton.setPosition(x, y - (height * 3) - (margin * 3));
+        tradeButton.setPosition(x, y - (height * 4) - (margin * 4));
+        endButton.setPosition(x, y - (height * 5) - (margin * 5));
 
         claimTileButton.setSize(width, height);
         shopButton.setSize(width, height);
-        buildButton.setSize(width, height);
         attackButton.setSize(width, height);
         scoutButton.setSize(width, height);
         tradeButton.setSize(width, height);
+        endButton.setSize(width, height);
 
         addActor(claimTileButton);
         addActor(shopButton);
-        addActor(buildButton);
         addActor(attackButton);
         addActor(scoutButton);
         addActor(tradeButton);
+        addActor(endButton);
 
         disableInput();
 
-//        claimTileButton.addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ChangeEvent event, Actor actor) {
-//                Natac.instance.getClientManager().selectFromConnectedPlayers();
-//            }
-//        });
+        endButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Natac.instance.endTurn();
+            }
+        });
     }
 
     public void disableInput() {
         claimTileButton.setDisabled(true);
         shopButton.setDisabled(true);
-        buildButton.setDisabled(true);
         attackButton.setDisabled(true);
         scoutButton.setDisabled(true);
         tradeButton.setDisabled(true);
+        endButton.setDisabled(true);
     }
 
     public void enableInput() {
         claimTileButton.setDisabled(false);
         shopButton.setDisabled(false);
-        buildButton.setDisabled(false);
         attackButton.setDisabled(false);
         scoutButton.setDisabled(false);
         tradeButton.setDisabled(false);
+        endButton.setDisabled(false);
     }
 
     public boolean isDisabled() { return claimTileButton.isDisabled(); }

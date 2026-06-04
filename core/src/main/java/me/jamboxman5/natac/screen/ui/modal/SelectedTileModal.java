@@ -82,7 +82,7 @@ public class SelectedTileModal extends Stage {
         buttonOrganizer = new Table();
         buttonOrganizer.top();
 
-        Button bb = new TextButton("Barracks", skin);
+        Button bb = new TextButton(StructureSelection.BARRACKS.toString(), skin);
 
         buttonOrganizer.add(bb).width(290).height(200).pad(5).row();
 
@@ -266,8 +266,8 @@ public class SelectedTileModal extends Stage {
         public String toString() {
             String s = "";
             s += name;
-            if (goldCost > 0) s += "($" + goldCost + ")";
-            if (resourceCost > 0) s += "(" + resourceCost + "R)";
+            if (goldCost > 0) s += " ($" + goldCost + ")";
+            if (resourceCost > 0) s += " (" + resourceCost + "R)";
             return s;
         }
 
