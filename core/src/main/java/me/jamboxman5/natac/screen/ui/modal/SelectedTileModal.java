@@ -152,7 +152,7 @@ public class SelectedTileModal extends Stage {
         shapes.filledRectangle(0, 0, Settings.screenWidth, Settings.screenHeight);
 
         selectedTileSprite.setCenter(tileCenter.x, tileCenter.y);
-        selectedTileSprite.setScale(5f * 0.9f, 5f * 0.9f);
+        selectedTileSprite.setScale(5f, 5f);
         selectedTileSprite.draw(batch);
 
         shapes.setDefaultLineWidth(10f);
@@ -161,7 +161,7 @@ public class SelectedTileModal extends Stage {
 
         if (selectedTile.getType() == TileType.MOUNTAINS) {
             Sprite layer = new Sprite(Tile.mountainsLayer);
-            layer.setScale(5f * 0.9f);
+            layer.setScale(5f);
             layer.setCenter(tileCenter.x, tileCenter.y);
             layer.draw(batch);
         }
@@ -184,7 +184,7 @@ public class SelectedTileModal extends Stage {
             float angle = i * MathUtils.PI / 3;
             // Multiply the X-offset by the stretch factor
             float stretchFactor = 1.5f;
-            int radius = 250;
+            int radius = 55 * 5;
             vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
             vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
         }
