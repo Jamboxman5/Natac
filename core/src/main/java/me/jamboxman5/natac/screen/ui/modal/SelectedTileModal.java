@@ -122,6 +122,9 @@ public class SelectedTileModal extends Stage {
                 StructureSelection selected = (StructureSelection) payload.getObject();
                 Vector2 dropPos = new Vector2(Gdx.input.getX(), Settings.screenHeight - Gdx.input.getY());
 
+
+                if (!selectedTileHighlight.contains(dropPos)) return;
+
                 PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
                 PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
             }
