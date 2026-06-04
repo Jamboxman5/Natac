@@ -20,6 +20,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.screen.ui.elements.StructureSelector;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
@@ -40,12 +41,8 @@ public class SelectedTileModal extends Stage {
     Button buildButton;
     Button backButton;
 
+    StructureSelector structureSelector;
 
-    DragAndDrop dragAndDrop;
-    ScrollPane scrollPane;
-    Table buttonOrganizer;
-
-    Array<Button> popupButtons;
 
     int margin = 40;
 
@@ -71,68 +68,10 @@ public class SelectedTileModal extends Stage {
         addActor(buildButton);
         addActor(backButton);
 
-        createBuildMenu();
+        structureSelector = new StructureSelector(selectedTile, selectedTileHighlight, tileCenter, margin);
 
     }
 
-    private void createBuildMenu() {
-
-        dragAndDrop = new DragAndDrop();
-
-        buttonOrganizer = new Table();
-        buttonOrganizer.top();
-
-        Button bb = new TextButton(StructureSelection.BARRACKS.toString(), skin);
-
-        buttonOrganizer.add(bb).width(290).height(200).pad(5).row();
-
-        dragAndDrop.addSource(new DragAndDrop.Source(bb) {
-            @Override
-            public DragAndDrop.Payload dragStart(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer) {
-
-                if (Natac.instance.player.getGold() < StructureSelection.BARRACKS.goldCost) return null;
-                if (Natac.instance.player.getResources() < StructureSelection.BARRACKS.resourceCost) return null;
-
-                DragAndDrop.Payload payload = new DragAndDrop.Payload();
-                payload.setObject(StructureSelection.BARRACKS);
-
-                return payload;
-            }
-
-            @Override
-            public void dragStop(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                DragAndDrop.Payload payload,
-                DragAndDrop.Target target) {
-
-                StructureSelection selected = (StructureSelection) payload.getObject();
-                Vector2 dropPos = new Vector2(Gdx.input.getX(), Settings.screenHeight - Gdx.input.getY());
-
-
-                if (!selectedTileHighlight.contains(dropPos)) return;
-
-                PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
-                PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
-            }
-        });
-
-        scrollPane = new ScrollPane(buttonOrganizer);
-        scrollPane.setSize(300, Settings.screenHeight - (margin * 2));
-        scrollPane.setPosition(Settings.screenWidth - 300 - margin, margin);
-        scrollPane.setScrollingDisabled(true, false);
-
-    }
-
-    private Vector2 unprojectDropPos(Vector2 dropPos) {
-        return dropPos.cpy().sub(tileCenter).scl(1f/5f);
-    }
 
     private float bgAlpha = 0f;
     private final float bgTargetAlpha = 0.5f;
@@ -215,8 +154,8 @@ public class SelectedTileModal extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 //                buildButton.remove();
-                addActor(scrollPane);
-                setScrollFocus(scrollPane);
+                addActor(structureSelector);
+                setScrollFocus(structureSelector);
             }
         };
     }
@@ -255,26 +194,5 @@ public class SelectedTileModal extends Stage {
 //        };
 //    }
 
-    private enum StructureSelection {
 
-        BARRACKS("Barracks", 50, 0);
-
-        public final String name;
-        public final int resourceCost;
-        public final int goldCost;
-
-        public String toString() {
-            String s = "";
-            s += name;
-            if (goldCost > 0) s += " ($" + goldCost + ")";
-            if (resourceCost > 0) s += " (" + resourceCost + "R)";
-            return s;
-        }
-
-        StructureSelection(String name, int goldCost, int resourceCost) {
-            this.name = name;
-            this.goldCost = goldCost;
-            this.resourceCost = resourceCost;
-        }
-    }
 }
