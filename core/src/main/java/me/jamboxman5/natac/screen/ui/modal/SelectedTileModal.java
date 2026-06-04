@@ -83,18 +83,8 @@ public class SelectedTileModal extends Stage {
         buttonOrganizer.top();
 
         Button bb = new TextButton("Barracks", skin);
-        Button bb2 = new TextButton("Butt", skin);
-        Button bb3 = new TextButton("Butt", skin);
-        Button bb4 = new TextButton("Butt", skin);
-        Button bb5 = new TextButton("Butt", skin);
-        Button bb6 = new TextButton("Butt", skin);
 
         buttonOrganizer.add(bb).width(290).height(200).pad(5).row();
-        buttonOrganizer.add(bb2).width(290).height(200).pad(5).row();
-        buttonOrganizer.add(bb3).width(290).height(200).pad(5).row();
-        buttonOrganizer.add(bb4).width(290).height(200).pad(5).row();
-        buttonOrganizer.add(bb5).width(290).height(200).pad(5).row();
-        buttonOrganizer.add(bb6).width(290).height(200).pad(5).row();
 
         dragAndDrop.addSource(new DragAndDrop.Source(bb) {
             @Override
