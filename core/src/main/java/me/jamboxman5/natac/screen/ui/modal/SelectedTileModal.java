@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,6 +18,7 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.elements.StructureSelector;
+import me.jamboxman5.natac.screen.ui.elements.UnitSelector;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
@@ -42,6 +40,7 @@ public class SelectedTileModal extends Stage {
     Button backButton;
 
     StructureSelector structureSelector;
+    UnitSelector unitSelector;
 
 
     int margin = 40;
@@ -68,7 +67,12 @@ public class SelectedTileModal extends Stage {
         addActor(buildButton);
         addActor(backButton);
 
-        structureSelector = new StructureSelector(selectedTile, selectedTileHighlight, tileCenter, margin);
+        Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
+        structureSelector = new StructureSelector(this, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
+
+        Rectangle unitSelectorBounds = new Rectangle(margin, margin, 300, Settings.screenHeight - (margin * 2));
+        unitSelector = new UnitSelector(this, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
+
 
     }
 
@@ -158,6 +162,11 @@ public class SelectedTileModal extends Stage {
                 setScrollFocus(structureSelector);
             }
         };
+    }
+
+    public void closeSelector() {
+        structureSelector.remove();
+        unitSelector.remove();
     }
 
 //    public ChangeListener getBuildConfirmAction() {
