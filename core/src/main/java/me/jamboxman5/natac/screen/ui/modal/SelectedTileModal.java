@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
@@ -77,6 +78,13 @@ public class SelectedTileModal extends Stage {
         unitSelector = new UnitSelector(this, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
 
 
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (unitSelector != null) unitSelector.update();
+        if (structureSelector != null) structureSelector.update();
     }
 
     public void addRecruitButton() {
@@ -174,6 +182,7 @@ public class SelectedTileModal extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 closeSelector();
+                structureSelector.animateEntrance(Align.right);
                 addActor(structureSelector);
                 setScrollFocus(structureSelector);
             }
@@ -185,6 +194,7 @@ public class SelectedTileModal extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 closeSelector();
+                unitSelector.animateEntrance(Align.left);
                 addActor(unitSelector);
                 setScrollFocus(unitSelector);
             }

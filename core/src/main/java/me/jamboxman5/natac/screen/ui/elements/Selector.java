@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -27,6 +28,8 @@ public class Selector extends ScrollPane {
 
     protected SelectedTileModal parent;
     protected boolean isVertical;
+
+    protected Vector2 targetPos;
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
@@ -59,6 +62,27 @@ public class Selector extends ScrollPane {
         setPosition(bounds.x, bounds.y);
         setScrollingDisabled(isVertical, !isVertical);
 
+        targetPos = new Vector2(bounds.x, bounds.y);
+
+    }
+
+    public void animateEntrance(int alignFrom) {
+        if (alignFrom == Align.left) {
+            moveBy(-500, 0);
+        } else if (alignFrom == Align.right) {
+            moveBy(500, 0);
+        }
+    }
+
+    public void update() {
+        if (targetPos.epsilonEquals(getX(), getY())) return;
+        float xDiff = targetPos.x - getX();
+        if (xDiff > 0) moveBy(20, 0);
+        if (xDiff < 0) moveBy(-20, 0);
+
+        float yDiff = targetPos.y - getY();
+        if (yDiff > 0) moveBy(0, 20);
+        if (yDiff < 0) moveBy(0, -20);
     }
 
     protected Vector2 unprojectDropPos(Vector2 dropPos) {
