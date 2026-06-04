@@ -56,6 +56,7 @@ public class StructureSelector extends Selector {
 
                 PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
                 PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
+                parent.addRecruitButton();
             }
         });
 

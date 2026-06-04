@@ -15,6 +15,7 @@ import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
 import me.jamboxman5.natac.units.Unit;
@@ -298,6 +299,12 @@ public class Tile {
 
     public float getCurrentScale() { return currentScale; }
 
+    public boolean hasBarracks() {
+        for (Structure s : buildings) {
+            if (s instanceof Barracks) return true;
+        }
+        return false;
+    }
 
 }
 

@@ -37,6 +37,7 @@ public class SelectedTileModal extends Stage {
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
     Button buildButton;
+    Button recruitButton;
     Button backButton;
 
     StructureSelector structureSelector;
@@ -67,6 +68,8 @@ public class SelectedTileModal extends Stage {
         addActor(buildButton);
         addActor(backButton);
 
+        if (t.hasBarracks()) addRecruitButton();
+
         Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
         structureSelector = new StructureSelector(this, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
 
@@ -76,6 +79,19 @@ public class SelectedTileModal extends Stage {
 
     }
 
+    public void addRecruitButton() {
+        if (recruitButton != null) return;
+
+        float x = (Settings.screenWidth / 2f) - margin - (backButton.getWidth() * 1.5f);
+        float width = backButton.getWidth();
+        float height = backButton.getHeight();
+
+        backButton.setPosition(x, backButton.getY());
+        buildButton.setPosition(x + width + margin, buildButton.getY());
+
+        recruitButton = getButton("Recruit", getRecruitAction(), (int) width, (int) height, x + (width*2f) + (margin*2f), margin * 2.5f);
+        addActor(recruitButton);
+    }
 
     private float bgAlpha = 0f;
     private final float bgTargetAlpha = 0.5f;
@@ -157,9 +173,20 @@ public class SelectedTileModal extends Stage {
         return new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-//                buildButton.remove();
+                closeSelector();
                 addActor(structureSelector);
                 setScrollFocus(structureSelector);
+            }
+        };
+    }
+
+    public ChangeListener getRecruitAction() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                closeSelector();
+                addActor(unitSelector);
+                setScrollFocus(unitSelector);
             }
         };
     }
