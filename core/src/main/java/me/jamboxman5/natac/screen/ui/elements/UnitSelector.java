@@ -4,23 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
-import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.units.army.Soldier;
 import me.jamboxman5.natac.util.Settings;
 
-public class UnitSelector extends Selector {
+public class UnitSelector extends DDSelector {
 
     public UnitSelector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds) {
-        super(parent, selectedTile, selectedTileBounds, tileCenter, bounds, true);
+        super(selectedTile, selectedTileBounds, tileCenter, bounds, true, Align.left, Align.left);
 
         Button bb = new TextButton(Selection.SOLDIER.toString(), skin);
         addButton(bb, 290, 200, 5);

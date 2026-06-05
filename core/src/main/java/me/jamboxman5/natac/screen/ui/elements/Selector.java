@@ -15,45 +15,35 @@ import me.jamboxman5.natac.sfx.Sounds;
 
 public class Selector extends ScrollPane {
 
-    protected DragAndDrop dragAndDrop;
     protected Table buttonOrganizer;
 
-    protected Tile selectedTile;
-    protected Polygon selectedTileBounds;
-    protected Vector2 tileCenter;
-
-    protected SelectedTileModal parent;
     protected boolean isVertical;
 
     protected Vector2 targetPos;
 
     protected boolean markedRemove = false;
 
+    protected int alignFrom;
+    protected int alignTo;
+
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
-    protected Selector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds, boolean isVertical) {
+    protected Selector(int alignFrom, int alignTo, boolean isVertical, Rectangle bounds) {
         super(new Table());
-
-        this.parent = parent;
-
-        this.selectedTile = selectedTile;
-        this.selectedTileBounds = selectedTileBounds;
-        this.tileCenter = tileCenter;
 
         this.isVertical = isVertical;
 
         buttonOrganizer = (Table) getActor();
-        dragAndDrop = new DragAndDrop();
-
         buttonOrganizer.top();
 
         Button back = new TextButton("Back", skin);
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.closeSelector();
+                animateExit();
             }
         });
+
         addButton(back, 290, 100, 5);
 
         setSize(bounds.width, bounds.height);
@@ -64,7 +54,7 @@ public class Selector extends ScrollPane {
 
     }
 
-    public void animateEntrance(int alignFrom) {
+    public void animateEntrance() {
         if (alignFrom == Align.left) {
             moveBy(-500, 0);
         } else if (alignFrom == Align.right) {
@@ -73,7 +63,7 @@ public class Selector extends ScrollPane {
         Sounds.MENU_SLIDE_IN.play();
     }
 
-    public void animateExit(int alignTo) {
+    public void animateExit() {
         if (alignTo == Align.left) {
             targetPos.add(-500, 0);
         } else if (alignTo == Align.right) {
@@ -95,35 +85,6 @@ public class Selector extends ScrollPane {
         float yDiff = targetPos.y - getY();
         if (yDiff > 0) moveBy(0, 20);
         if (yDiff < 0) moveBy(0, -20);
-    }
-
-    protected Vector2 unprojectDropPos(Vector2 dropPos) {
-        return dropPos.cpy().sub(tileCenter).scl(1f/5f);
-    }
-
-
-    protected enum Selection {
-
-        SOLDIER("Soldier", 50, 0),
-        BARRACKS("Barracks", 50, 0);
-
-        public final String name;
-        public final int resourceCost;
-        public final int goldCost;
-
-        public String toString() {
-            String s = "";
-            s += name;
-            if (goldCost > 0) s += " ($" + goldCost + ")";
-            if (resourceCost > 0) s += " (" + resourceCost + "R)";
-            return s;
-        }
-
-        Selection(String name, int goldCost, int resourceCost) {
-            this.name = name;
-            this.goldCost = goldCost;
-            this.resourceCost = resourceCost;
-        }
     }
 
     protected void addButton(Button b, float w, float h, float pad) {

@@ -6,24 +6,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
-import me.jamboxman5.natac.net.packet.PacketUtil;
-import me.jamboxman5.natac.screen.ui.elements.Selector;
 import me.jamboxman5.natac.screen.ui.elements.StructureSelector;
 import me.jamboxman5.natac.screen.ui.elements.UnitSelector;
 import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.structures.constructed.Barracks;
-import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
@@ -190,7 +183,7 @@ public class SelectedTileModal extends Stage {
                 Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
                 structureSelector = new StructureSelector(parent, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
 
-                structureSelector.animateEntrance(Align.right);
+                structureSelector.animateEntrance();
                 addActor(structureSelector);
                 setScrollFocus(structureSelector);
             }
@@ -206,7 +199,7 @@ public class SelectedTileModal extends Stage {
                 Rectangle unitSelectorBounds = new Rectangle(margin, margin, 300, Settings.screenHeight - (margin * 2));
                 unitSelector = new UnitSelector(parent, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
 
-                unitSelector.animateEntrance(Align.left);
+                unitSelector.animateEntrance();
                 addActor(unitSelector);
                 setScrollFocus(unitSelector);
             }
@@ -215,10 +208,10 @@ public class SelectedTileModal extends Stage {
 
     public void closeSelector() {
         if (structureSelector != null && structureSelector.hasParent()) {
-            structureSelector.animateExit(Align.right);
+            structureSelector.animateExit();
         }
         if (unitSelector != null && unitSelector.hasParent()) {
-            unitSelector.animateExit(Align.left);
+            unitSelector.animateExit();
         }
     }
 

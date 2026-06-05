@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import me.jamboxman5.natac.net.ClientManager;
 import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.net.packet.PacketEndTurn;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.screen.MainMenuScreen;
@@ -113,6 +114,7 @@ public class Natac extends Game {
         if (game.getMap().hasTiles(player)) {
             game.setState(GameScreen.State.PLAY);
             game.getMap().collectRevenues();
+            PacketUtil.createStatChange(player, 1, 0, 0,0,0 ,0);
         }
         else game.setState(GameScreen.State.CLAIM);
 

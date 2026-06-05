@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -15,10 +16,10 @@ import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.util.Settings;
 
-public class StructureSelector extends Selector {
+public class StructureSelector extends DDSelector {
 
     public StructureSelector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds) {
-        super(parent, selectedTile, selectedTileBounds, tileCenter, bounds, true);
+        super(selectedTile, selectedTileBounds, tileCenter, bounds, true, Align.right, Align.right);
 
         Button bb = new TextButton(Selection.BARRACKS.toString(), skin);
         addButton(bb, 290, 200, 5);
