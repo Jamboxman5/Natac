@@ -9,6 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.cards.Card;
+import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.screen.ui.elements.CardSelector;
+import me.jamboxman5.natac.screen.ui.elements.Selector;
 import me.jamboxman5.natac.util.Settings;
 
 public class PlayInputStage extends Stage {
@@ -19,8 +24,10 @@ public class PlayInputStage extends Stage {
     TextButton shopButton = new TextButton("Shop", skin);
     TextButton attackButton = new TextButton("Attack", skin);
     TextButton scoutButton = new TextButton("Scout", skin);
-    TextButton tradeButton = new TextButton("Trade", skin);
+    TextButton cardButton = new TextButton("Cards", skin);
     TextButton endButton = new TextButton("End Turn", skin);
+
+    Selector popupSelector;
 
     public PlayInputStage() {
 
@@ -40,21 +47,21 @@ public class PlayInputStage extends Stage {
         shopButton.setPosition(x, y - (height) - (margin));
         attackButton.setPosition(x, y - (height * 2) - (margin * 2));
         scoutButton.setPosition(x, y - (height * 3) - (margin * 3));
-        tradeButton.setPosition(x, y - (height * 4) - (margin * 4));
+        cardButton.setPosition(x, y - (height * 4) - (margin * 4));
         endButton.setPosition(x, y - (height * 5) - (margin * 5));
 
         claimTileButton.setSize(width, height);
         shopButton.setSize(width, height);
         attackButton.setSize(width, height);
         scoutButton.setSize(width, height);
-        tradeButton.setSize(width, height);
+        cardButton.setSize(width, height);
         endButton.setSize(width, height);
 
         addActor(claimTileButton);
         addActor(shopButton);
         addActor(attackButton);
         addActor(scoutButton);
-        addActor(tradeButton);
+        addActor(cardButton);
         addActor(endButton);
 
         disableInput();
@@ -65,6 +72,25 @@ public class PlayInputStage extends Stage {
                 Natac.instance.endTurn();
             }
         });
+
+        cardButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                popupSelector = new CardSelector();
+                popupSelector.animateEntrance();
+                addActor(popupSelector);
+            }
+        });
+
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (popupSelector != null) {
+            popupSelector.update();
+            if (popupSelector.canRemove()) popupSelector = null;
+        }
     }
 
     public void disableInput() {
@@ -72,7 +98,7 @@ public class PlayInputStage extends Stage {
         shopButton.setDisabled(true);
         attackButton.setDisabled(true);
         scoutButton.setDisabled(true);
-        tradeButton.setDisabled(true);
+        cardButton.setDisabled(true);
         endButton.setDisabled(true);
     }
 
@@ -81,7 +107,7 @@ public class PlayInputStage extends Stage {
         shopButton.setDisabled(false);
         attackButton.setDisabled(false);
         scoutButton.setDisabled(false);
-        tradeButton.setDisabled(false);
+        cardButton.setDisabled(false);
         endButton.setDisabled(false);
     }
 

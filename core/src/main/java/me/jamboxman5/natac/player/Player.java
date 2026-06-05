@@ -1,7 +1,9 @@
 package me.jamboxman5.natac.player;
 
 import com.badlogic.gdx.graphics.Color;
+import me.jamboxman5.natac.cards.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,7 +11,7 @@ public class Player {
 
     private PlayerClass playerClass;
 
-    private transient List inventory;
+    private transient List<Card> inventory;
 
     private int gold;
     private int resources;
@@ -36,6 +38,8 @@ public class Player {
         this.research = playerClass.research;
 
         this.resources = 100;
+
+        this.inventory = new ArrayList<>();
 
     }
 
@@ -98,4 +102,8 @@ public class Player {
     public PlayerClass getPlayerClass() { return playerClass; }
 
     public String toString() { return username; }
+
+    public void giveCard(Card card) { inventory.add(card); }
+    public List<Card> getCards() { return inventory; }
+    public void removeCard(Card card) { inventory.remove(card); }
 }

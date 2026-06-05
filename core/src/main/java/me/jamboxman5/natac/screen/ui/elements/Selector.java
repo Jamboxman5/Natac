@@ -36,6 +36,10 @@ public class Selector extends ScrollPane {
         buttonOrganizer = (Table) getActor();
         buttonOrganizer.top();
 
+        setSize(bounds.width, bounds.height);
+        setPosition(bounds.x, bounds.y);
+        setScrollingDisabled(isVertical, !isVertical);
+
         Button back = new TextButton("Back", skin);
         back.addListener(new ChangeListener() {
             @Override
@@ -44,13 +48,15 @@ public class Selector extends ScrollPane {
             }
         });
 
-        addButton(back, 290, 100, 5);
-
-        setSize(bounds.width, bounds.height);
-        setPosition(bounds.x, bounds.y);
-        setScrollingDisabled(isVertical, !isVertical);
+        if (isVertical) {
+            addButton(back, getWidth(), getWidth()/2f, 5);
+        } else {
+            addButton(back, getHeight() /2f, getHeight(), 5);
+        }
 
         targetPos = new Vector2(bounds.x, bounds.y);
+        this.alignFrom = alignFrom;
+        this.alignTo = alignTo;
 
     }
 
@@ -65,17 +71,28 @@ public class Selector extends ScrollPane {
 
     public void animateExit() {
         if (alignTo == Align.left) {
+            moveBy(-20, 0);
             targetPos.add(-500, 0);
         } else if (alignTo == Align.right) {
+            moveBy(20, 0);
             targetPos.add(500, 0);
+        } else if (alignTo == Align.top) {
+            moveBy(0, 20);
+            targetPos.add(0, 500);
+        } else if (alignTo == Align.bottom) {
+            moveBy(0, -20);
+            targetPos.add(0, -500);
         }
+
         Sounds.MENU_SLIDE_OUT.play();
         markedRemove = true;
     }
 
     public void update() {
         if (targetPos.epsilonEquals(getX(), getY())) {
-            if (markedRemove) remove();
+            if (markedRemove) {
+                remove();
+            }
             return;
         }
         float xDiff = targetPos.x - getX();
@@ -90,5 +107,9 @@ public class Selector extends ScrollPane {
     protected void addButton(Button b, float w, float h, float pad) {
         buttonOrganizer.add(b).width(w).height(h).pad(pad);
         if (isVertical) buttonOrganizer.row();
+    }
+
+    public boolean canRemove() {
+        return markedRemove && targetPos.epsilonEquals(getX(), getY());
     }
 }

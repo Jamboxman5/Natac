@@ -18,8 +18,12 @@ import me.jamboxman5.natac.util.Settings;
 
 public class StructureSelector extends DDSelector {
 
+    SelectedTileModal parent;
+
     public StructureSelector(SelectedTileModal parent, Tile selectedTile, Polygon selectedTileBounds, Vector2 tileCenter, Rectangle bounds) {
         super(selectedTile, selectedTileBounds, tileCenter, bounds, true, Align.right, Align.right);
+
+        this.parent = parent;
 
         Button bb = new TextButton(Selection.BARRACKS.toString(), skin);
         addButton(bb, 290, 200, 5);
@@ -62,6 +66,8 @@ public class StructureSelector extends DDSelector {
                 parent.addRecruitButton();
             }
         });
+
+
 
     }
 
