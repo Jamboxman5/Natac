@@ -18,6 +18,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.screen.ui.elements.Selector;
 import me.jamboxman5.natac.screen.ui.elements.StructureSelector;
 import me.jamboxman5.natac.screen.ui.elements.UnitSelector;
 import me.jamboxman5.natac.structures.Structure;
@@ -64,18 +65,14 @@ public class SelectedTileModal extends Stage {
         float x = (Settings.screenWidth / 2f) - (margin / 2f) - width;
 
         backButton = getButton("Back", getBackAction(), width, height, x, margin * 2.5f);
-        buildButton = getButton("Build", getBuildAction(), width, height, x + width + margin, margin * 2.5f);
+        buildButton = getButton("Build", getBuildAction(this), width, height, x + width + margin, margin * 2.5f);
 
         addActor(buildButton);
         addActor(backButton);
 
         if (t.hasBarracks()) addRecruitButton();
 
-        Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
-        structureSelector = new StructureSelector(this, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
 
-        Rectangle unitSelectorBounds = new Rectangle(margin, margin, 300, Settings.screenHeight - (margin * 2));
-        unitSelector = new UnitSelector(this, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
 
 
     }
@@ -83,8 +80,15 @@ public class SelectedTileModal extends Stage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (unitSelector != null) unitSelector.update();
-        if (structureSelector != null) structureSelector.update();
+        if (unitSelector != null) {
+            unitSelector.update();
+            if (!unitSelector.hasParent()) unitSelector = null;
+        }
+        if (structureSelector != null) {
+            structureSelector.update();
+            if (!structureSelector.hasParent()) structureSelector = null;
+        }
+
     }
 
     public void addRecruitButton() {
@@ -97,7 +101,7 @@ public class SelectedTileModal extends Stage {
         backButton.setPosition(x, backButton.getY());
         buildButton.setPosition(x + width + margin, buildButton.getY());
 
-        recruitButton = getButton("Recruit", getRecruitAction(), (int) width, (int) height, x + (width*2f) + (margin*2f), margin * 2.5f);
+        recruitButton = getButton("Recruit", getRecruitAction(this), (int) width, (int) height, x + (width*2f) + (margin*2f), margin * 2.5f);
         addActor(recruitButton);
     }
 
@@ -177,11 +181,15 @@ public class SelectedTileModal extends Stage {
         };
     }
 
-    public ChangeListener getBuildAction() {
+    public ChangeListener getBuildAction(SelectedTileModal parent) {
         return new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if (structureSelector != null) return;
                 closeSelector();
+                Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
+                structureSelector = new StructureSelector(parent, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
+
                 structureSelector.animateEntrance(Align.right);
                 addActor(structureSelector);
                 setScrollFocus(structureSelector);
@@ -189,11 +197,15 @@ public class SelectedTileModal extends Stage {
         };
     }
 
-    public ChangeListener getRecruitAction() {
+    public ChangeListener getRecruitAction(SelectedTileModal parent) {
         return new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if (unitSelector != null) return;
                 closeSelector();
+                Rectangle unitSelectorBounds = new Rectangle(margin, margin, 300, Settings.screenHeight - (margin * 2));
+                unitSelector = new UnitSelector(parent, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
+
                 unitSelector.animateEntrance(Align.left);
                 addActor(unitSelector);
                 setScrollFocus(unitSelector);
@@ -202,8 +214,12 @@ public class SelectedTileModal extends Stage {
     }
 
     public void closeSelector() {
-        structureSelector.remove();
-        unitSelector.remove();
+        if (structureSelector != null && structureSelector.hasParent()) {
+            structureSelector.animateExit(Align.right);
+        }
+        if (unitSelector != null && unitSelector.hasParent()) {
+            unitSelector.animateExit(Align.left);
+        }
     }
 
 //    public ChangeListener getBuildConfirmAction() {

@@ -5,17 +5,13 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
-import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
-import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
-import me.jamboxman5.natac.units.army.Soldier;
-import me.jamboxman5.natac.util.Settings;
+import me.jamboxman5.natac.sfx.Sounds;
 
 public class Selector extends ScrollPane {
 
@@ -30,6 +26,8 @@ public class Selector extends ScrollPane {
     protected boolean isVertical;
 
     protected Vector2 targetPos;
+
+    protected boolean markedRemove = false;
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
@@ -72,10 +70,24 @@ public class Selector extends ScrollPane {
         } else if (alignFrom == Align.right) {
             moveBy(500, 0);
         }
+        Sounds.MENU_SLIDE_IN.play();
+    }
+
+    public void animateExit(int alignTo) {
+        if (alignTo == Align.left) {
+            targetPos.add(-500, 0);
+        } else if (alignTo == Align.right) {
+            targetPos.add(500, 0);
+        }
+        Sounds.MENU_SLIDE_OUT.play();
+        markedRemove = true;
     }
 
     public void update() {
-        if (targetPos.epsilonEquals(getX(), getY())) return;
+        if (targetPos.epsilonEquals(getX(), getY())) {
+            if (markedRemove) remove();
+            return;
+        }
         float xDiff = targetPos.x - getX();
         if (xDiff > 0) moveBy(20, 0);
         if (xDiff < 0) moveBy(-20, 0);
