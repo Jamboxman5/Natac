@@ -11,6 +11,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
+import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.util.Settings;
 
@@ -54,6 +55,7 @@ public class StructureSelector extends Selector {
 
                 if (!selectedTileBounds.contains(dropPos)) return;
 
+                Sounds.STRUCTURE_DROP.play();
                 PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
                 PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
                 parent.addRecruitButton();
