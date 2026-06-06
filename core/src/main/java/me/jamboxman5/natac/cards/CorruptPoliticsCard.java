@@ -5,11 +5,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class CorruptPoliticsCard implements Card {
+public class CorruptPoliticsCard extends Card {
     //Golden Keep specific Research Card
 
     //Instance variables (stats/relevant data)
     int StatDrop = -2;
+
+    public CorruptPoliticsCard() {
+        super("Corrupt Politics");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

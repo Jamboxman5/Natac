@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class AdoredbyAllCard implements Card {
+public class AdoredByAllCard extends Card {
     //Card that increases status
 
     //Instance variables (stats/relevant data)
     int StatusBoost = 1;
+
+    public AdoredByAllCard() {
+        super("Adored by All");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

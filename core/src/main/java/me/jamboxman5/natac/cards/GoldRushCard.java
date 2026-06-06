@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class GoldRushCard implements Card {
+public class GoldRushCard extends Card {
     //Card that gives player gold
 
     //Instance variables (stats/relevant data)
     int GoldBoost = 3;
+
+    public GoldRushCard() {
+        super("Gold Rush");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

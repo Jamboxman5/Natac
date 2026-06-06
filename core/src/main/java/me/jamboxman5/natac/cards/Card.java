@@ -5,11 +5,19 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 
-public interface Card {
+public abstract class Card {
 
-    void playCard(Player playing, Map currentMap);
+    protected String name;
 
-    static Card pullCard(PlayerClass pClass) {
+    protected Card(String name) {
+        this.name = name;
+    }
+
+    public String toString() { return name; }
+
+    public abstract void playCard(Player playing, Map currentMap);
+
+    public static Card pullCard(PlayerClass pClass) {
 
         //This static method can be called from anywhere to generate a deck of cards as specified below
         //The only current required parameter is the class of the drawing player to restrict class based cards
@@ -19,7 +27,7 @@ public interface Card {
 
         //Cards that can be pulled by anyone
         cards.add(new AcademiaCard(), new AcademiaCard());
-        cards.add(new AdoredbyAllCard(), new AdoredbyAllCard(), new AdoredbyAllCard());
+        cards.add(new AdoredByAllCard(), new AdoredByAllCard(), new AdoredByAllCard());
         cards.add(new BountifulHarvestCard(), new BountifulHarvestCard(), new BountifulHarvestCard(), new BountifulHarvestCard());
         cards.add(new CityGuardCard(), new CityGuardCard(), new CityGuardCard(), new CityGuardCard());
         cards.add(new FoolsGoldCard(), new FoolsGoldCard());

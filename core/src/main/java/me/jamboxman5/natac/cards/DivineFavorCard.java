@@ -4,12 +4,16 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class DivineFavorCard implements Card {
+public class DivineFavorCard extends Card {
     //Holy Empire Research Card
 
     //Instance variables (stats/relevant data)
     int StatBoost = 1;
     int ResourceIncrease = 10;
+
+    public DivineFavorCard() {
+        super("Divine Favor");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

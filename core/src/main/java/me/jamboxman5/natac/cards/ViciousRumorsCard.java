@@ -5,11 +5,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class ViciousRumorsCard implements Card {
+public class ViciousRumorsCard extends Card {
     //Card that increases status
 
     //Instance variables (stats/relevant data)
     int StatusDrop = 1;
+
+    public ViciousRumorsCard() {
+        super("Vicious Rumors");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

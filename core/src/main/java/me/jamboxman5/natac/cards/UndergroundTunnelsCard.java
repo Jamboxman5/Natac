@@ -5,11 +5,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class UndergroundTunnelsCard implements Card {
+public class UndergroundTunnelsCard extends Card {
     //Mole Men specific Research Card
 
     //Instance variables (stats/relevant data)
     int DefenseDrop = 3;
+
+    public UndergroundTunnelsCard() {
+        super("Underground Tunnels");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

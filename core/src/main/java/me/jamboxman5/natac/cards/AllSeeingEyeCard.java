@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class AllSeeingEyeCard implements Card {
+public class AllSeeingEyeCard extends Card {
     //Steel City specific Research Card
 
     //Instance variables (stats/relevant data)
     int StatBoost = 2;
+
+    public AllSeeingEyeCard() {
+        super("All Seeing Eye");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

@@ -5,11 +5,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class PlagueCard implements Card {
+public class PlagueCard extends Card {
     //Card that increases status
 
     //Instance variables (stats/relevant data)
     int DefenseDrop = -1;
+
+    public PlagueCard() {
+        super("Plague");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

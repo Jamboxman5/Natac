@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class BountifulHarvestCard implements Card {
+public class BountifulHarvestCard extends Card {
     //Card that boosts resources
 
     //Instance variables (stats/relevant data)
     int ResourceBoost = 10;
+
+    public BountifulHarvestCard() {
+        super("Bountiful Harvest");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class LibraryOfAlexandriaCard implements Card {
+public class LibraryOfAlexandriaCard extends Card {
     //Card that increases research
 
     //Instance variables (stats/relevant data)
     int ResearchBoost = 1;
+
+    public LibraryOfAlexandriaCard() {
+        super("Library of Alexandria");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

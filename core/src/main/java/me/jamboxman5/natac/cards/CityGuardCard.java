@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class CityGuardCard implements Card {
+public class CityGuardCard extends Card {
     //Card that increases defense
 
     //Instance variables (stats/relevant data)
     int DefBoost = 1;
+
+    public CityGuardCard() {
+        super("City Guard");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

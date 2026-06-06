@@ -5,11 +5,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class OfferingPlateCard implements Card {
+public class OfferingPlateCard extends Card {
     //Holy Empire Research Card
 
     //Instance variables (stats/relevant data)
     int GoldChange = 1;
+
+    public OfferingPlateCard() {
+        super("Offering Plate");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

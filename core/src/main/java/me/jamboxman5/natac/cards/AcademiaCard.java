@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class AcademiaCard implements Card {
+public class AcademiaCard extends Card {
     //Card that increases status
 
     //Instance variables (stats/relevant data)
     int StatBoost = 2;
+
+    public AcademiaCard() {
+        super("Academia");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

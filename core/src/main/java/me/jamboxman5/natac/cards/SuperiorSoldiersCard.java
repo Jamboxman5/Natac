@@ -4,11 +4,15 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class SuperiorSoldiersCard implements Card {
+public class SuperiorSoldiersCard extends Card {
     //Card that increases attack
 
     //Instance variables (stats/relevant data)
     int AttkBoost = 1;
+
+    public SuperiorSoldiersCard() {
+        super("Superior Soldiers");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

@@ -5,12 +5,16 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class PeaceTalksCard implements Card {
+public class PeaceTalksCard extends Card {
     //Card that increases status
 
     //Instance variables (stats/relevant data)
     int AttackDrop = -1;
     int StatusBoost = 1;
+
+    public PeaceTalksCard() {
+        super("Peace Talks");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {

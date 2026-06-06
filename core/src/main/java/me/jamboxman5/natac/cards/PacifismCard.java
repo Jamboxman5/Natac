@@ -4,10 +4,14 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 
-public class PacifismCard implements Card {
+public class PacifismCard extends Card {
     //Card reduces attack value to 0 then boosts defense by 3 + original attack
 
     //Instance variables (stats/relevant data)
+
+    public PacifismCard() {
+        super("Pacifism");
+    }
 
     @Override
     public void playCard(Player player, Map currentMap) {
