@@ -62,9 +62,14 @@ public class Selector extends ScrollPane {
 
     public void animateEntrance() {
         if (alignFrom == Align.left) {
-            moveBy(-500, 0);
+            moveBy(-getWidth() + 100, 0);
         } else if (alignFrom == Align.right) {
-            moveBy(500, 0);
+            moveBy(getWidth() + 100, 0);
+        } else if (alignFrom == Align.top) {
+            moveBy(0, getHeight() + 100);
+        }
+        else if (alignFrom == Align.bottom) {
+            moveBy(0, -(getHeight() + 100));
         }
         Sounds.MENU_SLIDE_IN.play();
     }
@@ -96,12 +101,13 @@ public class Selector extends ScrollPane {
             return;
         }
         float xDiff = targetPos.x - getX();
-        if (xDiff > 0) moveBy(20, 0);
-        if (xDiff < 0) moveBy(-20, 0);
+        if (xDiff > 0) moveBy(Math.min(xDiff, 20), 0);
+        if (xDiff < 0) moveBy(Math.max(xDiff, -20), 0);
 
         float yDiff = targetPos.y - getY();
-        if (yDiff > 0) moveBy(0, 20);
-        if (yDiff < 0) moveBy(0, -20);
+        if (yDiff > 0) moveBy(0, Math.min(yDiff, 20));
+        if (yDiff < 0) moveBy(0, Math.max(yDiff, -20));
+//        System.out.println(targetPos + " | (" + getX() + "," + getY() + ")");
     }
 
     protected void addButton(Button b, float w, float h, float pad) {
