@@ -141,7 +141,7 @@ public class SelectedTileModal extends Stage {
             float angle = i * MathUtils.PI / 3;
             // Multiply the X-offset by the stretch factor
             float stretchFactor = 1.5f;
-            int radius = 56 * 5;
+            int radius = 55 * 5;
             vertices[i * 2] = (radius * MathUtils.cos(angle) * stretchFactor);
             vertices[i * 2 + 1] = (radius * MathUtils.sin(angle));
         }
