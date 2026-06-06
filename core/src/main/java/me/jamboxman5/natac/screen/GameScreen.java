@@ -198,9 +198,9 @@ public class GameScreen implements Screen, InputProcessor {
         ScreenUtils.clear(0f, 0, 0f, 1);
         gameCamera.update();
         uiCamera.update();
+        update(delta);
 
         draw();
-        update(delta);
     }
 
     @Override
