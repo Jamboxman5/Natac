@@ -76,6 +76,7 @@ public class PlayInputStage extends Stage {
         cardButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if (popupSelector != null) return;
                 popupSelector = new CardSelector();
                 popupSelector.animateEntrance();
                 addActor(popupSelector);
@@ -90,6 +91,7 @@ public class PlayInputStage extends Stage {
         if (popupSelector != null) {
             popupSelector.update();
             if (popupSelector.canRemove()) popupSelector = null;
+            setScrollFocus(null);
         }
     }
 
