@@ -49,6 +49,8 @@ public class CardSelector extends Selector {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 card.playCard(Natac.instance.getClientManager().selectFromConnectedPlayers(), Natac.instance.getGame().getMap());
+                Natac.instance.player.removeCard(card);
+                animateExit();
             }
         });
         return button;
