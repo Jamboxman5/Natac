@@ -40,6 +40,10 @@ public class Map {
 //        }
     }
 
+    public void update() {
+        for (Tile t : tiles) t.update();
+    }
+
     public void clearStartingTiles() {
         for (Tile t : tiles) {
             if (t.getState() == TileState.STARTING) t.setState(TileState.BLOCKED);

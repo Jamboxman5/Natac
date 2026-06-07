@@ -231,6 +231,14 @@ public class Tile {
 
         sprite.setScale(currentScale, currentScale);
 
+        update();
+
+        float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
+        highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
+
+    }
+
+    public void update() {
         for (Unit u : occupants) u.update();
         occupants.removeAll(removingOccupants);
         occupants.addAll(pendingOccupants);
@@ -242,10 +250,6 @@ public class Tile {
         buildings.addAll(pendingBuildings);
         removingBuildings.clear();
         pendingBuildings.clear();
-
-        float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
-        highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
-
     }
 
     public void addUnit(Unit unit) { pendingOccupants.add(unit); }
@@ -277,7 +281,7 @@ public class Tile {
     }
 
     public void removeUnit(Unit unit) { removingOccupants.add(unit); }
-    public void removeUnit(Structure structure) { removingBuildings.add(structure); }
+    public void removeStructure(Structure structure) { removingBuildings.add(structure); }
 
     public static class Hexagon {
         private float currentScale = 1f;

@@ -153,6 +153,8 @@ public class GameScreen implements Screen, InputProcessor {
             if (tileModal == null) {
                 tileModal = new SelectedTileModal(map.getSelectedTile());
                 multiplexer.addProcessor(0, tileModal);
+            } else {
+                map.update();
             }
         } else {
             if (tileModal != null) {
