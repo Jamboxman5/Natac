@@ -114,21 +114,12 @@ public class Tile {
 
         if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
             if (opacity <= 0) opacity = 0.7f;
-            Color fill = new Color(state.tileColor);
+            Color fill = new Color(state.highlightColor);
             fill.a = opacity;
             shapes.setColor(fill);
             shapes.filledPolygon(bounds.shape);
             opacity -= 0.0025f;
-        } else if (tileSelectState == GameScreen.SelectionState.OWNED && state == TileState.CLAIMED) {
-            if (opacity <= 0) opacity = 0.7f;
-            Color fill = new Color(state.tileColor);
-            fill.a = opacity;
-            shapes.setColor(fill);
-            shapes.filledPolygon(bounds.shape);
-            opacity -= 0.0025f;
-        } else {
-            shapes.setColor(state.tileColor);
-            shapes.filledPolygon(bounds.shape);
+        } else if (state == TileState.BLOCKED) {
             if (opacity > 0) opacity -= 0.0025f;
             Color fog = Color.BLACK;
             fog.a = opacity;
@@ -141,7 +132,7 @@ public class Tile {
         }
 
         shapes.setDefaultLineWidth(highlightWidth);
-        shapes.setColor(Color.WHITE);
+        shapes.setColor(state.highlightColor);
         shapes.polygon(bounds.shape, JoinType.POINTY);
 
         if (isFogged) return;

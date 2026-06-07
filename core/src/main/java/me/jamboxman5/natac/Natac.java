@@ -15,6 +15,7 @@ import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.sfx.Musics;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class Natac extends Game {
         this.setScreen(new MainMenuScreen());
 
         Fonts.initFonts();
+
+        Musics.TEXT_BGM.play();
 
     }
 

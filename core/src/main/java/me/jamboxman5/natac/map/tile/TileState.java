@@ -4,16 +4,16 @@ import com.badlogic.gdx.graphics.Color;
 
 public enum TileState {
     UNAVAILABLE(Color.BLACK),
-    BLOCKED(new Color(0, 0, 0f, 0f)),
-    SELECTABLE(new Color(0f, 0f, .6f, .5f)),
-    SELECTED(new Color(0, 0, .4f, .7f)),
-    STARTING(new Color(0f, 0f, .6f, .5f)),
-    CLAIMED(new Color(0, .5f, 0f, .5f)),
-    ENEMY_CLAIMED(new Color(0.6f, 0f, 0f, .7f));
+    BLOCKED(new Color(1f, 1f, 1f, 1f)),
+    SELECTABLE(new Color(0f, 0f, .6f, 1f)),
+    SELECTED(new Color(0, 0, .4f, 1f)),
+    STARTING(new Color(0f, 0f, .6f, 1f)),
+    CLAIMED(new Color(0, .5f, 0f, 1f)),
+    ENEMY_CLAIMED(new Color(0.6f, 0f, 0f, 1f));
 
-    public final Color tileColor;
+    public final Color highlightColor;
 
-    TileState(Color tileColor) {
-        this.tileColor = tileColor;
+    TileState(Color highlightColor) {
+        this.highlightColor = highlightColor;
     }
 }
