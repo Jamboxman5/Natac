@@ -38,6 +38,7 @@ public class Player {
         this.research = playerClass.research;
 
         this.resources = 100;
+        this.gold = 50;
 
         this.inventory = new ArrayList<>();
 
