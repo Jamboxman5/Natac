@@ -97,6 +97,7 @@ public abstract class Unit {
         current.removeUnit(this);
         closest.addUnit(this);
         tilePos = closest.getTilePosition();
+        closest.defog();
 
         if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
 

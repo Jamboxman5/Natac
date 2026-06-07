@@ -37,7 +37,11 @@ public class Tile {
     private int defense;
 
     private final List<Structure> buildings;
+    private final List<Structure> removingBuildings;
+    private final List<Structure> pendingBuildings;
+
     private final List<Unit> occupants;
+    private final List<Unit> pendingOccupants;
     private final List<Unit> removingOccupants;
 
     private float currentScale = 1f;
@@ -52,7 +56,10 @@ public class Tile {
 
     public Tile() {
         buildings = new ArrayList<>();
+        pendingBuildings = new ArrayList<>();
+        removingBuildings = new ArrayList<>();
         occupants = new ArrayList<>();
+        pendingOccupants = new ArrayList<>();
         removingOccupants = new ArrayList<>();
         isFogged = true;
     }
@@ -65,7 +72,10 @@ public class Tile {
         bounds = new Hexagon(pos);
 
         buildings = new ArrayList<>();
+        pendingBuildings = new ArrayList<>();
+        removingBuildings = new ArrayList<>();
         occupants = new ArrayList<>();
+        pendingOccupants = new ArrayList<>();
         removingOccupants = new ArrayList<>();
 
         isFogged = true;
@@ -163,7 +173,7 @@ public class Tile {
     }
 
 
-    private void defog() {
+    public void defog() {
         if (state != TileState.UNAVAILABLE) isFogged = false;
     }
 
@@ -223,17 +233,23 @@ public class Tile {
 
         for (Unit u : occupants) u.update();
         occupants.removeAll(removingOccupants);
+        occupants.addAll(pendingOccupants);
         removingOccupants.clear();
+        pendingOccupants.clear();
 
         for (Structure s : buildings) s.update();
+        buildings.removeAll(removingBuildings);
+        buildings.addAll(pendingBuildings);
+        removingBuildings.clear();
+        pendingBuildings.clear();
 
         float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
         highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
 
     }
 
-    public void addUnit(Unit unit) { occupants.add(unit); }
-    public void addStructure(Structure structure) { buildings.add(structure); }
+    public void addUnit(Unit unit) { pendingOccupants.add(unit); }
+    public void addStructure(Structure structure) { pendingBuildings.add(structure); }
 
     public boolean contains(Vector2 point) {
         return bounds.shape.contains(point);
@@ -261,6 +277,7 @@ public class Tile {
     }
 
     public void removeUnit(Unit unit) { removingOccupants.add(unit); }
+    public void removeUnit(Structure structure) { removingBuildings.add(structure); }
 
     public static class Hexagon {
         private float currentScale = 1f;
