@@ -9,6 +9,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.List;
 import java.util.UUID;
 
 public abstract class Unit {
@@ -18,6 +19,9 @@ public abstract class Unit {
     protected Vector2 position;
 
     protected Vector2 tilePos;
+
+    protected Vector2 targetTilePos;
+    protected int travelCounter = 0;
 
     protected UUID owner;
 
@@ -36,7 +40,15 @@ public abstract class Unit {
         this.color = color;
     }
 
-    public abstract void update();
+    public void update() {
+        if (isTravelling()) {
+            int tilePassability = Natac.instance.getGame().getMap().findTile(tilePos).getType().passability;
+            if (travelCounter >= tilePassability) {
+                travelCounter = 0;
+                travel();
+            }
+        }
+    }
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
         shapes.setColor(color);
@@ -54,6 +66,39 @@ public abstract class Unit {
     public Circle getBounds(Vector2 center, float scale) {
         Vector2 drawPos = center.cpy().add(position.cpy().scl(scale));
         return new Circle(drawPos, 5f * scale);
+    }
+
+    public void deploy(Tile target) {
+        targetTilePos = target.getTilePosition();
+    }
+
+    public boolean isTravelling() {
+        return (targetTilePos != null && !targetTilePos.epsilonEquals(tilePos));
+    }
+
+    protected void travel() {
+        Tile current = Natac.instance.getGame().getMap().findTile(tilePos);
+        List<Tile> candidates = current.getNeighbors();
+
+        Tile closest = null;
+        float shortestDistance = Float.POSITIVE_INFINITY;
+
+        for (Tile t : candidates) {
+            float distance = targetTilePos.cpy().sub(tilePos).len();
+            if (distance < shortestDistance) {
+                shortestDistance = distance;
+                closest = t;
+            }
+        }
+
+        if (closest == null) return;
+
+        current.removeUnit(this);
+        closest.addUnit(this);
+        tilePos = closest.getTilePosition();
+
+        if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
+
     }
 
 }

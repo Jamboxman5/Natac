@@ -254,6 +254,8 @@ public class Tile {
         return type;
     }
 
+    public void removeUnit(Unit unit) { occupants.remove(unit); }
+
     public static class Hexagon {
         private float currentScale = 1f;
 
