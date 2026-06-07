@@ -42,16 +42,13 @@ public abstract class Structure {
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
         shapes.setColor(drawColor);
-        Vector2 drawPos = tilePos.cpy().add(position.cpy().scl(Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale()));
-        drawPos.sub(5f/2f, 5f/2f);
-        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 5, 5));
+        shapes.filledRectangle(getBounds(tilePos, Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale()));
     }
 
     public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
         shapes.setColor(drawColor);
-        Vector2 drawPos = center.cpy().add(position.cpy().scl(5));
-        drawPos.sub(25f/2f, 25f/2f);
-        shapes.filledRectangle(new Rectangle(drawPos.x, drawPos.y, 25, 25));
+        shapes.filledRectangle(getBounds(center, 5f));
+
     }
 
     protected static Vector2 getRandomPosition() {
@@ -70,4 +67,10 @@ public abstract class Structure {
     }
 
     public int getBuildCost() { return buildCost; }
+
+    public Rectangle getBounds(Vector2 center, float scale) {
+        Vector2 drawPos = center.cpy().add(position.cpy().scl(scale));
+        drawPos.sub((5f * scale)/2f, (5f * scale)/2f);
+        return new Rectangle(drawPos.x, drawPos.y, 5f * scale, 5f * scale);
+    }
 }
