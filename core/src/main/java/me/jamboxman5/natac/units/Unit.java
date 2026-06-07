@@ -2,6 +2,8 @@ package me.jamboxman5.natac.units;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
@@ -48,4 +50,10 @@ public abstract class Unit {
 
 
     public UUID getOwner() { return owner; }
+
+    public Circle getBounds(Vector2 center, float scale) {
+        Vector2 drawPos = center.cpy().add(position.cpy().scl(scale));
+        return new Circle(drawPos, 5f * scale);
+    }
+
 }

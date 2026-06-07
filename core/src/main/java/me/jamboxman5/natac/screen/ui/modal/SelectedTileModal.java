@@ -84,6 +84,28 @@ public class SelectedTileModal extends Stage {
 
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+        Vector2 touchPos = new Vector2(screenX, Settings.screenHeight - screenY);
+
+        for (Structure s : selectedTile.getStructures()) {
+            if (s.getBounds(tileCenter, 5f).contains(touchPos)) {
+                System.out.println(s);
+                return true;
+            }
+        }
+
+        for (Unit u : selectedTile.getUnits()) {
+            if (u.getBounds(tileCenter, 5f).contains(touchPos)) {
+                System.out.println(u);
+                return true;
+            }
+        }
+
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
+
     public void addRecruitButton() {
         if (recruitButton != null) return;
 
