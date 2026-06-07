@@ -75,6 +75,7 @@ public class NetUtil {
         client.addListener(new PacketPlayerModifyListener());
         client.addListener(new PacketBuildStructureListener());
         client.addListener(new PacketSpawnUnitListener());
+        client.addListener(new PacketEndTurnListener());
     }
 
     public static void registerListeners(DiscreteServer server) {

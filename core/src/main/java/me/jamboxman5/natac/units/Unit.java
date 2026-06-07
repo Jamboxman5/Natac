@@ -101,4 +101,8 @@ public abstract class Unit {
 
     }
 
+    public void incrementTravel() {
+        travelCounter++;
+    }
+
 }

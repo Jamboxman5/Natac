@@ -1,9 +1,7 @@
 package me.jamboxman5.natac.map;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
@@ -12,7 +10,7 @@ import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.units.army.Soldier;
+import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -135,5 +133,18 @@ public class Map {
             }
         }
         PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, goldCollected, resourcesCollected);
+    }
+
+    public void updateTravellers() {
+        for (Tile t : tiles) {
+            if (t.getState() == TileState.UNAVAILABLE) continue;
+            if (t.getUnits() == null) continue;
+            if (t.getUnits().isEmpty()) continue;
+
+            for (Unit u : t.getUnits()) {
+                if (u.isTravelling()) u.incrementTravel();
+            }
+
+        }
     }
 }

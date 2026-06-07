@@ -85,7 +85,7 @@ public class Tile {
             bounds = new Hexagon(pos);
         }
 
-        if (state == TileState.HIDDEN) return;
+        if (state == TileState.UNAVAILABLE) return;
 
         if (sprite == null) sprite = new Sprite(type.texture);
 
@@ -161,7 +161,7 @@ public class Tile {
 
 
     private void defog() {
-        if (state != TileState.HIDDEN) isFogged = false;
+        if (state != TileState.UNAVAILABLE) isFogged = false;
     }
 
     public void claim(UUID claimingPlayerID, boolean sendPacket) {
@@ -205,7 +205,7 @@ public class Tile {
 
         float targetScale = bounds.contains(touchPos) ? 1.1f : 1f;
 
-        if (bounds.contains(touchPos) && state != TileState.HIDDEN) {
+        if (bounds.contains(touchPos) && state != TileState.UNAVAILABLE) {
             if (!soundPlayed) {
                 Sounds.TILE_HOVER.play();
                 soundPlayed = true;

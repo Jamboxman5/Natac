@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.ClientManager;
 import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.net.packet.PacketEndTurn;
@@ -130,5 +131,9 @@ public class Natac extends Game {
         getGame().setState(GameScreen.State.WAIT);
 
         isTurn = false;
+    }
+    public void updateAfterTurn() {
+        if (getGame() == null) return;
+        getGame().getMap().updateTravellers();
     }
 }
