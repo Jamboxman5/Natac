@@ -13,4 +13,13 @@ public class PacketPlayerModify extends Packet {
 
     public int diffGold;
     public int diffResources;
+
+    public String toString() {
+                    return diffAttack + " | " +
+                                diffDefense + " | " +
+                diffGold + " | " +
+                diffResources + " | " +
+                diffStatus + " | " +
+                diffResearch;
+    }
 }

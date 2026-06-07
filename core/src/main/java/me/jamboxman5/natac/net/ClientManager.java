@@ -30,6 +30,7 @@ public class ClientManager {
 
     public void sendPacketTCP(Packet packet) {
         client.sendTCP(packet);
+//        log(packet.toString());
     }
     public void sendPacketUDP(Packet p) { client.sendUDP(p); }
 
