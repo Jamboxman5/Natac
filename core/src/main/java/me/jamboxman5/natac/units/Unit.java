@@ -43,6 +43,8 @@ public abstract class Unit {
     public void update() {
         if (isTravelling()) {
             int tilePassability = Natac.instance.getGame().getMap().findTile(tilePos).getType().passability;
+            System.out.println("TRAVELLING: " + travelCounter + " | " + tilePassability);
+
             if (travelCounter >= tilePassability) {
                 travelCounter = 0;
                 travel();

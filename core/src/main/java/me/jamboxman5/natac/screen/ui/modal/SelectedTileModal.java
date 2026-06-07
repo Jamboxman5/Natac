@@ -98,7 +98,7 @@ public class SelectedTileModal extends Stage {
 
         for (Unit u : selectedTile.getUnits()) {
             if (u.getBounds(tileCenter, 5f).contains(touchPos)) {
-                System.out.println(u);
+                u.deploy(selectedTile.getNeighbors().get(0));
                 return true;
             }
         }

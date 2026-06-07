@@ -26,6 +26,6 @@ public class Soldier extends Unit {
 
     @Override
     public void update() {
-
+        super.update();
     }
 }

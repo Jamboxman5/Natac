@@ -38,6 +38,7 @@ public class Tile {
 
     private final List<Structure> buildings;
     private final List<Unit> occupants;
+    private final List<Unit> removingOccupants;
 
     private float currentScale = 1f;
 
@@ -52,6 +53,7 @@ public class Tile {
     public Tile() {
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
+        removingOccupants = new ArrayList<>();
         isFogged = true;
     }
 
@@ -64,6 +66,7 @@ public class Tile {
 
         buildings = new ArrayList<>();
         occupants = new ArrayList<>();
+        removingOccupants = new ArrayList<>();
 
         isFogged = true;
 
@@ -219,6 +222,9 @@ public class Tile {
         sprite.setScale(currentScale, currentScale);
 
         for (Unit u : occupants) u.update();
+        occupants.removeAll(removingOccupants);
+        removingOccupants.clear();
+
         for (Structure s : buildings) s.update();
 
         float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
@@ -254,7 +260,7 @@ public class Tile {
         return type;
     }
 
-    public void removeUnit(Unit unit) { occupants.remove(unit); }
+    public void removeUnit(Unit unit) { removingOccupants.add(unit); }
 
     public static class Hexagon {
         private float currentScale = 1f;
