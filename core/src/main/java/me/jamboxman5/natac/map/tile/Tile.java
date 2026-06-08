@@ -108,8 +108,6 @@ public class Tile {
             sprite.setOriginCenter();
             sprite.draw(batch);
 
-            for (Unit u : occupants) u.draw(batch, shapes);
-            for (Structure s : buildings) s.draw(batch, shapes);
         }
 
         if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
@@ -136,16 +134,17 @@ public class Tile {
         shapes.polygon(bounds.shape, JoinType.POINTY);
 
         if (isFogged) return;
-        if (type != TileType.MOUNTAINS) return;
 
-        batch.flush();
+        if (type == TileType.MOUNTAINS) {
+            Sprite layer = new Sprite(mountainsLayer);
+            layer.setScale(currentScale);
+            layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
+            layer.setOriginCenter();
+            layer.draw(batch);
+        }
 
-        Sprite layer = new Sprite(mountainsLayer);
-        layer.setScale(currentScale);
-        layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
-        layer.setOriginCenter();
-        layer.draw(batch);
-
+        for (Unit u : occupants) u.draw(batch, shapes);
+        for (Structure s : buildings) s.draw(batch, shapes);
     }
 
     private void defogNeighbors(int radius) {
