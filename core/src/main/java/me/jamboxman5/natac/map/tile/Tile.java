@@ -90,7 +90,8 @@ public class Tile {
 
     private float highlightWidth = 1f;
 
-    private transient float opacity = 0;
+    private transient float pulse = 0;
+    private transient float fogOpacity = 1f;
 
     public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionState tileSelectState) {
 
@@ -106,31 +107,30 @@ public class Tile {
 
             sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
             sprite.setOriginCenter();
+            sprite.setAlpha(1f-fogOpacity);
             sprite.draw(batch);
 
         }
 
+        Color highlight = new Color(state.highlightColor);
+
         if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
-            if (opacity <= 0) opacity = 0.7f;
-            Color fill = new Color(state.highlightColor);
-            fill.a = opacity;
-            shapes.setColor(fill);
-            shapes.filledPolygon(bounds.shape);
-            opacity -= 0.0025f;
-        } else if (state == TileState.BLOCKED) {
-            if (opacity > 0) opacity -= 0.0025f;
-            Color fog = Color.BLACK;
-            fog.a = opacity;
-            shapes.setColor(fog);
-            shapes.filledPolygon(bounds.shape);
+            if (pulse > 1) pulse = 0f;
+            highlight.r = pulse;
+            highlight.g = pulse;
+            pulse += 0.005f;
         }
 
-        if (isFogged) {
-            opacity = 1f;
+        if (state == TileState.BLOCKED && !isFogged) {
+            if (fogOpacity > 0) fogOpacity -= 0.0025f;
+//            Color fog = Color.BLACK;
+//            fog.a = fogOpacity;
+//            shapes.setColor(fog);
+//            shapes.filledPolygon(bounds.shape);
         }
 
         shapes.setDefaultLineWidth(highlightWidth);
-        shapes.setColor(state.highlightColor);
+        shapes.setColor(highlight);
         shapes.polygon(bounds.shape, JoinType.POINTY);
 
         if (isFogged) return;
@@ -140,6 +140,7 @@ public class Tile {
             layer.setScale(currentScale);
             layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
             layer.setOriginCenter();
+            layer.setAlpha(1f-fogOpacity);
             layer.draw(batch);
         }
 
@@ -200,7 +201,10 @@ public class Tile {
             bounds = new Hexagon(pos);
         }
 
-        if (state == TileState.STARTING && isFogged) defog();
+        if (state == TileState.STARTING && isFogged) {
+            defog();
+            fogOpacity = 0f;
+        }
 
         bounds.update(touchPos);
 
