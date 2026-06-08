@@ -1,19 +1,15 @@
 package me.jamboxman5.natac.screen.ui.elements;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
-import me.jamboxman5.natac.map.tile.Tile;
-import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.sfx.Sounds;
 
-public class Selector extends ScrollPane {
+public class Scroller extends ScrollPane {
 
     protected Table buttonOrganizer;
 
@@ -28,7 +24,7 @@ public class Selector extends ScrollPane {
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
-    protected Selector(int alignFrom, int alignTo, boolean isVertical, Rectangle bounds) {
+    protected Scroller(int alignFrom, int alignTo, boolean isVertical, Rectangle bounds) {
         super(new Table());
 
         this.isVertical = isVertical;

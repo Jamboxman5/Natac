@@ -9,11 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
-import me.jamboxman5.natac.cards.Card;
-import me.jamboxman5.natac.net.packet.PacketUtil;
-import me.jamboxman5.natac.player.Player;
-import me.jamboxman5.natac.screen.ui.elements.CardSelector;
-import me.jamboxman5.natac.screen.ui.elements.Selector;
+import me.jamboxman5.natac.screen.ui.elements.CardScroller;
+import me.jamboxman5.natac.screen.ui.elements.Scroller;
 import me.jamboxman5.natac.util.Settings;
 
 public class PlayInputStage extends Stage {
@@ -27,7 +24,7 @@ public class PlayInputStage extends Stage {
     TextButton cardButton = new TextButton("Cards", skin);
     TextButton endButton = new TextButton("End Turn", skin);
 
-    Selector popupSelector;
+    Scroller popupScroller;
 
     public PlayInputStage() {
 
@@ -76,10 +73,10 @@ public class PlayInputStage extends Stage {
         cardButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (popupSelector != null) return;
-                popupSelector = new CardSelector();
-                popupSelector.animateEntrance();
-                addActor(popupSelector);
+                if (popupScroller != null) return;
+                popupScroller = new CardScroller();
+                popupScroller.animateEntrance();
+                addActor(popupScroller);
             }
         });
 
@@ -88,9 +85,9 @@ public class PlayInputStage extends Stage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (popupSelector != null) {
-            popupSelector.update();
-            if (popupSelector.canRemove()) popupSelector = null;
+        if (popupScroller != null) {
+            popupScroller.update();
+            if (popupScroller.canRemove()) popupScroller = null;
             setScrollFocus(null);
         }
     }

@@ -9,13 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
-import me.jamboxman5.natac.screen.ui.elements.StructureSelector;
-import me.jamboxman5.natac.screen.ui.elements.UnitSelector;
+import me.jamboxman5.natac.screen.ui.elements.StructureScroller;
+import me.jamboxman5.natac.screen.ui.elements.UnitScroller;
 import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
@@ -35,8 +34,8 @@ public class SelectedTileModal extends Stage {
     Button recruitButton;
     Button backButton;
 
-    StructureSelector structureSelector;
-    UnitSelector unitSelector;
+    StructureScroller structureSelector;
+    UnitScroller unitSelector;
 
 
     int margin = 40;
@@ -202,7 +201,7 @@ public class SelectedTileModal extends Stage {
                 if (structureSelector != null) return;
                 closeSelector();
                 Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
-                structureSelector = new StructureSelector(parent, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
+                structureSelector = new StructureScroller(parent, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
 
                 structureSelector.animateEntrance();
                 addActor(structureSelector);
@@ -218,7 +217,7 @@ public class SelectedTileModal extends Stage {
                 if (unitSelector != null) return;
                 closeSelector();
                 Rectangle unitSelectorBounds = new Rectangle(margin, margin, 300, Settings.screenHeight - (margin * 2));
-                unitSelector = new UnitSelector(parent, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
+                unitSelector = new UnitScroller(parent, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
 
                 unitSelector.animateEntrance();
                 addActor(unitSelector);

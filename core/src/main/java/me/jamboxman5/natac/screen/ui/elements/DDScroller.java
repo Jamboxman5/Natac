@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import me.jamboxman5.natac.map.tile.Tile;
 
-public class DDSelector extends Selector {
+public class DDScroller extends Scroller {
 
     protected DragAndDrop dragAndDrop;
 
@@ -15,7 +15,7 @@ public class DDSelector extends Selector {
     protected Polygon selectedTileBounds;
     protected Vector2 tileCenter;
 
-    protected DDSelector(Tile selectedTile,
+    protected DDScroller(Tile selectedTile,
                          Polygon selectedTileBounds,
                          Vector2 tileCenter,
                          Rectangle bounds,
