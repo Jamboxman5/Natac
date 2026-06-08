@@ -39,5 +39,7 @@ public class NeighborSet {
     public Tile getUpNeighbor(TileNeighbor nPos) { return neighborLocations.get(nPos); }
 
     public Collection<Tile> getNeighbors() { return neighborLocations.values(); }
-
+    public boolean isFull() { return neighborLocations.size() == 6; }
+    public boolean isEmpty() { return neighborLocations.isEmpty(); }
+    public int size() { return neighborLocations.size(); }
 }
