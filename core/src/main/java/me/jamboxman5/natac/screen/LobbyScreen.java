@@ -80,7 +80,7 @@ public class LobbyScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 PacketStartGame packet = new PacketStartGame();
-                packet.map = MapBuilder.generateMap(5);
+                packet.map = MapBuilder.generateMap(Settings.mapRadius);
                 Natac.instance.getClientManager().sendPacketTCP(packet);
             }
         });

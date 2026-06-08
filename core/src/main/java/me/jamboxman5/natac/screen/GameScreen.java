@@ -53,6 +53,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     private SelectedTileModal tileModal = null;
 
+    public static final Vector2 viewportDimensions = new Vector2(1280, 720);
+
     public void addUIActor(Actor actor) { uiStage.addActor(actor);
     }
 
@@ -75,7 +77,7 @@ public class GameScreen implements Screen, InputProcessor {
         gameCamera = new OrthographicCamera();
         uiCamera = new OrthographicCamera(Settings.screenWidth, Settings.screenHeight);
         uiCamera.setToOrtho(false);
-        viewport = new FitViewport(1280, 720, gameCamera);
+        viewport = new FitViewport(viewportDimensions.x, viewportDimensions.y, gameCamera);
         uiStage = new PlayInputStage();
 
 
@@ -137,8 +139,8 @@ public class GameScreen implements Screen, InputProcessor {
 
         gameCamera.zoom = MathUtils.lerp(gameCamera.zoom, targetZoom, 0.15f);
 
-        targetPos.x = MathUtils.clamp(targetPos.x, 0, 1280);
-        targetPos.y = MathUtils.clamp(targetPos.y, 0, 1080);
+        targetPos.x = MathUtils.clamp(targetPos.x, (viewportDimensions.x /3f) - (1280 * (Settings.mapRadius / 3f)), (viewportDimensions.x /3f) + (1280 * (Settings.mapRadius / 3f)));
+        targetPos.y = MathUtils.clamp(targetPos.y, (viewportDimensions.y /3f) - (720 * (Settings.mapRadius / 3f)), (viewportDimensions.x /3f) + (720 * (Settings.mapRadius / 3f)));
 
         gameCamera.position.x = MathUtils.lerp(gameCamera.position.x, targetPos.x, .15f);
         gameCamera.position.y = MathUtils.lerp(gameCamera.position.y, targetPos.y, .15f);

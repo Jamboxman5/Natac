@@ -5,6 +5,7 @@ import me.jamboxman5.natac.map.tile.NeighborSet;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileNeighbor;
 import me.jamboxman5.natac.map.tile.TileState;
+import me.jamboxman5.natac.screen.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MapBuilder {
 
         {
 
-            Tile base = new Tile(0, 0, TileState.BLOCKED);
+            Tile base = new Tile(GameScreen.viewportDimensions.x / 2f, GameScreen.viewportDimensions.y /2f, TileState.BLOCKED);
             map.addTile(base);
 
             generateNeighbors(base, map, horizontalStep, verticalStep, radius);

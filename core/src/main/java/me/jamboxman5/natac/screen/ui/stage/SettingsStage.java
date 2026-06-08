@@ -32,6 +32,7 @@ public class SettingsStage extends Stage {
     Slider musVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
     Slider sfxVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
     Slider defogRadiusSlider = new Slider(1, 3, 1, false, skin);
+    Slider mapRadiusSlider = new Slider(1, 6, 1, false, skin);
 
     SelectBox<Settings.Resolution> resolutionSelector = new SelectBox<>(skin);
 
@@ -49,6 +50,7 @@ public class SettingsStage extends Stage {
         addActor(musVolumeSlider);
         addActor(sfxVolumeSlider);
         addActor(defogRadiusSlider);
+        addActor(mapRadiusSlider);
 
         float yStart = center.y + (40 * ((getActors().size-2)/2f));
 
@@ -66,6 +68,7 @@ public class SettingsStage extends Stage {
         sfxVolumeSlider.setSize(200, 20);
         musVolumeSlider.setSize(200, 20);
         defogRadiusSlider.setSize(200, 20);
+        mapRadiusSlider.setSize(200, 20);
 
         button1.setPosition(40, 40);
         button2.setPosition(Settings.screenWidth - 40 - button2.getWidth(), 40);
@@ -76,6 +79,8 @@ public class SettingsStage extends Stage {
         sfxVolumeSlider.setPosition(center.x + 300 - sfxVolumeSlider.getWidth(), yStart);
         yStart-=50;
         musVolumeSlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
+        yStart-=50;
+        mapRadiusSlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
 
         button1.addListener(new ChangeListener() {
             @Override
@@ -91,6 +96,7 @@ public class SettingsStage extends Stage {
                 Settings.defogTileRadius = (int) defogRadiusSlider.getValue();
                 Settings.musVolume = musVolumeSlider.getValue();
                 Settings.sfxVolume = sfxVolumeSlider.getValue();
+                Settings.mapRadius = (int) mapRadiusSlider.getValue();
 
                 for (MusicTracks m : MusicTracks.values()) {
                     m.setVolume(Settings.musVolume);
@@ -105,6 +111,7 @@ public class SettingsStage extends Stage {
         sfxVolumeSlider.setValue(Settings.sfxVolume);
         musVolumeSlider.setValue(Settings.musVolume);
         defogRadiusSlider.setValue(Settings.defogTileRadius);
+        mapRadiusSlider.setValue(Settings.mapRadius);
     }
 
     public void draw(SpriteBatch batch) {
@@ -114,6 +121,7 @@ public class SettingsStage extends Stage {
         labelFont.draw(batch, "Defog Radius: ", center.x - 300, defogRadiusSlider.getY() + Fonts.getTextHeight("Defog Radius: ", labelFont, 1f));
         labelFont.draw(batch, "Music Volume: ", center.x - 300, musVolumeSlider.getY() + Fonts.getTextHeight("Music Volume:", labelFont, 1f));
         labelFont.draw(batch, "SFX Volume: ", center.x - 300, sfxVolumeSlider.getY() + Fonts.getTextHeight("SFX Volume: ", labelFont, 1f));
+        labelFont.draw(batch, "Map Radius: ", center.x - 300, mapRadiusSlider.getY() + Fonts.getTextHeight("Map Radius: ", labelFont, 1f));
 
     }
 

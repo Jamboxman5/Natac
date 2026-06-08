@@ -56,6 +56,7 @@ public class SettingsData {
         Settings.sfxVolume = settingsOBJ.get("sfxVolume").getAsFloat();
         Settings.hudMargin = settingsOBJ.get("hudMargin").getAsInt();
         Settings.defogTileRadius = settingsOBJ.get("defogTileRadius").getAsInt();
+        Settings.mapRadius = settingsOBJ.get("mapRadius").getAsInt();
     }
 
     public static void updateSettings() {
@@ -67,6 +68,7 @@ public class SettingsData {
         settingsOBJ.addProperty("sfxVolume", Settings.sfxVolume);
         settingsOBJ.addProperty("musVolume", Settings.musVolume);
         settingsOBJ.addProperty("defogTileRadius", Settings.defogTileRadius);
+        settingsOBJ.addProperty("mapRadius", Settings.mapRadius);
 
         try {
             DataManager.save(settingsOBJ.toString(), settingsPath);

@@ -7,6 +7,7 @@
   "screenHeight": 768,
   "guiScale": 1.5,
   "hudMargin": 20,
-  "defogTileRadius": 2
+  "defogTileRadius": 2,
+  "mapRadius": 3
 
 }
