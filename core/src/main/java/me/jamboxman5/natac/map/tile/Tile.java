@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.GameScreen;
@@ -159,7 +160,7 @@ public class Tile {
     public List<Tile> getNeighbors() {
         return Natac.instance.getGame().getMap().getNeighbors(this);
     }
-
+    public List<Tile> getNeighbors(Map map) { return map.getNeighbors(this); }
 
     public void defog() {
         if (state != TileState.UNAVAILABLE) isFogged = false;

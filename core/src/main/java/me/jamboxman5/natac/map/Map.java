@@ -82,6 +82,9 @@ public class Map {
         return new ArrayList<>(new NeighborSet(t, this).getNeighbors());
     }
 
+    public NeighborSet getNeighborSet(Tile t) {
+        return new NeighborSet(t, this);
+    }
 
     public void addTile(Tile t) { tiles.add(t); }
 
@@ -126,6 +129,12 @@ public class Map {
                 if (u.isTravelling()) u.incrementTravel();
             }
 
+        }
+    }
+
+    public void setupBaseTiles() {
+        for (Tile t : tiles) {
+            if (getNeighborSet(t).size() <= 3) t.setState(TileState.STARTING);
         }
     }
 }
