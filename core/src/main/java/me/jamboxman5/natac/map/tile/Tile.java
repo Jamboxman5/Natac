@@ -54,6 +54,8 @@ public class Tile {
 
     private Vector2 pos;
 
+    private final boolean flip;
+
     public Tile() {
         buildings = new ArrayList<>();
         pendingBuildings = new ArrayList<>();
@@ -62,23 +64,16 @@ public class Tile {
         pendingOccupants = new ArrayList<>();
         removingOccupants = new ArrayList<>();
         isFogged = true;
+        flip = Math.random() > .5;
     }
 
     public Tile(float x, float y, TileState state) {
+        this();
         this.state = state;
         this.type = getRandomType();
 
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
-
-        buildings = new ArrayList<>();
-        pendingBuildings = new ArrayList<>();
-        removingBuildings = new ArrayList<>();
-        occupants = new ArrayList<>();
-        pendingOccupants = new ArrayList<>();
-        removingOccupants = new ArrayList<>();
-
-        isFogged = true;
 
         if (Math.random() > 0.8 && state != TileState.STARTING) buildings.add(new Ruins(pos));
     }
@@ -105,6 +100,7 @@ public class Tile {
 
         if (!isFogged) {
 
+            if (flip) sprite.setFlip(true, false);
             sprite.setCenter(bounds.shape.getX(), bounds.shape.getY());
             sprite.setOriginCenter();
             sprite.setAlpha(1f-fogOpacity);
@@ -137,6 +133,7 @@ public class Tile {
 
         if (type == TileType.MOUNTAINS) {
             Sprite layer = new Sprite(mountainsLayer);
+            if (flip) layer.setFlip(true, false);
             layer.setScale(currentScale);
             layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
             layer.setOriginCenter();
