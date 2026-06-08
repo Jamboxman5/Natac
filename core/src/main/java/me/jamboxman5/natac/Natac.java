@@ -1,12 +1,6 @@
 package me.jamboxman5.natac;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.ClientManager;
 import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.net.packet.PacketEndTurn;
@@ -15,13 +9,10 @@ import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
-import me.jamboxman5.natac.sfx.Musics;
+import me.jamboxman5.natac.sfx.MusicTracks;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Natac extends Game {
 
@@ -46,7 +37,7 @@ public class Natac extends Game {
 
         Fonts.initFonts();
 
-        Musics.TEXT_BGM.play();
+        MusicTracks.TEXT_BGM.play();
 
     }
 

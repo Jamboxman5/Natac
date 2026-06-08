@@ -18,7 +18,7 @@ import me.jamboxman5.natac.data.SettingsData;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.SettingsScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
-import me.jamboxman5.natac.sfx.Musics;
+import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.util.Settings;
 
 public class SettingsStage extends Stage {
@@ -92,7 +92,7 @@ public class SettingsStage extends Stage {
                 Settings.musVolume = musVolumeSlider.getValue();
                 Settings.sfxVolume = sfxVolumeSlider.getValue();
 
-                for (Musics m : Musics.values()) {
+                for (MusicTracks m : MusicTracks.values()) {
                     m.setVolume(Settings.musVolume);
                 }
 
