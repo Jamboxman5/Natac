@@ -50,22 +50,6 @@ public class ClientManager {
 
     }
 
-    public Player selectFromConnectedPlayers() {
-        Player[] names = new Player[connectedPlayers.size];
-        for (int i = 0; i < connectedPlayers.size; i++) {
-            names[i] = connectedPlayers.get(i);
-        }
-        return (Player) JOptionPane.showInputDialog(
-            null,
-            "Choose a player:",
-            "Player Selector",
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            names,
-            names[0]
-        );
-    }
-
     private void sendLogin(Player player) {
         PacketLogin login = new PacketLogin();
         login.connectingPlayer = player;

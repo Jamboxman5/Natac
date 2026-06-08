@@ -20,7 +20,7 @@ public class FoolsGoldCard extends Card {
         //Define effects to happen when card is played
         //Player variable is the instance of the player who is playing this card
         //Decrease the gold stat of another player by 3
-        Player p = Natac.instance.getClientManager().selectFromConnectedPlayers();
-        PacketUtil.createStatChange(p,0,0,0,0,GoldDrop,0);
+//        Player p = Natac.instance.getClientManager().selectFromConnectedPlayers();
+        PacketUtil.createStatChange(player,0,0,0,0,GoldDrop,0);
     }
 }

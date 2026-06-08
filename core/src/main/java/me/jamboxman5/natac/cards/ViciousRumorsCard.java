@@ -20,7 +20,7 @@ public class ViciousRumorsCard extends Card {
         //Define effects to happen when card is played
         //Player variable is the instance of the player who is playing this card
         //Increase the player's status value
-        Player p = Natac.instance.getClientManager().selectFromConnectedPlayers();
-        PacketUtil.createStatChange(p,0,StatusDrop,0,0,0,0);
+//        Player p = Natac.instance.getClientManager().selectFromConnectedPlayers();
+        PacketUtil.createStatChange(player,0,StatusDrop,0,0,0,0);
     }
 }

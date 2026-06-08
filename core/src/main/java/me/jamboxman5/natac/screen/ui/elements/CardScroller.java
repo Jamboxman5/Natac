@@ -44,12 +44,12 @@ public class CardScroller extends Scroller {
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                card.playCard(Natac.instance.getClientManager().selectFromConnectedPlayers(), Natac.instance.getGame().getMap());
-                Natac.instance.player.removeCard(card);
+                Natac.instance.getGame().addUIActor(new CardPlayerSelector(card));
                 animateExit();
             }
         });
         return button;
     }
+
 
 }
