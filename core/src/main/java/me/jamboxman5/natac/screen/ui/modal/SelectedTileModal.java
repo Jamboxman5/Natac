@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.esotericsoftware.kryonet.Listener;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
@@ -57,7 +59,11 @@ public class SelectedTileModal extends Stage {
         float x = (Settings.screenWidth / 2f) - (margin / 2f) - width;
 
         backButton = getButton("Back", getBackAction(), width, height, x, margin * 2.5f);
-        buildButton = getButton("Build", getBuildAction(this), width, height, x + width + margin, margin * 2.5f);
+        if (selectedTile.getOwner() == null) {
+            buildButton = getButton("Claim", getClaimAction(this), width, height, x + width + margin, margin * 2.5f);
+        } else {
+            buildButton = getButton("Build", getBuildAction(this), width, height, x + width + margin, margin * 2.5f);
+        }
 
         addActor(buildButton);
         addActor(backButton);
@@ -206,6 +212,18 @@ public class SelectedTileModal extends Stage {
                 structureSelector.animateEntrance();
                 addActor(structureSelector);
                 setScrollFocus(structureSelector);
+            }
+        };
+    }
+
+    public ChangeListener getClaimAction(SelectedTileModal parent) {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                selectedTile.claim(Natac.instance.player.getID(), true);
+                ((TextButton) buildButton).setText("Build");
+                buildButton.clearListeners();
+                buildButton.addListener(getBuildAction(parent));
             }
         };
     }
