@@ -21,6 +21,7 @@ public abstract class Unit {
     protected Vector2 tilePos;
 
     protected Vector2 targetTilePos;
+    protected Vector2 targetPos;
     protected int travelCounter = 0;
 
     protected UUID owner;
@@ -51,9 +52,13 @@ public abstract class Unit {
                 travel();
             }
             alpha -= .005f;
-            if (alpha < .25f) alpha = 1f;
+            if (alpha < .4f) alpha = 1f;
         } else {
             alpha = 1f;
+        }
+        if (targetPos != null) {
+            position.lerp(targetPos, 0.01f);
+            if (targetPos.epsilonEquals(position)) targetPos = null;
         }
     }
 
@@ -107,6 +112,11 @@ public abstract class Unit {
         current.removeUnit(this);
         closest.addUnit(this);
         tilePos = closest.getTilePosition();
+        targetPos = position.cpy();
+        Vector2 displacement =
+            current.getTilePosition().cpy()
+                .sub(closest.getTilePosition());
+        position.add(displacement);
         closest.defog();
 
         if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
