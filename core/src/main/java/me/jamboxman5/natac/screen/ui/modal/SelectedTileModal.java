@@ -96,7 +96,7 @@ public class SelectedTileModal extends Stage {
 
         for (Unit u : selectedTile.getUnits()) {
             if (u.getBounds(tileCenter, 5f).contains(touchPos)) {
-//                u.deploy(selectedTile.getNeighbors().get(0));
+                Natac.instance.getGame().selectUnit(u);
                 return true;
             }
         }

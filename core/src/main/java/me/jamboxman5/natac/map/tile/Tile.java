@@ -13,6 +13,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.structures.Structure;
@@ -89,7 +90,7 @@ public class Tile {
     private transient float pulse = 0;
     private transient float fogOpacity = 1f;
 
-    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionState tileSelectState) {
+    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionMode tileSelectState) {
 
         if (bounds == null) {
             bounds = new Hexagon(pos);
@@ -111,10 +112,18 @@ public class Tile {
 
         Color highlight = new Color(state.highlightColor);
 
-        if (tileSelectState == GameScreen.SelectionState.BASE && state == TileState.STARTING) {
+        if (tileSelectState == GameScreen.SelectionMode.BASE && state == TileState.STARTING) {
             if (pulse > 1) pulse = 0f;
             highlight.r = pulse;
             highlight.g = pulse;
+            pulse += 0.005f;
+        }
+
+        if (tileSelectState == GameScreen.SelectionMode.TRAVEL && state != TileState.ENEMY_CLAIMED) {
+            if (pulse > 1) pulse = 0.3f;
+            highlight.r = pulse;
+            highlight.g = pulse;
+            highlight.b = pulse;
             pulse += 0.005f;
         }
 
@@ -274,6 +283,13 @@ public class Tile {
 
     public void removeUnit(Unit unit) { removingOccupants.add(unit); }
     public void removeStructure(Structure structure) { removingBuildings.add(structure); }
+
+    public boolean hasUnits(Player player) {
+        for (Unit u : occupants) {
+            if (u.getOwner().equals(player.getID())) return true;
+        }
+        return false;
+    }
 
     public static class Hexagon {
         private float currentScale = 1f;

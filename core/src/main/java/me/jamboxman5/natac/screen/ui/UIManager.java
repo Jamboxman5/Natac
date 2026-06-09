@@ -8,7 +8,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class UIManager {
 
-    public static void draw(SpriteBatch batch, ShapeDrawer shapes, GameScreen.State gameState) {
+    public static void draw(SpriteBatch batch, ShapeDrawer shapes, GameScreen.State gameState, GameScreen.SelectionMode selectionMode) {
         Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, Natac.instance.player.getUsername(), batch, 20, 40);
 
         int statStart = Settings.screenHeight - 40;
@@ -18,7 +18,11 @@ public class UIManager {
 
         switch(gameState) {
             case PLAY:
-                Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Your turn... ", batch, 20, 80);
+                if (Natac.instance.getGame().getTileSelectionMode() == GameScreen.SelectionMode.TRAVEL) {
+                    Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Send this unit where? ", batch, 20, 80);
+                } else {
+                    Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Your turn... ", batch, 20, 80);
+                }
                 break;
             case WAIT:
                 Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Waiting for other players... ", batch, 20, 80);

@@ -16,6 +16,7 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
+import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -49,11 +50,13 @@ public class GameScreen implements Screen, InputProcessor {
     private PlayInputStage uiStage;
 
     private State gameState;
-    private SelectionState tileSelectState;
+    private SelectionMode tileSelectState;
 
     private SelectedTileModal tileModal = null;
 
     public static final Vector2 viewportDimensions = new Vector2(1280, 720);
+
+    private Unit selectedUnit = null;
 
     public void addUIActor(Actor actor) { uiStage.addActor(actor);
     }
@@ -62,13 +65,15 @@ public class GameScreen implements Screen, InputProcessor {
         CLAIM, WAIT, PLAY;
     }
 
-    public enum SelectionState {
-        OWNED, NEIGHBORING, NONE, BASE,
+    public enum SelectionMode {
+        OWNED, NONE, TRAVEL, BASE,
     }
 
-    public void setTileSelectState(SelectionState state) {
+    public void setTileSelectionMode(SelectionMode state) {
         this.tileSelectState = state;
     }
+
+    public SelectionMode getTileSelectionMode() { return tileSelectState; }
 
     public GameScreen(Map map) {
 
@@ -112,7 +117,7 @@ public class GameScreen implements Screen, InputProcessor {
         if (map.getSelectedTile() == null) uiStage.draw();
 
         uiSprites.begin();
-        UIManager.draw(uiSprites, uiShapes, gameState);
+        UIManager.draw(uiSprites, uiShapes, gameState, tileSelectState);
         uiSprites.end();
 
         if (tileModal != null) {
@@ -189,7 +194,7 @@ public class GameScreen implements Screen, InputProcessor {
         modalShapes = new ShapeDrawer(modalBatch, whitePixel);
 
         gameState = State.WAIT;
-        tileSelectState = SelectionState.BASE;
+        tileSelectState = SelectionMode.BASE;
 
         vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
 
@@ -319,6 +324,11 @@ public class GameScreen implements Screen, InputProcessor {
     public State getState() { return gameState; }
     public void setState(State newState) { gameState = newState; }
 
-
+    public Unit getSelectedUnit() { return selectedUnit; }
+    public void selectUnit(Unit unit) {
+        this.selectedUnit = unit;
+        this.tileSelectState = SelectionMode.TRAVEL;
+        map.deselectTile();
+    }
 
 }

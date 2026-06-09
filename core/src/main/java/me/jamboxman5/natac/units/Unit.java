@@ -85,7 +85,7 @@ public abstract class Unit {
         float shortestDistance = Float.POSITIVE_INFINITY;
 
         for (Tile t : candidates) {
-            float distance = targetTilePos.cpy().sub(tilePos).len();
+            float distance =  targetTilePos.dst(t.getTilePosition());
             if (distance < shortestDistance) {
                 shortestDistance = distance;
                 closest = t;

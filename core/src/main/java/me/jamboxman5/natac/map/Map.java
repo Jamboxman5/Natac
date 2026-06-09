@@ -29,7 +29,7 @@ public class Map {
 
     }
 
-    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionState tileSelectState) {
+    public void draw(Camera camera, SpriteBatch batch, ShapeDrawer shapes, GameScreen.SelectionMode tileSelectState) {
         for (Tile t : tiles) t.draw(camera, batch, shapes, tileSelectState);
     }
 
@@ -52,20 +52,43 @@ public class Map {
     }
 
     public void clickTile(Vector2 pos) {
+
         for (Tile t : tiles) {
             if (t.contains(pos)) {
-                switch (t.getState()) {
-                    case STARTING:
-                        t.claim(Natac.instance.player.getID(), true);
-                        clearStartingTiles();
-                        Natac.instance.endTurn();
-                        return;
-                    case CLAIMED:
+
+                GameScreen gameScreen = Natac.instance.getGame();
+
+                if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.BASE) {
+
+                    switch (t.getState()) {
+                        case STARTING:
+                            t.claim(Natac.instance.player.getID(), true);
+                            clearStartingTiles();
+                            Natac.instance.endTurn();
+                            gameScreen.setTileSelectionMode(GameScreen.SelectionMode.NONE);
+                            return;
+                        default:
+                            return;
+
+                    }
+
+                } else if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.TRAVEL) {
+
+                   if (t.getState() != TileState.ENEMY_CLAIMED) {
+                       gameScreen.setTileSelectionMode(GameScreen.SelectionMode.NONE);
+                       gameScreen.getSelectedUnit().deploy(t);
+                   }
+
+                } else if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.NONE) {
+
+                    if (t.getState() == TileState.CLAIMED || t.hasUnits(Natac.instance.player)) {
                         selectedTile = t;
-                    default:
-                        return;
+                    }
 
                 }
+
+                return;
+
             }
 
         }
