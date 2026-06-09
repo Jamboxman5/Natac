@@ -31,6 +31,8 @@ public abstract class Unit {
         color = Color.WHITE;
     }
 
+    protected float alpha = 1f;
+
     protected Unit(int speed, int range, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
         this.speed = speed;
         this.range = range;
@@ -48,16 +50,24 @@ public abstract class Unit {
                 travelCounter = 0;
                 travel();
             }
+            alpha -= .005f;
+            if (alpha < .25f) alpha = 1f;
+        } else {
+            alpha = 1f;
         }
     }
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
-        shapes.setColor(color);
+        Color drawColor = new Color(color);
+        drawColor.a = alpha;
+        shapes.setColor(drawColor);
         shapes.filledCircle(tilePos.cpy().add(position.cpy().scl(Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale())), 5);
     }
 
     public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
-        shapes.setColor(color);
+        Color drawColor = new Color(color);
+        drawColor.a = alpha;
+        shapes.setColor(drawColor);
         shapes.filledCircle(center.cpy().add(position.cpy().scl(5)), 25);
     }
 
