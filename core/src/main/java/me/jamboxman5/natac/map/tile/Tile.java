@@ -38,7 +38,7 @@ public class Tile {
     private int health;
     private int defense;
 
-    private final List<Structure> buildings;
+    private final List<Structure> structures;
     private final List<Structure> removingBuildings;
     private final List<Structure> pendingBuildings;
 
@@ -59,7 +59,7 @@ public class Tile {
     private final boolean flip;
 
     public Tile() {
-        buildings = new ArrayList<>();
+        structures = new ArrayList<>();
         pendingBuildings = new ArrayList<>();
         removingBuildings = new ArrayList<>();
         occupants = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Tile {
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
-        if (Math.random() > 0.8 && state != TileState.STARTING) buildings.add(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) structures.add(new Ruins(pos));
     }
 
 
@@ -152,7 +152,7 @@ public class Tile {
         }
 
         for (Unit u : occupants) u.draw(batch, shapes);
-        for (Structure s : buildings) s.draw(batch, shapes);
+        for (Structure s : structures) s.draw(batch, shapes);
     }
 
     private void defogNeighbors(int radius) {
@@ -246,9 +246,9 @@ public class Tile {
         removingOccupants.clear();
         pendingOccupants.clear();
 
-        for (Structure s : buildings) s.update();
-        buildings.removeAll(removingBuildings);
-        buildings.addAll(pendingBuildings);
+        for (Structure s : structures) s.update();
+        structures.removeAll(removingBuildings);
+        structures.addAll(pendingBuildings);
         removingBuildings.clear();
         pendingBuildings.clear();
     }
@@ -273,7 +273,7 @@ public class Tile {
 
     public Sprite getSprite() { return sprite; }
 
-    public List<Structure> getStructures() { return buildings; }
+    public List<Structure> getStructures() { return structures; }
 
     public List<Unit> getUnits() { return occupants; }
 
@@ -289,6 +289,10 @@ public class Tile {
             if (u.getOwner().equals(player.getID())) return true;
         }
         return false;
+    }
+
+    public void clearStructures() {
+        structures.clear();
     }
 
     public static class Hexagon {
@@ -337,7 +341,7 @@ public class Tile {
     public float getCurrentScale() { return currentScale; }
 
     public boolean hasBarracks() {
-        for (Structure s : buildings) {
+        for (Structure s : structures) {
             if (s instanceof Barracks) return true;
         }
         return false;
