@@ -117,15 +117,13 @@ public class Tile {
             highlight.r = pulse;
             highlight.g = pulse;
             pulse += 0.005f;
-        }
-
-        if (tileSelectState == GameScreen.SelectionMode.TRAVEL && state != TileState.ENEMY_CLAIMED) {
+        } else if (tileSelectState == GameScreen.SelectionMode.TRAVEL && state != TileState.ENEMY_CLAIMED) {
             if (pulse > 1) pulse = 0.3f;
             highlight.r = pulse;
             highlight.g = pulse;
             highlight.b = pulse;
             pulse += 0.005f;
-        }
+        } else if (pulse != 1) pulse = 1;
 
         if (state == TileState.BLOCKED && !isFogged) {
             if (fogOpacity > 0) fogOpacity -= 0.0025f;
