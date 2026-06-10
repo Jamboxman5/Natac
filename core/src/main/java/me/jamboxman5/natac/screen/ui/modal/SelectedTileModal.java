@@ -178,7 +178,7 @@ public class SelectedTileModal extends Stage {
 
     }
 
-    private Button getButton(String txt, ChangeListener clickAction, int w, int h, float x, float y) {
+    private Button getButton(String txt, ChangeListener clickAction, float w, float h, float x, float y) {
         TextButton button = new TextButton(txt, skin);
         button.setPosition(x, y);
         button.setSize(w, h);
@@ -221,9 +221,9 @@ public class SelectedTileModal extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 selectedTile.claim(Natac.instance.player.getID(), true);
-                ((TextButton) buildButton).setText("Build");
-                buildButton.clearListeners();
-                buildButton.addListener(getBuildAction(parent));
+                buildButton.remove();
+                buildButton = getButton("Build", getBuildAction(parent), buildButton.getWidth(), buildButton.getHeight(), buildButton.getX(), buildButton.getY());
+                addActor(buildButton);
             }
         };
     }
