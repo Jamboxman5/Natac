@@ -34,6 +34,8 @@ public abstract class Unit {
 
     protected float alpha = 1f;
 
+    protected UUID id = UUID.randomUUID();
+
     protected Unit(int speed, int range, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
         this.speed = speed;
         this.range = range;
@@ -109,22 +111,28 @@ public abstract class Unit {
 
         if (closest == null) return;
 
-        current.removeUnit(this);
-        closest.addUnit(this);
-        tilePos = closest.getTilePosition();
-        targetPos = position.cpy();
-        Vector2 displacement =
-            current.getTilePosition().cpy()
-                .sub(closest.getTilePosition());
-        position.add(displacement);
-        closest.defog();
-
-        if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
+        move(current, closest);
 
     }
 
     public void incrementTravel() {
         travelCounter++;
     }
+
+    public void move(Tile from, Tile to) {
+        from.removeUnit(this);
+        to.addUnit(this);
+        tilePos = to.getTilePosition();
+        targetPos = position.cpy();
+        Vector2 displacement =
+            from.getTilePosition().cpy()
+                .sub(to.getTilePosition());
+        position.add(displacement);
+        to.defog();
+
+        if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
+    }
+
+    public UUID getID() { return id; }
 
 }

@@ -17,6 +17,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Map {
     private List<Tile> tiles;
@@ -160,5 +161,14 @@ public class Map {
             if (getNeighborSet(t).size() <= 3) t.setState(TileState.STARTING);
             t.clearStructures();
         }
+    }
+
+    public Unit findUnit(UUID unitID) {
+        for (Tile t : tiles) {
+            for (Unit u : t.getUnits()) {
+                if (u.getID().equals(unitID)) return u;
+            }
+        }
+        return null;
     }
 }
