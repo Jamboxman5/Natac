@@ -35,7 +35,8 @@ public class ClientManager {
     public void sendPacketUDP(Packet p) { client.sendUDP(p); }
 
     public void connect(Player player, String address) throws IOException {
-        if (address.length() == 0) address = "localhost";
+        if (address == null) return;
+        if (address.isEmpty()) address = "localhost";
         client = new Client(65536, 65536);
         Kryo kryo = client.getKryo();
 
