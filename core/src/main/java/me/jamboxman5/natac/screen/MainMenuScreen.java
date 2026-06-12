@@ -19,6 +19,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.screen.ui.elements.prompt.JoinAddressPrompt;
 import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.util.Settings;
 
@@ -109,13 +110,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (field.getText().isEmpty()) return;
-                String ip = JOptionPane.showInputDialog("Enter host IP: ");
-                if (ip == null || ip.isEmpty()) return;
-                Player player = new Player(field.getText(), classSelectBox.getSelected(), Color.RED);
-
-                if (Natac.instance.joinGame(player, ip)) Natac.instance.setScreen(new LobbyScreen(player));
-                else Natac.instance.getClientManager().logSevere("INVALID ADDRESS!");
-
+                uiStage.addActor(new JoinAddressPrompt(field.getText(), classSelectBox.getSelected()));
             }
         });
 
@@ -191,11 +186,13 @@ public class MainMenuScreen implements Screen {
     }
 
     public void draw() {
-        uiStage.draw();
 
         spriteBatch.begin();
         font.draw(spriteBatch, "NATAC", Fonts.getXForCenteredText(Settings.screenWidth / 2, "NATAC", font, 1f), ((float) Settings.screenHeight /2) + 160);
         spriteBatch.end();
+
+        uiStage.draw();
+
     }
 
 
