@@ -37,8 +37,6 @@ public class Natac extends Game {
 
         Fonts.initFonts();
 
-        MusicTracks.TEXT_BGM.play();
-
     }
 
     @Override

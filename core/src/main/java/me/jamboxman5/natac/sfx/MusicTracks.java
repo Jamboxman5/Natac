@@ -6,7 +6,8 @@ import me.jamboxman5.natac.util.Settings;
 
 public enum MusicTracks {
 
-    TEXT_BGM(Gdx.audio.newMusic(Gdx.files.internal("sound/music/natac-test-bgm.wav")));
+    TEST_BGM(Gdx.audio.newMusic(Gdx.files.internal("sound/music/natac-test-bgm.wav"))),
+    MENU_BGM(Gdx.audio.newMusic(Gdx.files.internal("sound/music/menu-bgm.wav")));
 
     public final Music track;
 
@@ -21,7 +22,17 @@ public enum MusicTracks {
     }
 
     public void stop() {
-        this.track.stop();
+        if (this.track.isPlaying()) this.track.stop();
+    }
+
+    public static void stopAll() {
+        for (MusicTracks m : MusicTracks.values()) {
+            m.stop();
+        }
+    }
+
+    public boolean isPlaying() {
+        return (this.track.isPlaying() || this.track.isLooping());
     }
 
     MusicTracks(Music track) {

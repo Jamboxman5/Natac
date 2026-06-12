@@ -19,6 +19,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.util.Settings;
 
 import javax.swing.*;
@@ -136,6 +137,10 @@ public class MainMenuScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
 
+        if (!MusicTracks.MENU_BGM.isPlaying()) {
+            MusicTracks.stopAll();
+            MusicTracks.MENU_BGM.play();
+        }
 
     }
 

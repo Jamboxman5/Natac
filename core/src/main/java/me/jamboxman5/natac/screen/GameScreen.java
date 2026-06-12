@@ -16,6 +16,7 @@ import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
+import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -203,6 +204,9 @@ public class GameScreen implements Screen, InputProcessor {
         blur.setPasses(4);
 
         vfxManager.addEffect(blur);
+
+        MusicTracks.stopAll();
+        MusicTracks.TEST_BGM.play();
 
     }
 
