@@ -23,6 +23,14 @@ public class PacketUtil {
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
+    public static void moveUnit(Unit unit, Vector2 to, Vector2 from) {
+        PacketMoveUnit packet = new PacketMoveUnit();
+        packet.unit = unit;
+        packet.tilePosTo = to;
+        packet.tilePosFrom = from;
+        Natac.instance.getClientManager().sendPacketTCP(packet);
+    }
+
     public static void createStatChange(Player target, int diffResearch,
                                         int diffStatus,
                                         int diffAttack,

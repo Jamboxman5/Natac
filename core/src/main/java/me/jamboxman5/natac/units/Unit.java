@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.net.packet.PacketMoveUnit;
+import me.jamboxman5.natac.net.packet.PacketUtil;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
@@ -111,7 +113,7 @@ public abstract class Unit {
 
         if (closest == null) return;
 
-        move(current, closest);
+        PacketUtil.moveUnit(this, closest.getTilePosition(), current.getTilePosition());
 
     }
 
