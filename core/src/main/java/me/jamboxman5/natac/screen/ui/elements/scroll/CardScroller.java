@@ -1,4 +1,4 @@
-package me.jamboxman5.natac.screen.ui.elements;
+package me.jamboxman5.natac.screen.ui.elements.scroll;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,6 +10,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.cards.Card;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.screen.ui.elements.select.CardPlayerSelector;
 import me.jamboxman5.natac.util.Settings;
 
 public class CardScroller extends Scroller {

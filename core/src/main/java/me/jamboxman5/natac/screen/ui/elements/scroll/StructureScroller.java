@@ -1,4 +1,4 @@
-package me.jamboxman5.natac.screen.ui.elements;
+package me.jamboxman5.natac.screen.ui.elements.scroll;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;

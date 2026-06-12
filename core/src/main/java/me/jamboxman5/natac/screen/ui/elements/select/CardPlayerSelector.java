@@ -1,4 +1,4 @@
-package me.jamboxman5.natac.screen.ui.elements;
+package me.jamboxman5.natac.screen.ui.elements.select;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Array;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.cards.Card;
 import me.jamboxman5.natac.player.Player;

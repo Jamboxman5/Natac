@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
-import me.jamboxman5.natac.screen.ui.elements.CardScroller;
-import me.jamboxman5.natac.screen.ui.elements.Scroller;
+import me.jamboxman5.natac.screen.ui.elements.scroll.CardScroller;
+import me.jamboxman5.natac.screen.ui.elements.scroll.Scroller;
 import me.jamboxman5.natac.util.Settings;
 
 public class PlayInputStage extends Stage {
