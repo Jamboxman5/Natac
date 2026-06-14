@@ -3,6 +3,7 @@ package me.jamboxman5.natac.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import me.jamboxman5.natac.sfx.MusicTracks;
 
 public class Settings {
 
@@ -78,9 +79,20 @@ public class Settings {
         }
     }
 
+    public static void setMusicVolume(float newVolume) {
+        Settings.musVolume = newVolume;
+        for (MusicTracks m : MusicTracks.values()) {
+            m.setVolume(Settings.musVolume);
+        }
+    }
+
+    public static void setSfxVolume(float newVolume) {
+        Settings.sfxVolume = newVolume;
+    }
+
     public static class Resolution {
 
-        private Vector2 res;
+        private final Vector2 res;
 
         public Resolution(int x, int y) {
             this.res = new Vector2(x, y);

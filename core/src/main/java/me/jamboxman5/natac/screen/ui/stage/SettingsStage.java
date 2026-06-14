@@ -38,6 +38,9 @@ public class SettingsStage extends Stage {
 
     BitmapFont labelFont = Fonts.createFont("placeholder", 40, Color.WHITE);
 
+    float currentMusVol = Settings.musVolume;
+    float currentSfxVol = Settings.sfxVolume;
+
     public SettingsStage() {
         super(new FitViewport(Settings.screenWidth, Settings.screenHeight));
 
@@ -85,6 +88,7 @@ public class SettingsStage extends Stage {
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Settings.setMusicVolume(currentMusVol);
                 Natac.instance.setScreen(new MainMenuScreen());
             }
         });
@@ -94,13 +98,10 @@ public class SettingsStage extends Stage {
             public void changed(ChangeEvent event, Actor actor) {
                 Settings.setResolution(resolutionSelector.getSelected());
                 Settings.defogTileRadius = (int) defogRadiusSlider.getValue();
-                Settings.musVolume = musVolumeSlider.getValue();
-                Settings.sfxVolume = sfxVolumeSlider.getValue();
                 Settings.mapRadius = (int) mapRadiusSlider.getValue();
 
-                for (MusicTracks m : MusicTracks.values()) {
-                    m.setVolume(Settings.musVolume);
-                }
+                Settings.setMusicVolume(musVolumeSlider.getValue());
+                Settings.setSfxVolume(sfxVolumeSlider.getValue());
 
                 Natac.instance.setScreen(new SettingsScreen());
 
@@ -112,6 +113,14 @@ public class SettingsStage extends Stage {
         musVolumeSlider.setValue(Settings.musVolume);
         defogRadiusSlider.setValue(Settings.defogTileRadius);
         mapRadiusSlider.setValue(Settings.mapRadius);
+
+        musVolumeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Settings.setMusicVolume(musVolumeSlider.getValue());
+            }
+        });
+
     }
 
     public void draw(SpriteBatch batch) {
