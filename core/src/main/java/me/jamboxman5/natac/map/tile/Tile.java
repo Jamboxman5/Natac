@@ -20,12 +20,14 @@ import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
+import me.jamboxman5.natac.structures.prop.Tree;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.units.army.Soldier;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,6 +80,12 @@ public class Tile {
         bounds = new Hexagon(pos);
 
         if (Math.random() > 0.8 && state != TileState.STARTING) structures.add(new Ruins(pos));
+        if (type == TileType.PLAINS) {
+            for (int i = 0; i < 10; i++) {
+//                if (Math.random() > .5)
+                    structures.add(new Tree(pos, getRandomPosition()));
+            }
+        }
     }
 
 
@@ -201,6 +209,7 @@ public class Tile {
 
             Natac.instance.getGame().setState(GameScreen.State.WAIT);
         }
+        System.out.println(structures);
     }
 
     public void update(Vector2 touchPos) {
@@ -237,6 +246,17 @@ public class Tile {
 
         float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
         highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
+
+        if (structures.size() > 1) {
+            structures.sort(new Comparator<Structure>() {
+                @Override
+                public int compare(Structure o1, Structure o2) {
+                    float y1 = o1.getPosition().y * 10;
+                    float y2 = o2.getPosition().y * 10;
+                    return (int) (y2 - y1);
+                }
+            });
+        }
 
     }
 
@@ -346,6 +366,14 @@ public class Tile {
             if (s instanceof Barracks) return true;
         }
         return false;
+    }
+
+    protected static Vector2 getRandomPosition() {
+        float xDiff = (float) (Math.random() * 50f);
+        float yDiff = (float) (Math.random() * 50f);
+        if (Math.random() > .5) xDiff = -xDiff;
+        if (Math.random() > .5) yDiff = -yDiff;
+        return new Vector2(xDiff, yDiff);
     }
 
 }

@@ -10,6 +10,7 @@ public class Prop extends Structure {
 
     public Prop(Vector2 pos, Vector2 tilePos, String name) {
         super(0, 0, 0, tilePos, pos, name);
+        this.drawColor = Color.WHITE;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package me.jamboxman5.natac.structures;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.structures.prop.Tree;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public abstract class Structure {
@@ -20,6 +22,7 @@ public abstract class Structure {
     protected Vector2 position;
 
     protected transient Color drawColor;
+    protected transient Sprite sprite;
 
     protected String structureName = "Structure";
 
@@ -41,11 +44,25 @@ public abstract class Structure {
     public abstract void update();
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
+        if (sprite != null) {
+            Vector2 drawPos = getDrawPos(tilePos, 1f);
+            sprite.setScale(1);
+            sprite.setPosition(drawPos.x, drawPos.y);
+            sprite.draw(batch);
+            return;
+        }
         shapes.setColor(drawColor);
         shapes.filledRectangle(getBounds(tilePos, Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale()));
     }
 
     public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
+        if (sprite != null) {
+            Vector2 drawPos = getDrawPos(center, 5f);
+            sprite.setScale(5);
+            sprite.setPosition(drawPos.x, drawPos.y);
+            sprite.draw(batch);
+            return;
+        }
         shapes.setColor(drawColor);
         shapes.filledRectangle(getBounds(center, 5f));
 
@@ -69,8 +86,16 @@ public abstract class Structure {
     public int getBuildCost() { return buildCost; }
 
     public Rectangle getBounds(Vector2 center, float scale) {
-        Vector2 drawPos = center.cpy().add(position.cpy().scl(scale));
+        Vector2 drawPos = getDrawPos(center, scale);
         drawPos.sub((5f * scale)/2f, (5f * scale)/2f);
         return new Rectangle(drawPos.x, drawPos.y, 5f * scale, 5f * scale);
+    }
+
+    protected Vector2 getDrawPos(Vector2 center, float scale) {
+        return center.cpy().add(position.cpy().scl(scale));
+    }
+
+    public Vector2 getPosition() {
+        return position;
     }
 }
