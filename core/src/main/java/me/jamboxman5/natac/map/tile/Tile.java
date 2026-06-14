@@ -188,6 +188,9 @@ public class Tile {
             packet.claimingID = claimingPlayerID;
             packet.tilePos = pos;
             Natac.instance.getClientManager().sendPacketTCP(packet);
+            Sounds.TILE_CLAIM.play();
+        } else {
+            Sounds.TILE_CLAIM.play();
         }
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
