@@ -26,6 +26,8 @@ public abstract class Structure {
 
     protected String structureName = "Structure";
 
+    private final static float structureScale = .75f;
+
     protected Structure() {
         this.drawColor = Color.WHITE;
     }
@@ -47,7 +49,7 @@ public abstract class Structure {
         if (sprite != null) {
             float scale = Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale();
             Vector2 drawPos = getDrawPos(tilePos, scale);
-            sprite.setScale(scale);
+            sprite.setScale(scale * structureScale);
             sprite.setOrigin(sprite.getWidth()/2f, 0f);
             sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
             sprite.draw(batch);
@@ -61,7 +63,7 @@ public abstract class Structure {
         if (sprite != null) {
             float scale = 5f;
             Vector2 drawPos = getDrawPos(center, scale);
-            sprite.setScale(scale);
+            sprite.setScale(scale * structureScale);
             drawPos.sub((sprite.getWidth()/2f), (sprite.getHeight())/2f);
             sprite.setPosition(drawPos.x, drawPos.y);
             sprite.draw(batch);

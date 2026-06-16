@@ -16,6 +16,7 @@ import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
 import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.structures.prop.Prop;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
@@ -149,6 +150,10 @@ public class SelectedTileModal extends Stage {
 
         for (Structure structure : selectedTile.getStructures()) {
             structure.drawModal(batch, shapes, tileCenter);
+        }
+
+        for (Prop p : selectedTile.getProps()) {
+            p.drawModal(batch, shapes, tileCenter);
         }
 
         for (Unit unit : selectedTile.getUnits()) {

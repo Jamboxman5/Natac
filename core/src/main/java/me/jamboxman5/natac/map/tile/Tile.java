@@ -348,6 +348,8 @@ public class Tile {
         structures.clear();
     }
 
+    public List<Prop> getProps() { return props; }
+
     public static class Hexagon {
         private float currentScale = 1f;
 
