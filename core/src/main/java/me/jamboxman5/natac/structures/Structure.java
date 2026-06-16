@@ -48,8 +48,8 @@ public abstract class Structure {
             float scale = Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale();
             Vector2 drawPos = getDrawPos(tilePos, scale);
             sprite.setScale(scale);
-            drawPos.sub((sprite.getWidth()/2f), (sprite.getHeight())/2f);
-            sprite.setPosition(drawPos.x, drawPos.y);
+            sprite.setOrigin(sprite.getWidth()/2f, 0f);
+            sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
             sprite.draw(batch);
             return;
         }
