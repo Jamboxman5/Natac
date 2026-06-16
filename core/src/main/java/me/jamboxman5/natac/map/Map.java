@@ -16,6 +16,7 @@ import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +41,16 @@ public class Map {
 //            for (Tile t : tiles)
 //                if (t.getState() == TileState.SELECTABLE) t.setState(TileState.BLOCKED);
 //        }
+    }
+
+    public void sortTiles() {
+        tiles.sort(new Comparator<Tile>() {
+            @Override
+            public int compare(Tile o1, Tile o2) {
+                float y1 = o1.getTilePosition().y * 10;
+                float y2 = o2.getTilePosition().y * 10;
+                return (int) (y2-y1);            }
+        });
     }
 
     public void update() {

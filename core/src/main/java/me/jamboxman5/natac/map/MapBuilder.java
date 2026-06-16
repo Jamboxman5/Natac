@@ -34,17 +34,8 @@ public class MapBuilder {
 
         }
 
+        map.sortTiles();
 
-//        for (int col = 0; col < columns; col++) {
-//            for (int row = 0; row < rows; row++) {
-//                float x = startX + (col * horizontalStep);
-//                float y = startY + ((rows-1-row) * verticalStep);
-//
-//                if (col % 2 != 0) y += verticalStep / 2f;
-//
-//                map.addTile(new Tile(x, y, mapLayout[row][col]));
-//            }
-//        }
         return map;
     }
 
