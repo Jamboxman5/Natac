@@ -45,8 +45,10 @@ public abstract class Structure {
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
         if (sprite != null) {
-            Vector2 drawPos = getDrawPos(tilePos, 1f);
-            sprite.setScale(1);
+            float scale = Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale();
+            Vector2 drawPos = getDrawPos(tilePos, scale);
+            sprite.setScale(scale);
+            drawPos.sub((sprite.getWidth()/2f), (sprite.getHeight())/2f);
             sprite.setPosition(drawPos.x, drawPos.y);
             sprite.draw(batch);
             return;
@@ -57,8 +59,10 @@ public abstract class Structure {
 
     public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
         if (sprite != null) {
-            Vector2 drawPos = getDrawPos(center, 5f);
-            sprite.setScale(5);
+            float scale = 5f;
+            Vector2 drawPos = getDrawPos(center, scale);
+            sprite.setScale(scale);
+            drawPos.sub((sprite.getWidth()/2f), (sprite.getHeight())/2f);
             sprite.setPosition(drawPos.x, drawPos.y);
             sprite.draw(batch);
             return;
