@@ -20,6 +20,7 @@ import me.jamboxman5.natac.structures.Structure;
 import me.jamboxman5.natac.structures.constructed.Barracks;
 import me.jamboxman5.natac.structures.constructed.TownHall;
 import me.jamboxman5.natac.structures.generated.Ruins;
+import me.jamboxman5.natac.structures.prop.Prop;
 import me.jamboxman5.natac.structures.prop.Tree;
 import me.jamboxman5.natac.units.Unit;
 import me.jamboxman5.natac.units.army.Soldier;
@@ -44,6 +45,10 @@ public class Tile {
     private final List<Structure> removingBuildings;
     private final List<Structure> pendingBuildings;
 
+    private final List<Prop> props;
+    private final List<Prop> removingProps;
+    private final List<Prop> pendingProps;
+
     private final List<Unit> occupants;
     private final List<Unit> pendingOccupants;
     private final List<Unit> removingOccupants;
@@ -67,6 +72,9 @@ public class Tile {
         occupants = new ArrayList<>();
         pendingOccupants = new ArrayList<>();
         removingOccupants = new ArrayList<>();
+        props = new ArrayList<>();
+        pendingProps = new ArrayList<>();
+        removingProps = new ArrayList<>();
         isFogged = true;
         flip = Math.random() > .5;
     }
@@ -83,7 +91,7 @@ public class Tile {
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
 //                if (Math.random() > .5)
-                    structures.add(new Tree(pos, getRandomPosition()));
+                    props.add(new Tree(pos, getRandomPosition()));
             }
         }
     }
@@ -159,6 +167,7 @@ public class Tile {
 
         for (Unit u : occupants) u.draw(batch, shapes);
         for (Structure s : structures) s.draw(batch, shapes);
+        for (Prop p : props) p.draw(batch, shapes);
     }
 
     private void defogNeighbors(int radius) {
@@ -258,6 +267,17 @@ public class Tile {
             });
         }
 
+        if (props.size() > 1) {
+            props.sort(new Comparator<Structure>() {
+                @Override
+                public int compare(Structure o1, Structure o2) {
+                    float y1 = o1.getPosition().y * 10;
+                    float y2 = o2.getPosition().y * 10;
+                    return (int) (y2 - y1);
+                }
+            });
+        }
+
     }
 
     public void update() {
@@ -272,10 +292,19 @@ public class Tile {
         structures.addAll(pendingBuildings);
         removingBuildings.clear();
         pendingBuildings.clear();
+
+        for (Prop p : props) p.update();
+        props.removeAll(removingProps);
+        props.addAll(pendingProps);
+        removingProps.clear();
+        pendingProps.clear();
     }
 
     public void addUnit(Unit unit) { pendingOccupants.add(unit); }
-    public void addStructure(Structure structure) { pendingBuildings.add(structure); }
+    public void addStructure(Structure structure) {
+        if (structure instanceof Prop) pendingProps.add((Prop) structure);
+        else pendingBuildings.add(structure);
+    }
 
     public boolean contains(Vector2 point) {
         return bounds.shape.contains(point);
@@ -303,7 +332,10 @@ public class Tile {
     }
 
     public void removeUnit(Unit unit) { removingOccupants.add(unit); }
-    public void removeStructure(Structure structure) { removingBuildings.add(structure); }
+    public void removeStructure(Structure structure) {
+        if (structure instanceof Prop) removingProps.add((Prop) structure);
+        else removingBuildings.add(structure);
+    }
 
     public boolean hasUnits(Player player) {
         for (Unit u : occupants) {

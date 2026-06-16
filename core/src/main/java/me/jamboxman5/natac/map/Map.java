@@ -158,8 +158,10 @@ public class Map {
 
     public void setupBaseTiles() {
         for (Tile t : tiles) {
-            if (getNeighborSet(t).size() <= 3) t.setState(TileState.STARTING);
-//            t.clearStructures();
+            if (getNeighborSet(t).size() <= 3) {
+                t.setState(TileState.STARTING);
+                t.clearStructures();
+            }
         }
     }
 
