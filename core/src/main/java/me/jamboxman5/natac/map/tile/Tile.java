@@ -133,7 +133,7 @@ public class Tile {
             highlight.r = pulse;
             highlight.g = pulse;
             pulse += 0.005f;
-        } else if (tileSelectState == GameScreen.SelectionMode.TRAVEL && state != TileState.ENEMY_CLAIMED) {
+        } else if (tileSelectState == GameScreen.SelectionMode.TRAVEL && state != TileState.ENEMY_CLAIMED && !Natac.instance.getGame().getSelectedUnit().getTilePosition().epsilonEquals(pos)) {
             if (pulse > 1) pulse = 0.3f;
             highlight.r = pulse;
             highlight.g = pulse;

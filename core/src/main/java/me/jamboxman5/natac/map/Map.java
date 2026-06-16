@@ -86,7 +86,7 @@ public class Map {
 
                 } else if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.TRAVEL) {
 
-                   if (t.getState() != TileState.ENEMY_CLAIMED) {
+                   if (t.getState() != TileState.ENEMY_CLAIMED && !Natac.instance.getGame().getSelectedUnit().getTilePosition().epsilonEquals(t.getTilePosition())) {
                        gameScreen.setTileSelectionMode(GameScreen.SelectionMode.NONE);
                        gameScreen.getSelectedUnit().deploy(t);
                    }

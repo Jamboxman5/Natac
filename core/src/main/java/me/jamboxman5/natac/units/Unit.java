@@ -137,4 +137,5 @@ public abstract class Unit {
 
     public UUID getID() { return id; }
 
+    public Vector2 getTilePosition() { return tilePos; }
 }
