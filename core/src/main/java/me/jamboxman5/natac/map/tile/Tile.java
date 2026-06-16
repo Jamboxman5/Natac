@@ -218,7 +218,6 @@ public class Tile {
 
             Natac.instance.getGame().setState(GameScreen.State.WAIT);
         }
-        System.out.println(structures);
     }
 
     public void update(Vector2 touchPos) {
