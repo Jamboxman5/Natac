@@ -66,7 +66,6 @@ public abstract class Structure {
             float scale = 5f;
             Vector2 drawPos = getDrawPos(center, scale);
             sprite.setScale(scale * structureScale);
-            drawPos.sub((sprite.getWidth()/2f), (sprite.getHeight())/2f);
             sprite.setOrigin(sprite.getWidth()/2f, 0f);
             sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
             shapes.setColor(new Color(0f, 0f, 0f, .25f));
