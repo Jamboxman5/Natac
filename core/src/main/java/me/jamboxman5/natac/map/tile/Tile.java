@@ -90,7 +90,7 @@ public class Tile {
         if (Math.random() > 0.8 && state != TileState.STARTING) structures.add(new Ruins(pos));
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
-//                if (Math.random() > .5)
+                if (Math.random() > .5)
                     props.add(new Tree(pos, getRandomPosition()));
             }
         }
