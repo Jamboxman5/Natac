@@ -53,7 +53,7 @@ public abstract class Structure {
             sprite.setOrigin(sprite.getWidth()/2f, 0f);
             sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
             shapes.setColor(new Color(0f, 0f, 0f, .25f));
-            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/3f) * scale, 4 * scale);
+            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
             sprite.draw(batch);
             return;
         }
@@ -67,9 +67,10 @@ public abstract class Structure {
             Vector2 drawPos = getDrawPos(center, scale);
             sprite.setScale(scale * structureScale);
             drawPos.sub((sprite.getWidth()/2f), (sprite.getHeight())/2f);
-            sprite.setPosition(drawPos.x, drawPos.y);
+            sprite.setOrigin(sprite.getWidth()/2f, 0f);
+            sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
             shapes.setColor(new Color(0f, 0f, 0f, .25f));
-            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 4 * scale * structureScale);
+            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
             sprite.draw(batch);
 
             return;
