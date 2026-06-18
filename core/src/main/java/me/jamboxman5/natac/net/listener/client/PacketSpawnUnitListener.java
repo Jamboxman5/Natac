@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Listener;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.net.packet.PacketBuildStructure;
 import me.jamboxman5.natac.net.packet.PacketSpawnUnit;
+import me.jamboxman5.natac.sfx.Sounds;
 
 public class PacketSpawnUnitListener implements Listener {
     @Override

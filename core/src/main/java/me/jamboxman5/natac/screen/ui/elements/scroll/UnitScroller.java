@@ -13,6 +13,7 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.entity.units.army.Soldier;
+import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.util.Settings;
 
 public class UnitScroller extends DDScroller {
@@ -57,6 +58,7 @@ public class UnitScroller extends DDScroller {
 
                 PacketUtil.spawnUnit(new Soldier(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner()), selectedTile.getTilePosition());
                 PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
+                Sounds.UNIT_SPAWN.play();
             }
         });
 
