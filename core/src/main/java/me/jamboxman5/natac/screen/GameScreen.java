@@ -109,14 +109,14 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glEnable(GL30.GL_BLEND);
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
-        if (map.getSelectedTile() != null) vfxManager.beginInputCapture();
+        if (battleModal != null || tileModal != null) vfxManager.beginInputCapture();
         else vfxManager.cleanUpBuffers();
 
         batch.begin();
         map.draw(gameCamera, batch, shapes, tileSelectState);
         batch.end();
 
-        if (map.getSelectedTile() != null) {
+        if (battleModal != null || tileModal != null) {
             vfxManager.endInputCapture();
             vfxManager.applyEffects();
             vfxManager.renderToScreen();
@@ -128,7 +128,11 @@ public class GameScreen implements Screen, InputProcessor {
         UIManager.draw(uiSprites, uiShapes, gameState, tileSelectState);
         uiSprites.end();
 
-        if (tileModal != null) {
+        if (battleModal != null) {
+            modalBatch.begin();
+            battleModal.draw(modalBatch, modalShapes);
+            modalBatch.end();
+        } else if (tileModal != null) {
             modalBatch.begin();
             tileModal.draw(modalBatch, modalShapes);
             modalBatch.end();
