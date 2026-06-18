@@ -4,33 +4,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.structures.Structure;
+import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
-import me.jamboxman5.natac.entity.structures.Structure;
-import me.jamboxman5.natac.entity.structures.prop.Prop;
-import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class SelectedTileModal extends Stage {
+public class BattleModal extends Stage {
 
     private Sprite selectedTileSprite = null;
     private Polygon selectedTileHighlight = null;
 
     private final Tile selectedTile;
 
-    private final float modalScale = 5f;
+    private final float modalScale = 10f;
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
@@ -47,7 +51,7 @@ public class SelectedTileModal extends Stage {
     Vector2 tileCenter = new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
 
 
-    public SelectedTileModal(Tile t) {
+    public BattleModal(Tile t) {
 
         super(new FitViewport(Settings.screenWidth, Settings.screenHeight));
 
@@ -61,11 +65,7 @@ public class SelectedTileModal extends Stage {
         float x = (Settings.screenWidth / 2f) - (margin / 2f) - width;
 
         backButton = getButton("Back", getBackAction(), width, height, x, margin * 2.5f);
-        if (selectedTile.getOwner() == null) {
-            buildButton = getButton("Claim", getClaimAction(this), width, height, x + width + margin, margin * 2.5f);
-        } else {
-            buildButton = getButton("Build", getBuildAction(this), width, height, x + width + margin, margin * 2.5f);
-        }
+
 
         addActor(buildButton);
         addActor(backButton);
@@ -122,7 +122,6 @@ public class SelectedTileModal extends Stage {
         backButton.setPosition(x, backButton.getY());
         buildButton.setPosition(x + width + margin, buildButton.getY());
 
-        recruitButton = getButton("Recruit", getRecruitAction(this), (int) width, (int) height, x + (width*2f) + (margin*2f), margin * 2.5f);
         addActor(recruitButton);
     }
 
@@ -194,50 +193,6 @@ public class SelectedTileModal extends Stage {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Natac.instance.getGame().getMap().deselectTile();
-            }
-        };
-    }
-
-    public ChangeListener getBuildAction(SelectedTileModal parent) {
-        return new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (structureSelector != null) return;
-                closeSelector();
-                Rectangle structureSelectorBounds = new Rectangle(Settings.screenWidth - 300 - margin, margin, 300, Settings.screenHeight - (margin * 2));
-                structureSelector = new StructureScroller(parent, selectedTile, selectedTileHighlight, tileCenter, structureSelectorBounds);
-
-                structureSelector.animateEntrance();
-                addActor(structureSelector);
-                setScrollFocus(structureSelector);
-            }
-        };
-    }
-
-    public ChangeListener getClaimAction(SelectedTileModal parent) {
-        return new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                selectedTile.claim(Natac.instance.player.getID(), true);
-                buildButton.remove();
-                buildButton = getButton("Build", getBuildAction(parent), buildButton.getWidth(), buildButton.getHeight(), buildButton.getX(), buildButton.getY());
-                addActor(buildButton);
-            }
-        };
-    }
-
-    public ChangeListener getRecruitAction(SelectedTileModal parent) {
-        return new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (unitSelector != null) return;
-                closeSelector();
-                Rectangle unitSelectorBounds = new Rectangle(margin, margin, 300, Settings.screenHeight - (margin * 2));
-                unitSelector = new UnitScroller(parent, selectedTile, selectedTileHighlight, tileCenter, unitSelectorBounds);
-
-                unitSelector.animateEntrance();
-                addActor(unitSelector);
-                setScrollFocus(unitSelector);
             }
         };
     }
