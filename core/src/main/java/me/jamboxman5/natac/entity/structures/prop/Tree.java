@@ -17,7 +17,7 @@ public class Tree extends Prop {
     @Override
     public void update() {
         if (sprite == null) {
-            sprite = new Sprite(new Texture(Gdx.files.internal("structure/prop/tree_1.png")));
+            sprite = new Sprite(new Texture(Gdx.files.internal("structure/prop/tree_" + (int) ( 1 + (Math.random() * 2)) + ".png")));
 
         }
     }
