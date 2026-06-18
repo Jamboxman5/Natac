@@ -355,9 +355,10 @@ public class GameScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(0, battleModal);
     }
 
-    public void endBattle() {
+    public void endBattle(Tile battleTile) {
         multiplexer.removeProcessor(battleModal);
         battleModal = null;
+        battleTile.setBattleStatus(false);
     }
 
 }

@@ -283,8 +283,9 @@ public class Tile {
 
         if (owner != null && owner.equals(Natac.instance.player.getID())) {
             UUID attacker = findAttacker();
-            if (attacker != null) {
+            if (attacker != null && !inBattle) {
                 Natac.instance.getGame().startBattle(this, attacker);
+                setBattleStatus(true);
             }
         }
 
