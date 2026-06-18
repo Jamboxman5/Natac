@@ -144,10 +144,10 @@ public class SelectedTileModal extends Stage {
         shapes.polygon(selectedTileHighlight, JoinType.POINTY);
 
         if (selectedTile.getType() == TileType.MOUNTAINS) {
-            Sprite layer = new Sprite(Tile.mountainsLayer);
-            layer.setScale(modalScale);
-            layer.setCenter(tileCenter.x, tileCenter.y);
-            layer.draw(batch);
+//            Sprite layer = new Sprite(Tile.mountainsLayer);
+//            layer.setScale(modalScale);
+//            layer.setCenter(tileCenter.x, tileCenter.y);
+//            layer.draw(batch);
         }
 
         for (Entity e : selectedTile.getEntities()) {

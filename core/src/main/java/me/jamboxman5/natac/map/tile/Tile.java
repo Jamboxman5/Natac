@@ -54,7 +54,7 @@ public class Tile {
 
     private boolean inBattle = false;
 
-    public final static Texture mountainsLayer = new Texture(Gdx.files.internal("tile/MountainTileSprite_3.png"));
+//    public final static Texture mountainsLayer = new Texture(Gdx.files.internal("tile/MountainTileSprite_3.png"));
 
     private Vector2 pos;
 
@@ -144,15 +144,15 @@ public class Tile {
 
         if (isFogged) return;
 
-        if (type == TileType.MOUNTAINS) {
-            Sprite layer = new Sprite(mountainsLayer);
-            if (flip) layer.setFlip(true, false);
-            layer.setScale(currentScale);
-            layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
-            layer.setOriginCenter();
-            layer.setAlpha(1f-fogOpacity);
-            layer.draw(batch);
-        }
+//        if (type == TileType.MOUNTAINS) {
+//            Sprite layer = new Sprite(mountainsLayer);
+//            if (flip) layer.setFlip(true, false);
+//            layer.setScale(currentScale);
+//            layer.setCenter(bounds.shape.getX(), bounds.shape.getY());
+//            layer.setOriginCenter();
+//            layer.setAlpha(1f-fogOpacity);
+//            layer.draw(batch);
+//        }
 
         for (Entity e : entities) e.draw(batch, shapes, pos, getCurrentScale());
 
