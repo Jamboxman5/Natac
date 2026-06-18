@@ -123,7 +123,7 @@ public class GameScreen implements Screen, InputProcessor {
 
         if (tileModal != null) {
             modalBatch.begin();
-            tileModal.drawSelectedTileMenu(modalBatch, modalShapes);
+            tileModal.draw(modalBatch, modalShapes);
             modalBatch.end();
         }
 

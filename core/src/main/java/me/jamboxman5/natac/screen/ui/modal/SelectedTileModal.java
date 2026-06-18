@@ -17,7 +17,6 @@ import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
 import me.jamboxman5.natac.entity.structures.Structure;
-import me.jamboxman5.natac.entity.structures.prop.Prop;
 import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
@@ -129,7 +128,7 @@ public class SelectedTileModal extends Stage {
     private float bgAlpha = 0f;
     private final float bgTargetAlpha = 0.5f;
 
-    public void drawSelectedTileMenu(SpriteBatch batch, ShapeDrawer shapes) {
+    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
 
         bgAlpha = MathUtils.lerp(bgAlpha, bgTargetAlpha, 0.02f);
 

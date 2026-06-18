@@ -34,15 +34,15 @@ public class BattleModal extends Stage {
 
     private final Tile selectedTile;
 
-    private final float modalScale = 10f;
+    private final float modalScale = 6f;
+
+    int width = Settings.screenWidth / 10;
+    int height = Settings.screenHeight / 10;
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
-    Button buildButton;
     Button recruitButton;
-    Button backButton;
 
-    StructureScroller structureSelector;
     UnitScroller unitSelector;
 
 
@@ -59,21 +59,9 @@ public class BattleModal extends Stage {
         selectedTileSprite = new Sprite(selectedTile.getSprite());
         selectedTileHighlight = generateHighlight();
 
-        int width = Settings.screenWidth / 10;
-        int height = Settings.screenHeight / 10;
-
-        float x = (Settings.screenWidth / 2f) - (margin / 2f) - width;
-
-        backButton = getButton("Back", getBackAction(), width, height, x, margin * 2.5f);
-
-
-        addActor(buildButton);
-        addActor(backButton);
-
-        if (t.hasBarracks()) addRecruitButton();
-
-
-
+        if (t.getOwner().equals(Natac.instance.player.getID()) && t.hasBarracks()) {
+//            addRecruitButton();
+        }
 
     }
 
@@ -83,10 +71,6 @@ public class BattleModal extends Stage {
         if (unitSelector != null) {
             unitSelector.update();
             if (!unitSelector.hasParent()) unitSelector = null;
-        }
-        if (structureSelector != null) {
-            structureSelector.update();
-            if (!structureSelector.hasParent()) structureSelector = null;
         }
 
     }
@@ -115,12 +99,8 @@ public class BattleModal extends Stage {
     public void addRecruitButton() {
         if (recruitButton != null) return;
 
-        float x = (Settings.screenWidth / 2f) - margin - (backButton.getWidth() * 1.5f);
-        float width = backButton.getWidth();
-        float height = backButton.getHeight();
-
-        backButton.setPosition(x, backButton.getY());
-        buildButton.setPosition(x + width + margin, buildButton.getY());
+        float x = (Settings.screenWidth / 2f) - (width/2f);
+//        recruitButton = getButton("Recruit", getRecruitAction(this), (int) width, (int) height, x + (width*2f) + (margin*2f), margin * 2.5f);
 
         addActor(recruitButton);
     }
@@ -128,7 +108,7 @@ public class BattleModal extends Stage {
     private float bgAlpha = 0f;
     private final float bgTargetAlpha = 0.5f;
 
-    public void drawSelectedTileMenu(SpriteBatch batch, ShapeDrawer shapes) {
+    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
 
         bgAlpha = MathUtils.lerp(bgAlpha, bgTargetAlpha, 0.02f);
 
@@ -195,15 +175,6 @@ public class BattleModal extends Stage {
                 Natac.instance.getGame().getMap().deselectTile();
             }
         };
-    }
-
-    public void closeSelector() {
-        if (structureSelector != null && structureSelector.hasParent()) {
-            structureSelector.animateExit();
-        }
-        if (unitSelector != null && unitSelector.hasParent()) {
-            unitSelector.animateExit();
-        }
     }
 
 //    public ChangeListener getBuildConfirmAction() {
