@@ -53,4 +53,12 @@ public class PacketUtil {
 
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
+
+    public static void repositionUnit(Unit unit, Vector2 newPosition) {
+        PacketRepositionUnit packet = new PacketRepositionUnit();
+        packet.unit = unit;
+        packet.newPosition = newPosition;
+
+        Natac.instance.getClientManager().sendPacketUDP(packet);
+    }
 }

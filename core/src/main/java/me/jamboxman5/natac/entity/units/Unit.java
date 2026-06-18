@@ -67,12 +67,17 @@ public abstract class Unit extends Entity {
             seek(targetPos);
         } else {
             //move back to standard position
-            if (!position.epsilonEquals(homePos)) seek(homePos);
+            if (!position.epsilonEquals(homePos)) {
+                seek(homePos);
+            }
         }
     }
 
     public void seek(Vector2 target) {
-        position.lerp(target, 0.01f);
+        Vector2 newPosition = position.cpy();
+        newPosition.lerp(target, 0.025f);
+        if (newPosition.dst(target) < 1) newPosition = target;
+        PacketUtil.repositionUnit(this, newPosition);
     }
 
     @Override

@@ -27,4 +27,5 @@ public abstract class Entity {
     public Vector2 getTilePosition() { return tilePos; }
 
 
+    public void setPosition(Vector2 newPosition) { this.position = newPosition; }
 }
