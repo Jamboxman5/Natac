@@ -125,7 +125,7 @@ public abstract class Unit {
         from.removeUnit(this);
         to.addUnit(this);
         tilePos = to.getTilePosition();
-        targetPos = position.cpy();
+        if (targetPos == null) targetPos = position.cpy();
         Vector2 displacement =
             from.getTilePosition().cpy()
                 .sub(to.getTilePosition());
