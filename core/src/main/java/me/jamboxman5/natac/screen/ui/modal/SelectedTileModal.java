@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
@@ -150,16 +151,8 @@ public class SelectedTileModal extends Stage {
             layer.draw(batch);
         }
 
-        for (Structure structure : selectedTile.getStructures()) {
-            structure.draw(batch, shapes, tileCenter, modalScale);
-        }
-
-        for (Prop p : selectedTile.getProps()) {
-            p.draw(batch, shapes, tileCenter, modalScale);
-        }
-
-        for (Unit unit : selectedTile.getUnits()) {
-            unit.draw(batch, shapes, tileCenter, modalScale);
+        for (Entity e : selectedTile.getEntities()) {
+            e.draw(batch, shapes, tileCenter, modalScale);
         }
 
         draw();

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -41,17 +42,9 @@ public class Tile {
     private int health;
     private int defense;
 
-    private final List<Structure> structures;
-    private final List<Structure> removingBuildings;
-    private final List<Structure> pendingBuildings;
-
-    private final List<Prop> props;
-    private final List<Prop> removingProps;
-    private final List<Prop> pendingProps;
-
-    private final List<Unit> occupants;
-    private final List<Unit> pendingOccupants;
-    private final List<Unit> removingOccupants;
+    private final List<Entity> entities;
+    private final List<Entity> pendingEntities;
+    private final List<Entity> removingEntities;
 
     private float currentScale = 1f;
 
@@ -66,15 +59,9 @@ public class Tile {
     private final boolean flip;
 
     public Tile() {
-        structures = new ArrayList<>();
-        pendingBuildings = new ArrayList<>();
-        removingBuildings = new ArrayList<>();
-        occupants = new ArrayList<>();
-        pendingOccupants = new ArrayList<>();
-        removingOccupants = new ArrayList<>();
-        props = new ArrayList<>();
-        pendingProps = new ArrayList<>();
-        removingProps = new ArrayList<>();
+        entities = new ArrayList<>();
+        pendingEntities = new ArrayList<>();
+        removingEntities = new ArrayList<>();
         isFogged = true;
         flip = Math.random() > .5;
     }
@@ -87,11 +74,11 @@ public class Tile {
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
-        if (Math.random() > 0.8 && state != TileState.STARTING) structures.add(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) addStructure(new Ruins(pos));
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
                 if (Math.random() > .5)
-                    props.add(new Tree(pos, getRandomPosition()));
+                    addProp(new Tree(pos, getRandomPosition()));
             }
         }
     }
@@ -165,9 +152,8 @@ public class Tile {
             layer.draw(batch);
         }
 
-        for (Unit u : occupants) u.draw(batch, shapes, pos, getCurrentScale());
-        for (Structure s : structures) s.draw(batch, shapes, pos, getCurrentScale());
-        for (Prop p : props) p.draw(batch, shapes, pos, getCurrentScale());
+        for (Entity e : entities) e.draw(batch, shapes, pos, getCurrentScale());
+
     }
 
     private void defogNeighbors(int radius) {
@@ -255,55 +241,41 @@ public class Tile {
         float targetHighlightWidth = bounds.contains(touchPos) ? 4f : 2.5f;
         highlightWidth = MathUtils.lerp(highlightWidth, targetHighlightWidth, 0.05f);
 
-        if (structures.size() > 1) {
-            structures.sort(new Comparator<Structure>() {
-                @Override
-                public int compare(Structure o1, Structure o2) {
-                    float y1 = o1.getPosition().y * 10;
-                    float y2 = o2.getPosition().y * 10;
-                    return (int) (y2 - y1);
-                }
-            });
-        }
+    }
 
-        if (props.size() > 1) {
-            props.sort(new Comparator<Structure>() {
-                @Override
-                public int compare(Structure o1, Structure o2) {
-                    float y1 = o1.getPosition().y * 10;
-                    float y2 = o2.getPosition().y * 10;
-                    return (int) (y2 - y1);
-                }
-            });
-        }
-
+    public void sortEntities() {
+        entities.sort(new Comparator<Entity>() {
+            @Override
+            public int compare(Entity o1, Entity o2) {
+                float y1 = o1.getPosition().y * 10;
+                float y2 = o2.getPosition().y * 10;
+                return (int) (y2-y1);
+            }
+        });
     }
 
     public void update() {
-        for (Unit u : occupants) u.update();
-        occupants.removeAll(removingOccupants);
-        occupants.addAll(pendingOccupants);
-        removingOccupants.clear();
-        pendingOccupants.clear();
 
-        for (Structure s : structures) s.update();
-        structures.removeAll(removingBuildings);
-        structures.addAll(pendingBuildings);
-        removingBuildings.clear();
-        pendingBuildings.clear();
+        for (Entity e : entities) e.update();
 
-        for (Prop p : props) p.update();
-        props.removeAll(removingProps);
-        props.addAll(pendingProps);
-        removingProps.clear();
-        pendingProps.clear();
+        boolean sort = false;
+        if (!removingEntities.isEmpty()) {
+            entities.removeAll(removingEntities);
+            removingEntities.clear();
+            sort = true;
+        }
+        if (!pendingEntities.isEmpty()) {
+            entities.addAll(pendingEntities);
+            pendingEntities.clear();
+            sort = true;
+        }
+
+        if (sort) sortEntities();
     }
 
-    public void addUnit(Unit unit) { pendingOccupants.add(unit); }
-    public void addStructure(Structure structure) {
-        if (structure instanceof Prop) pendingProps.add((Prop) structure);
-        else pendingBuildings.add(structure);
-    }
+    public void addUnit(Unit unit) { pendingEntities.add(unit); }
+    public void addStructure(Structure structure) { pendingEntities.add(structure); }
+    public void addProp(Prop prop) { pendingEntities.add(prop); }
 
     public boolean contains(Vector2 point) {
         return bounds.shape.contains(point);
@@ -322,32 +294,44 @@ public class Tile {
 
     public Sprite getSprite() { return sprite; }
 
-    public List<Structure> getStructures() { return structures; }
+    public List<Entity> getEntities() { return entities; }
 
-    public List<Unit> getUnits() { return occupants; }
-
+    public List<Structure> getStructures() {
+        ArrayList<Structure> structures = new ArrayList<>();
+        for (Entity e : entities) if (e instanceof Structure) structures.add((Structure) e);
+        return structures;
+    }
+    public List<Unit> getUnits() {
+        ArrayList<Unit> units = new ArrayList<>();
+        for (Entity e : entities) if (e instanceof Unit) units.add((Unit) e);
+        return units;
+    }
     public TileType getType() {
         return type;
     }
 
-    public void removeUnit(Unit unit) { removingOccupants.add(unit); }
-    public void removeStructure(Structure structure) {
-        if (structure instanceof Prop) removingProps.add((Prop) structure);
-        else removingBuildings.add(structure);
-    }
+    public void removeUnit(Unit unit) { removingEntities.add(unit); }
+    public void removeProp(Prop prop) { removingEntities.add(prop); }
+    public void removeStructure(Structure structure) { removingEntities.add((Prop) structure); }
 
     public boolean hasUnits(Player player) {
-        for (Unit u : occupants) {
+        for (Entity e : entities) {
+            if (!(e instanceof Unit)) continue;
+            Unit u = (Unit) e;
             if (u.getOwner().equals(player.getID())) return true;
         }
         return false;
     }
 
     public void clearStructures() {
-        structures.clear();
+        for (Entity e : entities) if (e instanceof Structure) removingEntities.add(e);
     }
 
-    public List<Prop> getProps() { return props; }
+    public List<Prop> getProps() {
+        ArrayList<Prop> props = new ArrayList<>();
+        for (Entity e : entities) if (e instanceof Prop) props.add((Prop) e);
+        return props;
+    }
 
     public static class Hexagon {
         private float currentScale = 1f;
@@ -395,7 +379,7 @@ public class Tile {
     public float getCurrentScale() { return currentScale; }
 
     public boolean hasBarracks() {
-        for (Structure s : structures) {
+        for (Entity s : entities) {
             if (s instanceof Barracks) return true;
         }
         return false;

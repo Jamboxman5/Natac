@@ -85,7 +85,4 @@ public abstract class Structure extends Entity {
         return center.cpy().add(position.cpy().scl(scale));
     }
 
-    public Vector2 getPosition() {
-        return position;
-    }
 }

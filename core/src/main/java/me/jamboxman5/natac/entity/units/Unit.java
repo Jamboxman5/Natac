@@ -16,10 +16,9 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class Unit extends Entity {
+
     protected int speed;
     protected int range;
-
-
 
     protected Vector2 targetTilePos;
     protected Vector2 targetPos;
@@ -130,5 +129,4 @@ public abstract class Unit extends Entity {
 
     public UUID getID() { return id; }
 
-    public Vector2 getTilePosition() { return tilePos; }
 }

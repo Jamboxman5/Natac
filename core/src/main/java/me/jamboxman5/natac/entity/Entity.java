@@ -21,4 +21,10 @@ public abstract class Entity {
     public abstract void update();
     public abstract void draw(SpriteBatch batch, ShapeDrawer shapes, Vector2 center, float scale);
 
+    public Vector2 getPosition() {
+        return position;
+    }
+    public Vector2 getTilePosition() { return tilePos; }
+
+
 }
