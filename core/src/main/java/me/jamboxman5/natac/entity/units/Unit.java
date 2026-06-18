@@ -22,6 +22,8 @@ public abstract class Unit extends Entity {
 
     protected Vector2 targetTilePos;
     protected Vector2 targetPos;
+    protected Vector2 homePos;
+
     protected int travelCounter = 0;
 
     protected UUID owner;
@@ -41,6 +43,7 @@ public abstract class Unit extends Entity {
         this.range = range;
         this.tilePos = tilePos;
         this.position = position;
+        this.homePos = position;
         this.owner = owner;
         this.color = color;
     }
@@ -58,10 +61,18 @@ public abstract class Unit extends Entity {
         } else {
             alpha = 1f;
         }
+
         if (targetPos != null) {
-            position.lerp(targetPos, 0.01f);
-            if (targetPos.epsilonEquals(position)) targetPos = null;
+            //move toward current target
+            seek(targetPos);
+        } else {
+            //move back to standard position
+            if (!position.epsilonEquals(homePos)) seek(homePos);
         }
+    }
+
+    public void seek(Vector2 target) {
+        position.lerp(target, 0.01f);
     }
 
     @Override
@@ -117,7 +128,6 @@ public abstract class Unit extends Entity {
         from.removeUnit(this);
         to.addUnit(this);
         tilePos = to.getTilePosition();
-        if (targetPos == null) targetPos = position.cpy();
         Vector2 displacement =
             from.getTilePosition().cpy()
                 .sub(to.getTilePosition());
