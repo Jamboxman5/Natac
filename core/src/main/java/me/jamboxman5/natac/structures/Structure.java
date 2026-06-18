@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.structures.prop.Tree;
+import org.w3c.dom.css.Rect;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public abstract class Structure {
@@ -46,34 +47,38 @@ public abstract class Structure {
     public abstract void update();
 
     public void draw(SpriteBatch batch, ShapeDrawer shapes) {
+        float scale = Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale();
+        Vector2 drawPos = getDrawPos(tilePos, scale);
+        shapes.setColor(new Color(0f, 0f, 0f, .25f));
         if (sprite != null) {
-            float scale = Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale();
-            Vector2 drawPos = getDrawPos(tilePos, scale);
+            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
             sprite.setScale(scale * structureScale);
             sprite.setOrigin(sprite.getWidth()/2f, 0f);
             sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
-            shapes.setColor(new Color(0f, 0f, 0f, .25f));
-            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
             sprite.draw(batch);
             return;
         }
+        Rectangle bounds = getBounds(tilePos, scale);
+        shapes.filledEllipse(drawPos.x, drawPos.y, (bounds.getWidth()), 5 * scale * structureScale);
         shapes.setColor(drawColor);
-        shapes.filledRectangle(getBounds(tilePos, Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale()));
+        shapes.filledRectangle(bounds);
     }
 
     public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
+        float scale = 5f;
+        Vector2 drawPos = getDrawPos(center, scale);
+        shapes.setColor(new Color(0f, 0f, 0f, .25f));
         if (sprite != null) {
-            float scale = 5f;
-            Vector2 drawPos = getDrawPos(center, scale);
+            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
             sprite.setScale(scale * structureScale);
             sprite.setOrigin(sprite.getWidth()/2f, 0f);
             sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
-            shapes.setColor(new Color(0f, 0f, 0f, .25f));
-            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
             sprite.draw(batch);
 
             return;
         }
+        Rectangle bounds = getBounds(center, scale);
+        shapes.filledEllipse(drawPos.x, drawPos.y, (bounds.getWidth()), 5 * scale * structureScale);
         shapes.setColor(drawColor);
         shapes.filledRectangle(getBounds(center, 5f));
 
