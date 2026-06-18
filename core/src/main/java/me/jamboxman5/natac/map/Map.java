@@ -10,8 +10,8 @@ import me.jamboxman5.natac.map.tile.TileState;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
-import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.units.Unit;
+import me.jamboxman5.natac.entity.structures.Structure;
+import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 

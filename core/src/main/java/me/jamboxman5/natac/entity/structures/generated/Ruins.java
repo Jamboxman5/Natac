@@ -1,12 +1,8 @@
-package me.jamboxman5.natac.structures.generated;
+package me.jamboxman5.natac.entity.structures.generated;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import me.jamboxman5.natac.map.tile.Tile;
-import me.jamboxman5.natac.structures.Structure;
-import space.earlygrey.shapedrawer.ShapeDrawer;
+import me.jamboxman5.natac.entity.structures.Structure;
 
 public class Ruins extends Structure {
 

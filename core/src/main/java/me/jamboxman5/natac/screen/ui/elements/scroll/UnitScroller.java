@@ -12,7 +12,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
-import me.jamboxman5.natac.units.army.Soldier;
+import me.jamboxman5.natac.entity.units.army.Soldier;
 import me.jamboxman5.natac.util.Settings;
 
 public class UnitScroller extends DDScroller {

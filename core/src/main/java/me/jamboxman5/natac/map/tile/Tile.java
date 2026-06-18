@@ -16,14 +16,14 @@ import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.sfx.Sounds;
-import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.structures.constructed.Barracks;
-import me.jamboxman5.natac.structures.constructed.TownHall;
-import me.jamboxman5.natac.structures.generated.Ruins;
-import me.jamboxman5.natac.structures.prop.Prop;
-import me.jamboxman5.natac.structures.prop.Tree;
-import me.jamboxman5.natac.units.Unit;
-import me.jamboxman5.natac.units.army.Soldier;
+import me.jamboxman5.natac.entity.structures.Structure;
+import me.jamboxman5.natac.entity.structures.constructed.Barracks;
+import me.jamboxman5.natac.entity.structures.constructed.TownHall;
+import me.jamboxman5.natac.entity.structures.generated.Ruins;
+import me.jamboxman5.natac.entity.structures.prop.Prop;
+import me.jamboxman5.natac.entity.structures.prop.Tree;
+import me.jamboxman5.natac.entity.units.Unit;
+import me.jamboxman5.natac.entity.units.army.Soldier;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -165,9 +165,9 @@ public class Tile {
             layer.draw(batch);
         }
 
-        for (Unit u : occupants) u.draw(batch, shapes);
-        for (Structure s : structures) s.draw(batch, shapes);
-        for (Prop p : props) p.draw(batch, shapes);
+        for (Unit u : occupants) u.draw(batch, shapes, pos, getCurrentScale());
+        for (Structure s : structures) s.draw(batch, shapes, pos, getCurrentScale());
+        for (Prop p : props) p.draw(batch, shapes, pos, getCurrentScale());
     }
 
     private void defogNeighbors(int radius) {

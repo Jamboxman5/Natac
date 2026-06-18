@@ -1,7 +1,6 @@
-package me.jamboxman5.natac.structures.prop;
+package me.jamboxman5.natac.entity.structures.prop;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;

@@ -1,9 +1,9 @@
-package me.jamboxman5.natac.structures.constructed;
+package me.jamboxman5.natac.entity.structures.constructed;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.player.PlayerClass;
-import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.entity.structures.Structure;
 
 public class Barracks extends Structure {
 

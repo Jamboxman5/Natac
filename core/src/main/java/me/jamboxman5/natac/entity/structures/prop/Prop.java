@@ -1,8 +1,8 @@
-package me.jamboxman5.natac.structures.prop;
+package me.jamboxman5.natac.entity.structures.prop;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import me.jamboxman5.natac.structures.Structure;
+import me.jamboxman5.natac.entity.structures.Structure;
 
 public class Prop extends Structure {
 

@@ -15,9 +15,9 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
-import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.structures.prop.Prop;
-import me.jamboxman5.natac.units.Unit;
+import me.jamboxman5.natac.entity.structures.Structure;
+import me.jamboxman5.natac.entity.structures.prop.Prop;
+import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -28,6 +28,8 @@ public class SelectedTileModal extends Stage {
     private Polygon selectedTileHighlight = null;
 
     private final Tile selectedTile;
+
+    private final float modalScale = 5f;
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
@@ -143,21 +145,21 @@ public class SelectedTileModal extends Stage {
 
         if (selectedTile.getType() == TileType.MOUNTAINS) {
             Sprite layer = new Sprite(Tile.mountainsLayer);
-            layer.setScale(5f);
+            layer.setScale(modalScale);
             layer.setCenter(tileCenter.x, tileCenter.y);
             layer.draw(batch);
         }
 
         for (Structure structure : selectedTile.getStructures()) {
-            structure.drawModal(batch, shapes, tileCenter);
+            structure.draw(batch, shapes, tileCenter, modalScale);
         }
 
         for (Prop p : selectedTile.getProps()) {
-            p.drawModal(batch, shapes, tileCenter);
+            p.draw(batch, shapes, tileCenter, modalScale);
         }
 
         for (Unit unit : selectedTile.getUnits()) {
-            unit.drawModal(batch, shapes, tileCenter);
+            unit.draw(batch, shapes, tileCenter, modalScale);
         }
 
         draw();

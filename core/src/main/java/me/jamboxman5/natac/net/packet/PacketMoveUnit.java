@@ -1,10 +1,7 @@
 package me.jamboxman5.natac.net.packet;
 
 import com.badlogic.gdx.math.Vector2;
-import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.units.Unit;
-
-import java.util.UUID;
+import me.jamboxman5.natac.entity.units.Unit;
 
 public class PacketMoveUnit extends Packet {
     public Unit unit;

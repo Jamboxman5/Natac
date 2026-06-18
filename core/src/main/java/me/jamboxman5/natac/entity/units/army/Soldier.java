@@ -1,12 +1,8 @@
-package me.jamboxman5.natac.units.army;
+package me.jamboxman5.natac.entity.units.army;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import me.jamboxman5.natac.Natac;
-import me.jamboxman5.natac.map.tile.Tile;
-import me.jamboxman5.natac.units.Unit;
-import space.earlygrey.shapedrawer.ShapeDrawer;
+import me.jamboxman5.natac.entity.units.Unit;
 
 import java.util.UUID;
 

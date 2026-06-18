@@ -1,4 +1,4 @@
-package me.jamboxman5.natac.units;
+package me.jamboxman5.natac.entity.units;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketMoveUnit;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -14,13 +15,11 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Unit {
+public abstract class Unit extends Entity {
     protected int speed;
     protected int range;
 
-    protected Vector2 position;
 
-    protected Vector2 tilePos;
 
     protected Vector2 targetTilePos;
     protected Vector2 targetPos;
@@ -66,18 +65,12 @@ public abstract class Unit {
         }
     }
 
-    public void draw(SpriteBatch batch, ShapeDrawer shapes) {
+    @Override
+    public void draw(SpriteBatch batch, ShapeDrawer shapes, Vector2 center, float scale) {
         Color drawColor = new Color(color);
         drawColor.a = alpha;
         shapes.setColor(drawColor);
-        shapes.filledCircle(tilePos.cpy().add(position.cpy().scl(Natac.instance.getGame().getMap().findTile(tilePos).getCurrentScale())), 5);
-    }
-
-    public void drawModal(SpriteBatch batch, ShapeDrawer shapes, Vector2 center) {
-        Color drawColor = new Color(color);
-        drawColor.a = alpha;
-        shapes.setColor(drawColor);
-        shapes.filledCircle(center.cpy().add(position.cpy().scl(5)), 25);
+        shapes.filledCircle(center.cpy().add(position.cpy().scl(scale)), 5 * scale);
     }
 
 

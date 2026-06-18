@@ -3,8 +3,8 @@ package me.jamboxman5.natac.net.packet;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.player.Player;
-import me.jamboxman5.natac.structures.Structure;
-import me.jamboxman5.natac.units.Unit;
+import me.jamboxman5.natac.entity.structures.Structure;
+import me.jamboxman5.natac.entity.units.Unit;
 
 public class PacketUtil {
 
