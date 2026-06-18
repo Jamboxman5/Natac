@@ -109,4 +109,10 @@ public class ClientManager {
         System.out.println("\u001B[31mCLIENT WARNING::  " + log + "\u001B[0m");
     }
 
+    public Player findPlayer(UUID playerID) {
+        for (Player p : connectedPlayers) {
+            if (p.getID().equals(playerID)) return p;
+        }
+        return null;
+    }
 }

@@ -21,7 +21,6 @@ public abstract class Unit extends Entity {
     protected int range;
 
     protected Vector2 targetTilePos;
-    protected Vector2 targetPos;
     protected Vector2 homePos;
 
     protected int travelCounter = 0;
@@ -29,6 +28,8 @@ public abstract class Unit extends Entity {
     protected UUID owner;
 
     protected transient Color color;
+
+    protected transient Entity target;
 
     protected Unit() {
         color = Color.WHITE;
@@ -62,9 +63,9 @@ public abstract class Unit extends Entity {
             alpha = 1f;
         }
 
-        if (targetPos != null) {
+        if (target != null) {
             //move toward current target
-            seek(targetPos);
+            seek(target.getPosition());
         } else {
             //move back to standard position
             if (!position.epsilonEquals(homePos)) {
@@ -143,5 +144,8 @@ public abstract class Unit extends Entity {
     }
 
     public UUID getID() { return id; }
+
+    public Entity getTarget() { return target; }
+    public void setTarget(Entity newTarget) { target = newTarget; }
 
 }

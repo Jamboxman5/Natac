@@ -52,6 +52,8 @@ public class Tile {
     private transient boolean isFogged;
     private transient boolean soundPlayed = false;
 
+    private boolean inBattle = false;
+
     public final static Texture mountainsLayer = new Texture(Gdx.files.internal("tile/MountainTileSprite_3.png"));
 
     private Vector2 pos;
@@ -217,9 +219,16 @@ public class Tile {
             fogOpacity = 0f;
         }
 
-        bounds.update(touchPos);
+        if (inBattle) {
+            //TODO: update logic when battling
+            update();
+
+            return;
+        }
 
         if (sprite == null) sprite = new Sprite(type.texture);
+
+        bounds.update(touchPos);
 
         float targetScale = bounds.contains(touchPos) ? 1.1f : 1f;
 
@@ -254,6 +263,8 @@ public class Tile {
         });
     }
 
+    public void setBattleStatus(boolean battling) { this.inBattle = battling; }
+
     public void update() {
 
         for (Entity e : entities) e.update();
@@ -270,7 +281,25 @@ public class Tile {
             sort = true;
         }
 
+        if (owner.equals(Natac.instance.player.getID())) {
+            UUID attacker = findAttacker();
+            if (attacker != null) {
+                Natac.instance.getGame().startBattle(this, attacker);
+            }
+        }
+
         if (sort) sortEntities();
+    }
+
+    public boolean hasEnemies() {
+        return findAttacker() != null;
+    }
+
+    public UUID findAttacker() {
+        for (Unit u : getUnits()) {
+            if (!u.getOwner().equals(owner)) return u.getOwner();
+        }
+        return null;
     }
 
     public void addUnit(Unit unit) { pendingEntities.add(unit); }
@@ -391,6 +420,41 @@ public class Tile {
         if (Math.random() > .5) xDiff = -xDiff;
         if (Math.random() > .5) yDiff = -yDiff;
         return new Vector2(xDiff, yDiff);
+    }
+
+    public Unit getClosestUnitTarget(Unit targeter) {
+        Unit closest = null;
+        Vector2 startPos = targeter.getPosition();
+        float shortestDistance = Float.POSITIVE_INFINITY;
+        for (Entity e : entities) {
+            if (!(e instanceof Unit)) continue;
+            Unit u = (Unit) e;
+            if (u.getOwner().equals(targeter.getOwner())) continue;
+            if (u.getPosition().dst(startPos) < shortestDistance) {
+                closest = u;
+                shortestDistance = u.getPosition().dst(startPos);
+            }
+
+        }
+        return closest;
+    }
+
+    public Entity getClosestTarget(Unit targeter) {
+        Entity closest = null;
+        Vector2 startPos = targeter.getPosition();
+        float shortestDistance = Float.POSITIVE_INFINITY;
+        for (Entity e : entities) {
+            if (e instanceof Prop) continue;
+            if (e instanceof Unit) {
+                if (((Unit) e).getOwner().equals(targeter.getOwner())) continue;
+            }
+            if (e.getPosition().dst(startPos) < shortestDistance) {
+                closest = e;
+                shortestDistance = e.getPosition().dst(startPos);
+            }
+
+        }
+        return closest;
     }
 
 }

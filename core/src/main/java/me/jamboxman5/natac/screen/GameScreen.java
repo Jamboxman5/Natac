@@ -12,7 +12,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.GaussianBlurEffect;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.map.Map;
+import me.jamboxman5.natac.map.tile.Tile;
+import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.screen.ui.modal.BattleModal;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.screen.ui.stage.PlayInputStage;
 import me.jamboxman5.natac.screen.ui.UIManager;
@@ -20,6 +24,8 @@ import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
+
+import java.util.UUID;
 
 public class GameScreen implements Screen, InputProcessor {
 
@@ -54,6 +60,7 @@ public class GameScreen implements Screen, InputProcessor {
     private SelectionMode tileSelectState;
 
     private SelectedTileModal tileModal = null;
+    private BattleModal battleModal = null;
 
     public static final Vector2 viewportDimensions = new Vector2(1280, 720);
 
@@ -153,6 +160,10 @@ public class GameScreen implements Screen, InputProcessor {
 
         gameCamera.update();
         uiCamera.update();
+
+        if (battleModal != null) {
+            battleModal.act(delta);
+        }
 
         if (map.getSelectedTile() == null) {
             mousePos.set(Gdx.input.getX(), Gdx.input.getY());
@@ -333,6 +344,16 @@ public class GameScreen implements Screen, InputProcessor {
         this.selectedUnit = unit;
         this.tileSelectState = SelectionMode.TRAVEL;
         map.deselectTile();
+    }
+
+    public void startBattle(Tile battleTile, UUID attackerID) {
+        battleModal = new BattleModal(battleTile, Natac.instance.getClientManager().findPlayer(attackerID));
+        multiplexer.addProcessor(0, battleModal);
+    }
+
+    public void endBattle() {
+        multiplexer.removeProcessor(battleModal);
+        battleModal = null;
     }
 
 }
