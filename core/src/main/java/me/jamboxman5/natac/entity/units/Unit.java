@@ -43,8 +43,8 @@ public abstract class Unit extends Entity {
         this.speed = speed;
         this.range = range;
         this.tilePos = tilePos;
-        this.position = position;
-        this.homePos = position;
+        this.position = position.cpy();
+        this.homePos = position.cpy();
         this.owner = owner;
         this.color = color;
     }
