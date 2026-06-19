@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.tile.NeighborSet;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
@@ -180,6 +181,15 @@ public class Map {
         for (Tile t : tiles) {
             for (Unit u : t.getUnits()) {
                 if (u.getID().equals(unitID)) return u;
+            }
+        }
+        return null;
+    }
+
+    public Entity findEntity(UUID entityID) {
+        for (Tile t : tiles) {
+            for (Entity e : t.getEntities()) {
+                if (e.getID().equals(entityID)) return e;
             }
         }
         return null;

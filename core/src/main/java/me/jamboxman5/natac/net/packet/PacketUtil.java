@@ -2,6 +2,7 @@ package me.jamboxman5.natac.net.packet;
 
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Unit;
@@ -60,5 +61,13 @@ public class PacketUtil {
         packet.newPosition = newPosition;
 
         Natac.instance.getClientManager().sendPacketUDP(packet);
+    }
+
+    public static void damageEntity(Entity entity, int damage) {
+        PacketDamageEntity packet = new PacketDamageEntity();
+        packet.entity = entity;
+        packet.healthDiff = damage;
+
+        Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 }

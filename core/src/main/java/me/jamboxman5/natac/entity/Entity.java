@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.UUID;
+
 public abstract class Entity {
 
     protected Vector2 position;
@@ -11,6 +13,8 @@ public abstract class Entity {
 
     protected int health;
     protected int maxHealth;
+
+    protected UUID id = UUID.randomUUID();
 
     protected Entity() {
         this(new Vector2(), new Vector2(), 100);
@@ -34,7 +38,12 @@ public abstract class Entity {
 
     public void setPosition(Vector2 newPosition) { this.position = newPosition; }
 
-    public void damage(int damagePts) { health -= damagePts; }
+    public void damage(int damagePts) {
+        health -= damagePts;
+        System.out.println(health + " (-" + damagePts + ")");
+    }
     public boolean isDestroyed() { return health <= 0; }
+
+    public UUID getID() { return id; }
 
 }

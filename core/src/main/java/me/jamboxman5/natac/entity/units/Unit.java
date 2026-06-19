@@ -37,8 +37,6 @@ public abstract class Unit extends Entity {
 
     protected float alpha = 1f;
 
-    protected UUID id = UUID.randomUUID();
-
     protected Unit(int speed, int range, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
         super(position, tilePos, maxHealth);
         this.speed = speed;
@@ -70,8 +68,10 @@ public abstract class Unit extends Entity {
             if (position.dst(target.getPosition()) < 10) {
                 if (target instanceof Unit) {
                     ((Unit) target).damage(10, this);
+                    PacketUtil.damageEntity(target, 10);
+                    PacketUtil.repositionUnit((Unit) target, target.getPosition().add(position.cpy().sub(target.getPosition()).clamp(20, 20)));
                 } else {
-                    target.damage(10);
+                    PacketUtil.damageEntity(target, 10);
                 }
             }
         } else {
@@ -150,8 +150,6 @@ public abstract class Unit extends Entity {
 
         if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
     }
-
-    public UUID getID() { return id; }
 
     public Entity getTarget() { return target; }
     public void setTarget(Entity newTarget) { target = newTarget; }
