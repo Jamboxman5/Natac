@@ -9,13 +9,18 @@ public abstract class Entity {
     protected Vector2 position;
     protected Vector2 tilePos;
 
+    protected int health;
+    protected int maxHealth;
+
     protected Entity() {
-        this(new Vector2(), new Vector2());
+        this(new Vector2(), new Vector2(), 100);
     }
 
-    protected Entity(Vector2 position, Vector2 tilePos) {
+    protected Entity(Vector2 position, Vector2 tilePos, int maxHealth) {
         this.position = position;
         this.tilePos = tilePos;
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
     }
 
     public abstract void update();
@@ -28,4 +33,8 @@ public abstract class Entity {
 
 
     public void setPosition(Vector2 newPosition) { this.position = newPosition; }
+
+    public void damage(int damagePts) { health -= damagePts; }
+    public boolean isDestroyed() { return health <= 0; }
+
 }

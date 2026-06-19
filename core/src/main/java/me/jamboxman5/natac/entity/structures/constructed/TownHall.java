@@ -15,7 +15,7 @@ public class TownHall extends Structure {
     }
 
     public TownHall(PlayerClass playerClass, Vector2 tilePos) {
-        super(0, 50, 0, tilePos, new Vector2(0, 0), "Town Hall");
+        super(0, 50, 0, 100, tilePos, new Vector2(0, 0), "Town Hall");
         this.type = playerClass;
     }
 

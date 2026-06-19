@@ -17,7 +17,7 @@ public class Soldier extends Unit {
     }
 
     public Soldier(Vector2 tilePos, Vector2 position, UUID owner) {
-        super(1, 1, tilePos, position, Color.CYAN, owner);
+        super(1, 1, 100, tilePos, position, Color.CYAN, owner);
     }
 
     @Override

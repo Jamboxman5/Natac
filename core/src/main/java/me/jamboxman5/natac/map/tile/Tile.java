@@ -267,7 +267,10 @@ public class Tile {
 
     public void update() {
 
-        for (Entity e : entities) e.update();
+        for (Entity e : entities) {
+            e.update();
+            if (e.isDestroyed()) removingEntities.add(e);
+        }
 
         boolean sort = false;
         if (!removingEntities.isEmpty()) {

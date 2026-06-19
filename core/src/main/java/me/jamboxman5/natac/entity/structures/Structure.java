@@ -27,13 +27,12 @@ public abstract class Structure extends Entity {
         this.drawColor = Color.WHITE;
     }
 
-    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, Vector2 tilePos, Vector2 position, String name) {
+    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, int maxHealth, Vector2 tilePos, Vector2 position, String name) {
+        super(position, tilePos, maxHealth);
         this.buildCost = buildCost;
         this.revenuePerTurn = revenuePerTurn;
         this.resourcesPerTurn = resourcesPerTurn;
 
-        this.tilePos = tilePos;
-        this.position = position;
         this.drawColor = Color.WHITE;
         this.structureName = name;
     }
