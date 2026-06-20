@@ -69,6 +69,8 @@ public class GameScreen implements Screen, InputProcessor {
     public void addUIActor(Actor actor) { uiStage.addActor(actor);
     }
 
+    public State getGameState() { return gameState; }
+
     public enum State {
         CLAIM, WAIT, PLAY;
     }
