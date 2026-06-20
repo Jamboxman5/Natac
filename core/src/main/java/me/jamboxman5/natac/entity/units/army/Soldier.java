@@ -12,6 +12,9 @@ public class Soldier extends Unit {
     protected int damage;
     protected int defense;
 
+    public static final int goldCost = 50;
+    public static final int resourceCost = 0;
+
     public Soldier() {
         this.color = Color.CYAN;
     }

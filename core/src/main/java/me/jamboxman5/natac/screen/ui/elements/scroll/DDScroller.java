@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import me.jamboxman5.natac.entity.structures.constructed.Barracks;
+import me.jamboxman5.natac.entity.units.army.Soldier;
 import me.jamboxman5.natac.map.tile.Tile;
 
 public class DDScroller extends Scroller {
@@ -44,33 +46,9 @@ public class DDScroller extends Scroller {
         return dropPos.cpy().sub(tileCenter).scl(1f/5f);
     }
 
-
-    protected enum Selection {
-
-        SOLDIER("Soldier", 50, 0),
-        BARRACKS("Barracks", 50, 0);
-
-        public final String name;
-        public final int resourceCost;
-        public final int goldCost;
-
-        public String toString() {
-            String s = "";
-            s += name;
-            if (goldCost > 0) s += " ($" + goldCost + ")";
-            if (resourceCost > 0) s += " (" + resourceCost + "R)";
-            return s;
-        }
-
-        Selection(String name, int goldCost, int resourceCost) {
-            this.name = name;
-            this.goldCost = goldCost;
-            this.resourceCost = resourceCost;
-        }
-    }
-
     protected void addButton(Button b, float w, float h, float pad) {
         buttonOrganizer.add(b).width(w).height(h).pad(pad);
         if (isVertical) buttonOrganizer.row();
     }
+
 }

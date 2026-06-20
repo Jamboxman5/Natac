@@ -6,6 +6,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
 import com.esotericsoftware.kryonet.Client;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.structures.constructed.*;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
@@ -16,8 +17,6 @@ import me.jamboxman5.natac.net.packet.*;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.entity.structures.Structure;
-import me.jamboxman5.natac.entity.structures.constructed.Barracks;
-import me.jamboxman5.natac.entity.structures.constructed.TownHall;
 import me.jamboxman5.natac.entity.structures.generated.Ruins;
 import me.jamboxman5.natac.entity.structures.prop.Prop;
 import me.jamboxman5.natac.entity.structures.prop.Tree;
@@ -31,6 +30,9 @@ import java.util.Vector;
 public class NetUtil {
 
     public static void registerPackets(Kryo kryo) {
+
+        /* PACKETS */
+
         kryo.register(Packet.class);
         kryo.register(PacketLogin.class);
         kryo.register(PacketStartGame.class);
@@ -48,28 +50,50 @@ public class NetUtil {
         kryo.register(PacketRepositionUnit.class);
         kryo.register(PacketDamageEntity.class);
 
+
+
+        /* UTILITIES */
+        kryo.register(Vector.class);
+        kryo.register(Vector2.class);
+        kryo.register(ArrayList.class);
+        kryo.register(UUID.class, new DefaultSerializers.UUIDSerializer());
+        kryo.register(float[].class);
+
+
+
+        /* MAP * WORLD */
         kryo.register(Player.class);
         kryo.register(PlayerClass.class);
         kryo.register(Map.class);
         kryo.register(Tile.class);
+        kryo.register(TileState.class);
         kryo.register(TileType.class);
-        kryo.register(Vector.class);
-        kryo.register(Vector2.class);
-        kryo.register(ArrayList.class);
-        kryo.register(Structure.class);
+        kryo.register(Tile.Hexagon.class);
+
+
+
+        /* ENTITIES */
         kryo.register(Entity.class);
-        kryo.register(Prop.class);
-        kryo.register(Tree.class);
-        kryo.register(Ruins.class);
-        kryo.register(TownHall.class);
-        kryo.register(Barracks.class);
+
+        //UNITS
         kryo.register(Unit.class);
         kryo.register(Soldier.class);
-        kryo.register(Tile.Hexagon.class);
-        kryo.register(TileState.class);
-        kryo.register(Polygon.class);
-        kryo.register(UUID.class, new DefaultSerializers.UUIDSerializer());
-        kryo.register(float[].class);
+
+        //STRUCTURES
+        kryo.register(Structure.class);
+        kryo.register(TownHall.class);
+        kryo.register(Ruins.class);
+        kryo.register(Barracks.class);
+        kryo.register(ArmyOutpost.class);
+        kryo.register(Depot.class);
+        kryo.register(Library.class);
+        kryo.register(Logger.class);
+        kryo.register(Quarry.class);
+        kryo.register(ScoutTower.class);
+
+        //PROPS
+        kryo.register(Prop.class);
+        kryo.register(Tree.class);
 
     }
 
