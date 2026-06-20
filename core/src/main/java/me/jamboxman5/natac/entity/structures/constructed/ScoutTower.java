@@ -17,7 +17,7 @@ public class ScoutTower extends Structure {
     }
 
     public ScoutTower(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(resourceCost, 0, 0, 20, tilePos, pos, name);
+        super(goldCost, resourceCost, 0, 0, 20, tilePos, pos, name);
     }
 
     @Override

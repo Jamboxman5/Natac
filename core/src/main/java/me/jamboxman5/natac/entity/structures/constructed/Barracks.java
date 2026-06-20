@@ -8,7 +8,7 @@ import me.jamboxman5.natac.entity.structures.Structure;
 public class Barracks extends Structure {
 
     public static final String name = "Barracks";
-    public static final int goldCost = 50;
+    private static final int goldCost = 50;
     public static final int resourceCost = 0;
 
     public Barracks() {
@@ -17,7 +17,7 @@ public class Barracks extends Structure {
     }
 
     public Barracks(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(goldCost, 0, 0, 50, tilePos, pos, name);
+        super(goldCost, resourceCost, 0, 0, 50, tilePos, pos, name);
     }
 
     @Override

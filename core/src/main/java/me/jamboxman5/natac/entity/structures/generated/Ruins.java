@@ -11,7 +11,7 @@ public class Ruins extends Structure {
     }
 
     public Ruins(Vector2 tilePos) {
-        super(1, 1, 1, (int) Float.POSITIVE_INFINITY, tilePos, getRandomPosition(), "Ruins");
+        super(0, 0, 0, 0, (int) Float.POSITIVE_INFINITY, tilePos, getRandomPosition(), "Ruins");
     }
 
     @Override

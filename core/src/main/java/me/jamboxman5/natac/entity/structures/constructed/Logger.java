@@ -17,7 +17,7 @@ public class Logger extends Structure {
     }
 
     public Logger(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(goldCost, 0, 10, 30, tilePos, pos, name);
+        super(goldCost, resourceCost, 0, 10, 30, tilePos, pos, name);
     }
 
     @Override
