@@ -17,7 +17,7 @@ public class ArmyOutpost extends Structure {
     }
 
     public ArmyOutpost(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(goldCost, 0, 0, 100, tilePos, pos, name);
+        super(goldCost, resourceCost, 0, 0, 100, tilePos, pos, name);
     }
 
     @Override

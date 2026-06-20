@@ -17,7 +17,7 @@ public class Quarry extends Structure {
     }
 
     public Quarry(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(resourceCost, 10, 0, 30, tilePos, pos, name);
+        super(goldCost, resourceCost, 10, 0, 30, tilePos, pos, name);
     }
 
     @Override

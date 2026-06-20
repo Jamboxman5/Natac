@@ -17,7 +17,7 @@ public class Library extends Structure {
     }
 
     public Library(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(goldCost, 0, 0, 50, tilePos, pos, name);
+        super(goldCost, resourceCost, 0, 0, 50, tilePos, pos, name);
     }
 
     @Override

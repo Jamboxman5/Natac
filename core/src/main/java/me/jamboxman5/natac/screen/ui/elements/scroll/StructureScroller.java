@@ -7,13 +7,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.structures.constructed.*;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.screen.ui.elements.select.StructureSelection;
 import me.jamboxman5.natac.screen.ui.modal.SelectedTileModal;
 import me.jamboxman5.natac.sfx.Sounds;
-import me.jamboxman5.natac.entity.structures.constructed.Barracks;
 import me.jamboxman5.natac.util.Settings;
 
 public class StructureScroller extends DDScroller {
@@ -25,47 +27,75 @@ public class StructureScroller extends DDScroller {
 
         this.parent = parent;
 
-        Button bb = new TextButton(Selection.BARRACKS.toString(), skin);
-        addButton(bb, 290, 200, 5);
+        for (StructureSelection selection : StructureSelection.values()) {
+            Button b = new TextButton(selection.toString(), skin);
+            addButton(b, 290, 200, 5);
 
-        dragAndDrop.addSource(new DragAndDrop.Source(bb) {
-            @Override
-            public DragAndDrop.Payload dragStart(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer) {
+            dragAndDrop.addSource(new DragAndDrop.Source(b) {
+                @Override
+                public DragAndDrop.Payload dragStart(
+                    InputEvent event,
+                    float x,
+                    float y,
+                    int pointer) {
 
-                if (Natac.instance.player.getGold() < Selection.BARRACKS.goldCost) return null;
-                if (Natac.instance.player.getResources() < Selection.BARRACKS.resourceCost) return null;
+                    if (Natac.instance.player.getGold() < selection.goldCost) return null;
+                    if (Natac.instance.player.getResources() < selection.resourceCost) return null;
 
-                DragAndDrop.Payload payload = new DragAndDrop.Payload();
-                payload.setObject(Selection.BARRACKS);
+                    DragAndDrop.Payload payload = new DragAndDrop.Payload();
+                    payload.setObject(selection);
 
-                return payload;
-            }
+                    return payload;
+                }
 
-            @Override
-            public void dragStop(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                DragAndDrop.Payload payload,
-                DragAndDrop.Target target) {
+                @Override
+                public void dragStop(
+                    InputEvent event,
+                    float x,
+                    float y,
+                    int pointer,
+                    DragAndDrop.Payload payload,
+                    DragAndDrop.Target target) {
 
-                Selection selected = (Selection) payload.getObject();
-                Vector2 dropPos = new Vector2(Gdx.input.getX(), Settings.screenHeight - Gdx.input.getY());
+                    StructureSelection selected = (StructureSelection) payload.getObject();
+                    Vector2 dropPos = new Vector2(Gdx.input.getX(), Settings.screenHeight - Gdx.input.getY());
 
 
-                if (!selectedTileBounds.contains(dropPos)) return;
+                    if (!selectedTileBounds.contains(dropPos)) return;
 
-                Sounds.STRUCTURE_DROP.play();
-                PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
-                PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
-                parent.addRecruitButton();
-            }
-        });
+                    Sounds.STRUCTURE_DROP.play();
+
+                    switch(selected) {
+                        case BARRACKS:
+                            PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                        case DEPOT:
+                            PacketUtil.buildStructure(new Depot(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                        case LOGGER:
+                            PacketUtil.buildStructure(new Logger(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                        case QUARRY:
+                            PacketUtil.buildStructure(new Quarry(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                        case LIBRARY:
+                            PacketUtil.buildStructure(new Library(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                        case SCOUT_TOWER:
+                            PacketUtil.buildStructure(new ScoutTower(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                        case ARMY_OUTPOST:
+                            PacketUtil.buildStructure(new ArmyOutpost(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            break;
+                    }
+
+                    PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
+                    parent.addRecruitButton();
+                }
+            });
+        }
+
+
 
 
 

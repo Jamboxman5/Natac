@@ -11,7 +11,8 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public abstract class Structure extends Entity {
 
-    protected int buildCost;
+    protected int goldCost;
+    protected int resourceCost;
 
     protected int revenuePerTurn;
     protected int resourcesPerTurn;
@@ -27,9 +28,10 @@ public abstract class Structure extends Entity {
         this.drawColor = Color.WHITE;
     }
 
-    protected Structure(int buildCost, int revenuePerTurn, int resourcesPerTurn, int maxHealth, Vector2 tilePos, Vector2 position, String name) {
+    protected Structure(int goldCost, int resourceCost, int revenuePerTurn, int resourcesPerTurn, int maxHealth, Vector2 tilePos, Vector2 position, String name) {
         super(position, tilePos, maxHealth);
-        this.buildCost = buildCost;
+        this.goldCost = goldCost;
+        this.resourceCost = resourceCost;
         this.revenuePerTurn = revenuePerTurn;
         this.resourcesPerTurn = resourcesPerTurn;
 
@@ -69,10 +71,14 @@ public abstract class Structure extends Entity {
     public int getResourcesPerTurn() { return resourcesPerTurn; }
 
     public String toString() {
-        return structureName + " ($" + buildCost + ")";
+        String s = structureName;
+        if (goldCost > 0) s += " ($" + goldCost + ")";
+        if (resourceCost > 0) s += " (" + resourceCost + "R)";
+        return s;
     }
 
-    public int getBuildCost() { return buildCost; }
+    public int getGoldCost() { return goldCost; }
+    public int getResourceCost() { return resourceCost; }
 
     public Rectangle getBounds(Vector2 center, float scale) {
         Vector2 drawPos = getDrawPos(center, scale);
