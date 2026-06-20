@@ -71,7 +71,7 @@ public class Map {
 
                 GameScreen gameScreen = Natac.instance.getGame();
 
-                if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.BASE) {
+                if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.BASE && gameScreen.getGameState() != GameScreen.State.WAIT) {
 
                     switch (t.getState()) {
                         case STARTING:
