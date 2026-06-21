@@ -57,6 +57,7 @@ public class PacketUtil {
     }
 
     public static void repositionMob(Mob repositioning, Vector2 newPosition) {
+        if (!isOwner(repositioning)) return;
         PacketRepositionMob packet = new PacketRepositionMob();
         packet.mob = repositioning;
         packet.newPosition = newPosition;
@@ -70,5 +71,9 @@ public class PacketUtil {
         packet.healthDiff = damage;
 
         Natac.instance.getClientManager().sendPacketTCP(packet);
+    }
+
+    private static boolean isOwner(Mob mob) {
+        return (mob.getOwner().equals(Natac.instance.player.getID()));
     }
 }

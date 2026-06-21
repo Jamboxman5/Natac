@@ -45,7 +45,7 @@ public class Mob extends Entity {
         newPosition.lerp(target, 0.025f);
         if (newPosition.dst(target) < 1) newPosition = target;
         PacketUtil.repositionMob(this, newPosition);
-        position = newPosition;
+//        position = newPosition;
     }
 
     public void update() {
