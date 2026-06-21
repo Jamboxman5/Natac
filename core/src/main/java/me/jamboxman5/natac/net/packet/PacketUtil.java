@@ -3,6 +3,7 @@ package me.jamboxman5.natac.net.packet;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.units.Mob;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Unit;
@@ -17,18 +18,18 @@ public class PacketUtil {
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
-    public static void spawnUnit(Unit unit, Vector2 tilePos) {
-        PacketSpawnUnit packet = new PacketSpawnUnit();
+    public static void spawnUnit(Mob spawning, Vector2 tilePos) {
+        PacketSpawnMob packet = new PacketSpawnMob();
         packet.tilePos = tilePos;
-        packet.unit = unit;
+        packet.mob = spawning;
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
-    public static void moveUnit(Unit unit, Vector2 to, Vector2 from) {
-        PacketMoveUnit packet = new PacketMoveUnit();
-        packet.unit = unit;
-        packet.tilePosTo = to;
-        packet.tilePosFrom = from;
+    public static void moveMob(Mob moving, Vector2 tileTo, Vector2 tileFrom) {
+        PacketMoveMob packet = new PacketMoveMob();
+        packet.mob = moving;
+        packet.tilePosTo = tileTo;
+        packet.tilePosFrom = tileFrom   ;
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
@@ -55,9 +56,9 @@ public class PacketUtil {
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
-    public static void repositionUnit(Unit unit, Vector2 newPosition) {
-        PacketRepositionUnit packet = new PacketRepositionUnit();
-        packet.unit = unit;
+    public static void repositionMob(Mob repositioning, Vector2 newPosition) {
+        PacketRepositionMob packet = new PacketRepositionMob();
+        packet.mob = repositioning;
         packet.newPosition = newPosition;
 
         Natac.instance.getClientManager().sendPacketUDP(packet);

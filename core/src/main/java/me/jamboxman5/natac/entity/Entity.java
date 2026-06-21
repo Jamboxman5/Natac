@@ -21,8 +21,8 @@ public abstract class Entity {
     }
 
     protected Entity(Vector2 position, Vector2 tilePos, int maxHealth) {
-        this.position = position;
-        this.tilePos = tilePos;
+        this.position = position.cpy();
+        this.tilePos = tilePos.cpy();
         this.maxHealth = maxHealth;
         this.health = maxHealth;
     }

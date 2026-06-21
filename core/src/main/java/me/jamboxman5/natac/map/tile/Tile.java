@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.structures.constructed.ScoutTower;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -41,6 +42,8 @@ public class Tile {
 
     private int health;
     private int defense;
+
+    private boolean scoutDefogged = false;
 
     private final List<Entity> entities;
     private final List<Entity> pendingEntities;
@@ -76,11 +79,11 @@ public class Tile {
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
-        if (Math.random() > 0.8 && state != TileState.STARTING) addStructure(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) add(new Ruins(pos));
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
                 if (Math.random() > .5)
-                    addProp(new Tree(pos, getRandomPosition()));
+                    add(new Tree(pos, getRandomPosition()));
             }
         }
     }
@@ -214,6 +217,10 @@ public class Tile {
             bounds = new Hexagon(pos);
         }
 
+        if (hasScoutTower() && owner != null && owner.equals(Natac.instance.player.getID()) && !scoutDefogged) {
+            defogNeighbors(5);
+        }
+
         if (state == TileState.STARTING && isFogged) {
             defog();
             fogOpacity = 0f;
@@ -306,9 +313,7 @@ public class Tile {
         return null;
     }
 
-    public void addUnit(Unit unit) { pendingEntities.add(unit); }
-    public void addStructure(Structure structure) { pendingEntities.add(structure); }
-    public void addProp(Prop prop) { pendingEntities.add(prop); }
+    public void add(Entity entity) { pendingEntities.add(entity); }
 
     public boolean contains(Vector2 point) {
         return bounds.shape.contains(point);
@@ -343,9 +348,7 @@ public class Tile {
         return type;
     }
 
-    public void removeUnit(Unit unit) { removingEntities.add(unit); }
-    public void removeProp(Prop prop) { removingEntities.add(prop); }
-    public void removeStructure(Structure structure) { removingEntities.add((Prop) structure); }
+    public void remove(Entity entity) { removingEntities.add(entity); }
 
     public boolean hasUnits(Player player) {
         for (Entity e : entities) {
@@ -414,6 +417,13 @@ public class Tile {
     public boolean hasBarracks() {
         for (Entity s : entities) {
             if (s instanceof Barracks) return true;
+        }
+        return false;
+    }
+
+    public boolean hasScoutTower() {
+        for (Entity s : entities) {
+            if (s instanceof ScoutTower) return true;
         }
         return false;
     }
