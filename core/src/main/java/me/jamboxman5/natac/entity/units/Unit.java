@@ -23,7 +23,7 @@ public abstract class Unit extends Mob {
         color = Color.WHITE;
     }
 
-    protected Unit(int speed, int range, int maxHealth,
+    protected Unit(float speed, int range, int maxHealth,
                    int baseDamage, long attackCooldownMS, int attackForce,
                    Vector2 tilePos, Vector2 position,
                    Color color, UUID owner) {
@@ -44,7 +44,7 @@ public abstract class Unit extends Mob {
             //move toward current target
             seek(target.getPosition());
             if (position.dst(target.getPosition()) < range && System.currentTimeMillis() - lastHit > attackCooldownMS) {
-                PacketUtil.damageEntity(target, 10, getAttackDisplacement(target));
+                PacketUtil.damageEntity(target, baseDamage, getAttackDisplacement(target));
                 lastHit = System.currentTimeMillis();
             }
         } else {

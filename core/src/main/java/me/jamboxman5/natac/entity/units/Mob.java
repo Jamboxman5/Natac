@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class Mob extends Entity {
 
-    protected int speed;
+    protected float speed;
 
     protected Vector2 targetTilePos;
     protected Vector2 homePos;
@@ -33,7 +33,7 @@ public class Mob extends Entity {
 
     protected Mob() {}
 
-    protected Mob(int speed, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
+    protected Mob(float speed, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
         super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth);
         this.speed = speed;
         this.homePos = position.cpy();
@@ -42,9 +42,13 @@ public class Mob extends Entity {
     }
 
     public void seek(Vector2 target) {
-        Vector2 newPosition = position.cpy();
-        newPosition.lerp(target, 0.025f);
-        if (newPosition.dst(target) < 1) newPosition = target;
+
+        Vector2 displacement = target.cpy().sub(position);
+        displacement.clamp(speed /5f, speed / 5f);
+
+        Vector2 newPosition;
+        if (position.dst(target) < speed) newPosition = target;
+        else newPosition = position.cpy().add(displacement);
 
         if (Natac.instance.getGame().getMap().findTile(tilePos).collides(this, newPosition.cpy().sub(position))) return;
 
@@ -80,6 +84,7 @@ public class Mob extends Entity {
 
         if (Settings.debugMode) {
             shapes.setColor(Color.RED);
+            shapes.setDefaultLineWidth(1f);
             shapes.rectangle(getBounds(center, scale));
         }
 
