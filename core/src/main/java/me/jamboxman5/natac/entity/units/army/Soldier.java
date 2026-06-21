@@ -8,19 +8,23 @@ import java.util.UUID;
 
 public class Soldier extends Unit {
 
-    protected int health;
-    protected int damage;
-    protected int defense;
-
     public static final int goldCost = 50;
     public static final int resourceCost = 0;
+
+    public static final int attackCooldownMS = 1000;
+    public static final int baseDamage = 10;
+    public static final int attackForce = 20;
+    public static final int range = 10;
+
+    public static final int speed = 10;
+    public static final int maxHealth = 100;
 
     public Soldier() {
         this.color = Color.CYAN;
     }
 
     public Soldier(Vector2 tilePos, Vector2 position, UUID owner) {
-        super(1, 1, 100, tilePos, position, Color.CYAN, owner);
+        super(speed, range, maxHealth, baseDamage, attackCooldownMS, attackForce, tilePos, position, Color.CYAN, owner);
     }
 
     @Override

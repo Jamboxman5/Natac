@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public abstract class Structure extends Entity {
@@ -29,7 +30,7 @@ public abstract class Structure extends Entity {
     }
 
     protected Structure(int goldCost, int resourceCost, int revenuePerTurn, int resourcesPerTurn, int maxHealth, Vector2 tilePos, Vector2 position, String name) {
-        super(position, tilePos, maxHealth);
+        super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth);
         this.goldCost = goldCost;
         this.resourceCost = resourceCost;
         this.revenuePerTurn = revenuePerTurn;
@@ -56,6 +57,12 @@ public abstract class Structure extends Entity {
         shapes.filledEllipse(drawPos.x, drawPos.y, (bounds.getWidth()), 5 * scale * structureScale);
         shapes.setColor(drawColor);
         shapes.filledRectangle(getBounds(center, scale));
+
+        if (Settings.debugMode) {
+            shapes.setColor(Color.RED);
+            shapes.setDefaultLineWidth(1f);
+            shapes.rectangle(getBounds(center, scale));
+        }
 
     }
 

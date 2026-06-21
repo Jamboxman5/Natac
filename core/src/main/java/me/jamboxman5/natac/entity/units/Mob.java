@@ -3,20 +3,22 @@ package me.jamboxman5.natac.entity.units;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class Mob extends Entity {
 
     protected int speed;
-    protected int range;
 
     protected Vector2 targetTilePos;
     protected Vector2 homePos;
@@ -31,10 +33,9 @@ public class Mob extends Entity {
 
     protected Mob() {}
 
-    protected Mob(int speed, int range, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
-        super(position, tilePos, maxHealth);
+    protected Mob(int speed, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
+        super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth);
         this.speed = speed;
-        this.range = range;
         this.homePos = position.cpy();
         this.owner = owner;
         this.color = color;
@@ -44,11 +45,17 @@ public class Mob extends Entity {
         Vector2 newPosition = position.cpy();
         newPosition.lerp(target, 0.025f);
         if (newPosition.dst(target) < 1) newPosition = target;
+
+        if (Natac.instance.getGame().getMap().findTile(tilePos).collides(this, newPosition.cpy().sub(position))) return;
+
         PacketUtil.repositionMob(this, newPosition);
 //        position = newPosition;
     }
 
     public void update() {
+
+        collisionBox.setPosition(tilePos.x + position.x - (collisionBox.width /2f), tilePos.y + position.y - (collisionBox.height / 2f));
+
         if (isTravelling()) {
             int tilePassability = Natac.instance.getGame().getMap().findTile(tilePos).getType().passability;
 
@@ -62,7 +69,6 @@ public class Mob extends Entity {
             alpha = 1f;
         }
 
-
     }
 
     @Override
@@ -70,15 +76,16 @@ public class Mob extends Entity {
         Color drawColor = new Color(color);
         drawColor.a = alpha;
         shapes.setColor(drawColor);
-        shapes.filledCircle(center.cpy().add(position.cpy().scl(scale)), 5 * scale);
+        shapes.filledCircle(center.cpy().add(position.cpy().scl(scale)), (collisionBox.getWidth() / 2f) * scale);
+
+        if (Settings.debugMode) {
+            shapes.setColor(Color.RED);
+            shapes.rectangle(getBounds(center, scale));
+        }
+
     }
 
     public UUID getOwner() { return owner; }
-
-    public Circle getBounds(Vector2 center, float scale) {
-        Vector2 drawPos = center.cpy().add(position.cpy().scl(scale));
-        return new Circle(drawPos, 5f * scale);
-    }
 
     public void deploy(Tile target) {
         targetTilePos = target.getTilePosition();

@@ -65,10 +65,11 @@ public class PacketUtil {
         Natac.instance.getClientManager().sendPacketUDP(packet);
     }
 
-    public static void damageEntity(Entity entity, int damage) {
+    public static void damageEntity(Entity entity, int damage, Vector2 displacement) {
         PacketDamageEntity packet = new PacketDamageEntity();
         packet.entity = entity;
         packet.healthDiff = damage;
+        packet.displacement = displacement;
 
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }

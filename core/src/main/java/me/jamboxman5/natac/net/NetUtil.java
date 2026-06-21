@@ -1,5 +1,6 @@
 package me.jamboxman5.natac.net;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
@@ -57,7 +58,7 @@ public class NetUtil {
         kryo.register(ArrayList.class);
         kryo.register(UUID.class, new DefaultSerializers.UUIDSerializer());
         kryo.register(float[].class);
-
+        kryo.register(Rectangle.class);
 
 
         /* MAP * WORLD */

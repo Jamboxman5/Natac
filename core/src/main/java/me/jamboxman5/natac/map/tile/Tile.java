@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.entity.structures.constructed.ScoutTower;
@@ -469,6 +467,18 @@ public class Tile {
 
         }
         return closest;
+    }
+
+    public boolean collides(Entity checking, Vector2 displacement) {
+
+        Rectangle rect = new Rectangle(checking.getCollisionBox());
+        rect.setPosition(rect.getX() + displacement.x, rect.getY() + displacement.y);
+
+        for (Entity e : entities) {
+            if (e == checking) continue;
+            if (e.getCollisionBox().contains(rect)) return true;
+        }
+        return false;
     }
 
 }

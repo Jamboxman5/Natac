@@ -12,7 +12,7 @@ public class PacketDamageEntityListener implements Listener {
         if (obj instanceof PacketDamageEntity) {
             PacketDamageEntity packet = (PacketDamageEntity) obj;
             Map m = Natac.instance.getGame().getMap();
-            m.findEntity(packet.entity.getID()).damage(packet.healthDiff);
+            m.findEntity(packet.entity.getID()).damage(packet.healthDiff, packet.displacement);
         }
     }
 }

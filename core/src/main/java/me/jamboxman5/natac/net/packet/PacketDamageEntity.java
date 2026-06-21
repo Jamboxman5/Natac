@@ -7,4 +7,5 @@ import me.jamboxman5.natac.entity.units.Unit;
 public class PacketDamageEntity extends Packet {
     public Entity entity;
     public int healthDiff;
+    public Vector2 displacement;
 }
