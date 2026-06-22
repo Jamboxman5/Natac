@@ -1,9 +1,7 @@
 package me.jamboxman5.natac.map.tile;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
@@ -33,13 +31,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class Tile {
+
     private UUID owner;
     private TileType type;
-    private int yield;
-    private int level;
-
-    private int health;
-    private int defense;
 
     private boolean scoutDefogged = false;
 
@@ -77,11 +71,11 @@ public class Tile {
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
-        if (Math.random() > 0.8 && state != TileState.STARTING) add(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) entities.add(new Ruins(pos));
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
                 if (Math.random() > .5)
-                    add(new Tree(pos, getRandomPosition()));
+                    entities.add(new Tree(pos, getRandomPosition()));
             }
         }
     }
@@ -217,6 +211,7 @@ public class Tile {
 
         if (hasScoutTower() && owner != null && owner.equals(Natac.instance.player.getID()) && !scoutDefogged) {
             defogNeighbors(5);
+            scoutDefogged = true;
         }
 
         if (state == TileState.STARTING && isFogged) {
@@ -334,7 +329,7 @@ public class Tile {
 
     public List<Structure> getStructures() {
         ArrayList<Structure> structures = new ArrayList<>();
-        for (Entity e : entities) if (e instanceof Structure) structures.add((Structure) e);
+        for (Entity e : entities) if (e instanceof Structure && !(e instanceof Prop)) structures.add((Structure) e);
         return structures;
     }
     public List<Unit> getUnits() {
@@ -358,7 +353,7 @@ public class Tile {
     }
 
     public void clearStructures() {
-        for (Entity e : entities) if (e instanceof Structure) removingEntities.add(e);
+        entities.removeAll(getStructures());
     }
 
     public List<Prop> getProps() {
