@@ -58,7 +58,7 @@ public abstract class Unit extends Mob {
 
     private Vector2 getAttackDisplacement(Entity target) {
         if (target instanceof Structure) return new Vector2(0, 0);
-        return position.cpy().sub(target.getPosition()).clamp(attackForce, attackForce);
+        return target.getPosition().cpy().sub(position).clamp(attackForce, attackForce);
     }
 
     public Entity getTarget() { return target; }
