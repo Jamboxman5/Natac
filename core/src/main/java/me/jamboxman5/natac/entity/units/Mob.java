@@ -206,7 +206,7 @@ public class Mob extends Entity {
 
     public void damage(int damagePts, Vector2 force) {
         damage(damagePts);
-        velocity.add(force);
+        acceleration.add(force);
     }
 
 }
