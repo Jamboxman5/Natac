@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.entity.units.Mob;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.UUID;
@@ -44,9 +45,8 @@ public abstract class Entity {
 
     public void setPosition(Vector2 newPosition) { this.position = newPosition; }
 
-    public void damage(int damagePts, Vector2 displacement) {
+    public void damage(int damagePts) {
         health -= damagePts;
-        position.add(displacement);
         System.out.println(health + " (-" + damagePts + ")");
     }
     public boolean isDestroyed() { return health <= 0; }

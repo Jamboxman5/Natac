@@ -42,23 +42,26 @@ public abstract class Unit extends Mob {
 
         if (target != null) {
             //move toward current target
-            seek(target.getPosition());
+            if (target instanceof Mob) {
+                pursue((Mob) target);
+            } else {
+                seek(target.getPosition());
+            }
             if (position.dst(target.getPosition()) < range && System.currentTimeMillis() - lastHit > attackCooldownMS) {
                 PacketUtil.damageEntity(target, baseDamage, getAttackDisplacement(target));
                 lastHit = System.currentTimeMillis();
             }
         } else {
             //move back to standard position
-            if (!position.epsilonEquals(homePos)) {
-                seek(homePos);
-            }
+            arrive(homePos, 200, 1);
+
         }
 
     }
 
     private Vector2 getAttackDisplacement(Entity target) {
         if (target instanceof Structure) return new Vector2(0, 0);
-        return target.getPosition().cpy().sub(position).clamp(attackForce, attackForce);
+        return target.getPosition().cpy().sub(position).nor().scl(attackForce);
     }
 
     public Entity getTarget() { return target; }

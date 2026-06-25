@@ -73,19 +73,31 @@ public class Mob extends Entity {
     public void arrive(Vector2 target, float slowingRadius, float stopRadius) {
 
         Vector2 displacement = target.cpy().sub(position);
-        float distance = displacement.len() - stopRadius;
+        float distance = displacement.len();
 
-        if (distance < slowingRadius) {
-            displacement.nor().scl(speed * (distance / slowingRadius));
-        } else {
-            displacement.nor().scl(speed);
+        if (distance <= stopRadius) {
+            velocity.setZero();
+            acceleration.setZero();
+            position.set(target); // optional snap
+            return;
         }
 
-        Vector2 steer = displacement.sub(velocity);
-        if (steer.len() > maxForce) steer.nor().scl(maxForce);
+        float desiredSpeed = speed;
+
+        if (distance < slowingRadius) {
+            desiredSpeed *= distance / slowingRadius;
+        }
+
+        Vector2 desired =
+            displacement.nor().scl(desiredSpeed);
+
+        Vector2 steer =
+            desired.sub(velocity);
+
+        if (steer.len() > maxForce)
+            steer.nor().scl(maxForce);
 
         acceleration.add(steer);
-        if (acceleration.len() > speed) acceleration.nor().scl(speed);
 
     }
 
@@ -190,6 +202,11 @@ public class Mob extends Entity {
         to.defog();
 
         if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
+    }
+
+    public void damage(int damagePts, Vector2 force) {
+        damage(damagePts);
+        velocity.add(force);
     }
 
 }
