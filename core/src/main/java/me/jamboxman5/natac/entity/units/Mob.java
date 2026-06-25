@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Mob extends Entity {
 
     protected float speed;
+    protected float maxForce;
 
     protected Vector2 targetTilePos;
     protected Vector2 homePos;
@@ -46,20 +47,53 @@ public class Mob extends Entity {
 
         velocity = new Vector2();
         acceleration = new Vector2();
+        maxForce = .5f;
     }
 
     public void seek(Vector2 target) {
 
         Vector2 displacement = target.cpy().sub(position);
-        displacement.clamp(speed /5f, speed / 5f);
+        displacement.nor().scl(speed);
 
-        Vector2 newPosition;
-        if (position.dst(target) < speed) newPosition = target;
-        else newPosition = position.cpy().add(displacement);
+        Vector2 steer = displacement.sub(velocity);
+        if (acceleration.len() > speed) acceleration.nor().scl(speed);
 
-        if (Natac.instance.getGame().getMap().findTile(tilePos).collides(id, newPosition, new Vector2(collisionBox.width, collisionBox.height))) return;
+        acceleration.add(steer);
+        if (acceleration.len() > speed) acceleration.nor().scl(speed);
+
+//        Vector2 newPosition;
+//        if (position.dst(target) < speed) newPosition = target;
+//        else newPosition = position.cpy().add(displacement);
+//
+//        if (Natac.instance.getGame().getMap().findTile(tilePos).collides(id, newPosition, new Vector2(collisionBox.width, collisionBox.height))) return;
 
 //        position = newPosition;
+    }
+
+    public void arrive(Vector2 target, float slowingRadius, float stopRadius) {
+
+        Vector2 displacement = target.cpy().sub(position);
+        float distance = displacement.len() - stopRadius;
+
+        if (distance < slowingRadius) {
+            displacement.nor().scl(speed * (distance / slowingRadius));
+        } else {
+            displacement.nor().scl(speed);
+        }
+
+        Vector2 steer = displacement.sub(velocity);
+        if (steer.len() > maxForce) steer.nor().scl(maxForce);
+
+        acceleration.add(steer);
+        if (acceleration.len() > speed) acceleration.nor().scl(speed);
+
+    }
+
+    public void pursue(Mob pursuing) {
+        Vector2 target = pursuing.getPosition().cpy();
+        Vector2 prediction = pursuing.velocity.cpy().scl(10);
+        target.add(prediction);
+        seek(target);
     }
 
     public void update() {
@@ -73,6 +107,7 @@ public class Mob extends Entity {
         velocity.nor().scl(speed);
 
         Vector2 newPos = position.cpy().add(velocity);
+
         if (!Natac.instance.getGame().getMap().findTile(tilePos).collides(id, newPos, new Vector2(collisionBox.width, collisionBox.height))) {
             position.add(velocity);
             collisionBox.setPosition(position.x - (collisionBox.width /2f), position.y - (collisionBox.height/2f));
