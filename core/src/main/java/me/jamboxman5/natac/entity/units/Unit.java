@@ -1,163 +1,70 @@
 package me.jamboxman5.natac.entity.units;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
-import me.jamboxman5.natac.map.tile.Tile;
-import me.jamboxman5.natac.net.packet.PacketMoveUnit;
+import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.net.packet.PacketUtil;
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.util.List;
 import java.util.UUID;
 
-public abstract class Unit extends Entity {
-
-    protected int speed;
-    protected int range;
-
-    protected Vector2 targetTilePos;
-    protected Vector2 homePos;
-
-    protected int travelCounter = 0;
-
-    protected UUID owner;
-
-    protected transient Color color;
+public abstract class Unit extends Mob {
 
     protected transient Entity target;
+
+    protected long attackCooldownMS;
+    protected int baseDamage;
+    protected int range;
+    protected int attackForce;
+
+    protected long lastHit = 0;
 
     protected Unit() {
         color = Color.WHITE;
     }
 
-    protected float alpha = 1f;
+    protected Unit(float speed, int range, int maxHealth,
+                   int baseDamage, long attackCooldownMS, int attackForce,
+                   Vector2 tilePos, Vector2 position,
+                   Color color, UUID owner) {
+        super(speed, maxHealth, tilePos, position, color, owner);
 
-    protected Unit(int speed, int range, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
-        super(position, tilePos, maxHealth);
-        this.speed = speed;
+        this.attackCooldownMS =attackCooldownMS;
+        this.baseDamage = baseDamage;
         this.range = range;
-        this.tilePos = tilePos;
-        this.position = position.cpy();
-        this.homePos = position.cpy();
-        this.owner = owner;
-        this.color = color;
-    }
+        this.attackForce = attackForce;
 
-    public void update() {
-        if (isTravelling()) {
-            int tilePassability = Natac.instance.getGame().getMap().findTile(tilePos).getType().passability;
-
-            if (travelCounter >= tilePassability) {
-                travelCounter = 0;
-                travel();
-            }
-            alpha -= .005f;
-            if (alpha < .4f) alpha = 1f;
-        } else {
-            alpha = 1f;
-        }
-
-        if (target != null) {
-            //move toward current target
-            seek(target.getPosition());
-            if (position.dst(target.getPosition()) < 10) {
-                if (target instanceof Unit) {
-                    ((Unit) target).damage(10, this);
-                    PacketUtil.damageEntity(target, 10);
-                    PacketUtil.repositionUnit((Unit) target, target.getPosition().add(position.cpy().sub(target.getPosition()).clamp(20, 20)));
-                } else {
-                    PacketUtil.damageEntity(target, 10);
-                }
-            }
-        } else {
-            //move back to standard position
-            if (!position.epsilonEquals(homePos)) {
-                seek(homePos);
-            }
-        }
-    }
-
-    public void seek(Vector2 target) {
-        Vector2 newPosition = position.cpy();
-        newPosition.lerp(target, 0.025f);
-        if (newPosition.dst(target) < 1) newPosition = target;
-        PacketUtil.repositionUnit(this, newPosition);
     }
 
     @Override
-    public void draw(SpriteBatch batch, ShapeDrawer shapes, Vector2 center, float scale) {
-        Color drawColor = new Color(color);
-        drawColor.a = alpha;
-        shapes.setColor(drawColor);
-        shapes.filledCircle(center.cpy().add(position.cpy().scl(scale)), 5 * scale);
-    }
+    public void update() {
+        super.update();
 
-
-    public UUID getOwner() { return owner; }
-
-    public Circle getBounds(Vector2 center, float scale) {
-        Vector2 drawPos = center.cpy().add(position.cpy().scl(scale));
-        return new Circle(drawPos, 5f * scale);
-    }
-
-    public void deploy(Tile target) {
-        targetTilePos = target.getTilePosition();
-    }
-
-    public boolean isTravelling() {
-        return (targetTilePos != null && !targetTilePos.epsilonEquals(tilePos));
-    }
-
-    protected void travel() {
-        Tile current = Natac.instance.getGame().getMap().findTile(tilePos);
-        List<Tile> candidates = current.getNeighbors();
-
-        Tile closest = null;
-        float shortestDistance = Float.POSITIVE_INFINITY;
-
-        for (Tile t : candidates) {
-            float distance =  targetTilePos.dst(t.getTilePosition());
-            if (distance < shortestDistance) {
-                shortestDistance = distance;
-                closest = t;
+        if (target != null) {
+            //move toward current target
+            if (target instanceof Mob) {
+                pursue((Mob) target);
+            } else {
+                seek(target.getPosition());
             }
+            if (position.dst(target.getPosition()) < range && System.currentTimeMillis() - lastHit > attackCooldownMS) {
+                PacketUtil.damageEntity(target, baseDamage, getAttackDisplacement(target));
+                lastHit = System.currentTimeMillis();
+            }
+        } else {
+            //move back to standard position
+            arrive(homePos, 200, 1);
+
         }
 
-        if (closest == null) return;
-
-        PacketUtil.moveUnit(this, closest.getTilePosition(), current.getTilePosition());
-
     }
 
-    public void incrementTravel() {
-        travelCounter++;
-    }
-
-    public void move(Tile from, Tile to) {
-        from.removeUnit(this);
-        to.addUnit(this);
-        tilePos = to.getTilePosition();
-        Vector2 displacement =
-            from.getTilePosition().cpy()
-                .sub(to.getTilePosition());
-        position.add(displacement);
-        to.defog();
-
-        if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
+    private Vector2 getAttackDisplacement(Entity target) {
+        if (target instanceof Structure) return new Vector2(0, 0);
+        return target.getPosition().cpy().sub(position).nor().scl(attackForce);
     }
 
     public Entity getTarget() { return target; }
     public void setTarget(Entity newTarget) { target = newTarget; }
-
-    public void damage(int damagePts, Unit damager) {
-        damage(damagePts);
-        Vector2 displacement = position.cpy().sub(damager.getPosition()).clamp(20, 20);
-        position.add(displacement);
-    }
 
 }

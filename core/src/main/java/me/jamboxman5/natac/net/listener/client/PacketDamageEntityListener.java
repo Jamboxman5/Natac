@@ -3,9 +3,10 @@ package me.jamboxman5.natac.net.listener.client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.units.Mob;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketDamageEntity;
-import me.jamboxman5.natac.net.packet.PacketRepositionUnit;
 
 public class PacketDamageEntityListener implements Listener {
     @Override
@@ -13,7 +14,11 @@ public class PacketDamageEntityListener implements Listener {
         if (obj instanceof PacketDamageEntity) {
             PacketDamageEntity packet = (PacketDamageEntity) obj;
             Map m = Natac.instance.getGame().getMap();
-            m.findEntity(packet.entity.getID()).damage(packet.healthDiff);
+            Entity damaging = m.findEntity(packet.entity.getID());
+            if (damaging == null) return;
+
+            if (damaging instanceof Mob) ((Mob) damaging).damage(packet.healthDiff, packet.displacement);
+            else damaging.damage(packet.healthDiff);
         }
     }
 }

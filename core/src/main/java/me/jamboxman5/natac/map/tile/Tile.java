@@ -1,16 +1,13 @@
 package me.jamboxman5.natac.map.tile;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.structures.constructed.ScoutTower;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.net.packet.PacketClaimTile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -34,13 +31,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class Tile {
+
     private UUID owner;
     private TileType type;
-    private int yield;
-    private int level;
 
-    private int health;
-    private int defense;
+    private boolean scoutDefogged = false;
 
     private final List<Entity> entities;
     private final List<Entity> pendingEntities;
@@ -76,11 +71,11 @@ public class Tile {
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
-        if (Math.random() > 0.8 && state != TileState.STARTING) addStructure(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) entities.add(new Ruins(pos));
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
                 if (Math.random() > .5)
-                    addProp(new Tree(pos, getRandomPosition()));
+                    entities.add(new Tree(pos, getRandomPosition()));
             }
         }
     }
@@ -214,6 +209,11 @@ public class Tile {
             bounds = new Hexagon(pos);
         }
 
+        if (hasScoutTower() && owner != null && owner.equals(Natac.instance.player.getID()) && !scoutDefogged) {
+            defogNeighbors(5);
+            scoutDefogged = true;
+        }
+
         if (state == TileState.STARTING && isFogged) {
             defog();
             fogOpacity = 0f;
@@ -306,9 +306,7 @@ public class Tile {
         return null;
     }
 
-    public void addUnit(Unit unit) { pendingEntities.add(unit); }
-    public void addStructure(Structure structure) { pendingEntities.add(structure); }
-    public void addProp(Prop prop) { pendingEntities.add(prop); }
+    public void add(Entity entity) { pendingEntities.add(entity); }
 
     public boolean contains(Vector2 point) {
         return bounds.shape.contains(point);
@@ -331,7 +329,7 @@ public class Tile {
 
     public List<Structure> getStructures() {
         ArrayList<Structure> structures = new ArrayList<>();
-        for (Entity e : entities) if (e instanceof Structure) structures.add((Structure) e);
+        for (Entity e : entities) if (e instanceof Structure && !(e instanceof Prop)) structures.add((Structure) e);
         return structures;
     }
     public List<Unit> getUnits() {
@@ -343,9 +341,7 @@ public class Tile {
         return type;
     }
 
-    public void removeUnit(Unit unit) { removingEntities.add(unit); }
-    public void removeProp(Prop prop) { removingEntities.add(prop); }
-    public void removeStructure(Structure structure) { removingEntities.add((Prop) structure); }
+    public void remove(Entity entity) { removingEntities.add(entity); }
 
     public boolean hasUnits(Player player) {
         for (Entity e : entities) {
@@ -357,7 +353,7 @@ public class Tile {
     }
 
     public void clearStructures() {
-        for (Entity e : entities) if (e instanceof Structure) removingEntities.add(e);
+        entities.removeAll(getStructures());
     }
 
     public List<Prop> getProps() {
@@ -418,6 +414,13 @@ public class Tile {
         return false;
     }
 
+    public boolean hasScoutTower() {
+        for (Entity s : entities) {
+            if (s instanceof ScoutTower) return true;
+        }
+        return false;
+    }
+
     protected static Vector2 getRandomPosition() {
         float xDiff = (float) (Math.random() * 50f);
         float yDiff = (float) (Math.random() * 50f);
@@ -459,6 +462,17 @@ public class Tile {
 
         }
         return closest;
+    }
+
+    public boolean collides(UUID checkingID, Vector2 pos, Vector2 bounds) {
+
+        Rectangle checkBounds = new Rectangle(pos.x - (bounds.x / 2f), pos.y - (bounds.y / 2f), bounds.x, bounds.y);
+
+        for (Entity e : entities) {
+            if (e.getID().equals(checkingID)) continue;
+            if (e.getCollisionBox().contains(checkBounds)) return true;
+        }
+        return false;
     }
 
 }

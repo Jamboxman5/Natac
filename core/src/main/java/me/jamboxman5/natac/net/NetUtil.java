@@ -1,12 +1,13 @@
 package me.jamboxman5.natac.net;
 
-import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
 import com.esotericsoftware.kryonet.Client;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.entity.structures.constructed.*;
+import me.jamboxman5.natac.entity.units.Mob;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
@@ -32,7 +33,6 @@ public class NetUtil {
     public static void registerPackets(Kryo kryo) {
 
         /* PACKETS */
-
         kryo.register(Packet.class);
         kryo.register(PacketLogin.class);
         kryo.register(PacketStartGame.class);
@@ -45,9 +45,9 @@ public class NetUtil {
         kryo.register(PacketEndTurn.class);
         kryo.register(PacketPlayerModify.class);
         kryo.register(PacketBuildStructure.class);
-        kryo.register(PacketSpawnUnit.class);
-        kryo.register(PacketMoveUnit.class);
-        kryo.register(PacketRepositionUnit.class);
+        kryo.register(PacketSpawnMob.class);
+        kryo.register(PacketMoveMob.class);
+        kryo.register(PacketRepositionMob.class);
         kryo.register(PacketDamageEntity.class);
 
 
@@ -58,7 +58,7 @@ public class NetUtil {
         kryo.register(ArrayList.class);
         kryo.register(UUID.class, new DefaultSerializers.UUIDSerializer());
         kryo.register(float[].class);
-
+        kryo.register(Rectangle.class);
 
 
         /* MAP * WORLD */
@@ -76,6 +76,7 @@ public class NetUtil {
         kryo.register(Entity.class);
 
         //UNITS
+        kryo.register(Mob.class);
         kryo.register(Unit.class);
         kryo.register(Soldier.class);
 
@@ -110,7 +111,7 @@ public class NetUtil {
         client.addListener(new PacketSpawnUnitListener());
         client.addListener(new PacketEndTurnListener());
         client.addListener(new PacketMoveUnitListener());
-        client.addListener(new PacketRepositionUnitListener());
+        client.addListener(new PacketRepositionMobListener());
         client.addListener(new PacketDamageEntityListener());
     }
 

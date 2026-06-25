@@ -12,7 +12,7 @@ public class PacketBuildStructureListener implements Listener {
     public void received(Connection conn, Object obj) {
         if (obj instanceof PacketBuildStructure) {
             PacketBuildStructure packet = (PacketBuildStructure) obj;
-            Natac.instance.getGame().getMap().findTile(packet.tilePos).addStructure(packet.structure);
+            Natac.instance.getGame().getMap().findTile(packet.tilePos).add(packet.structure);
         }
     }
 }
