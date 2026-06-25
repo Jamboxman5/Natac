@@ -18,7 +18,7 @@ public class ServerRepositionUnitListener implements Listener {
         if (obj instanceof PacketRepositionMob) {
             if (server.getState() != DiscreteServer.GameState.INGAME) return;
             PacketRepositionMob packet = (PacketRepositionMob) obj;
-            server.getServer().sendToAllUDP(packet);
+            server.getServer().sendToAllExceptUDP(conn.getID(), packet);
         }
     }
 }

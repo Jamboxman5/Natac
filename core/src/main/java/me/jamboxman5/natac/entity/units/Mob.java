@@ -31,6 +31,10 @@ public class Mob extends Entity {
 
     protected float alpha = 1f;
 
+    protected Vector2 velocity;
+    protected Vector2 acceleration;
+    protected Vector2 targetPos;
+
     protected Mob() {}
 
     protected Mob(float speed, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
@@ -39,6 +43,9 @@ public class Mob extends Entity {
         this.homePos = position.cpy();
         this.owner = owner;
         this.color = color;
+
+        velocity = new Vector2();
+        acceleration = new Vector2();
     }
 
     public void seek(Vector2 target) {
@@ -50,15 +57,27 @@ public class Mob extends Entity {
         if (position.dst(target) < speed) newPosition = target;
         else newPosition = position.cpy().add(displacement);
 
-        if (Natac.instance.getGame().getMap().findTile(tilePos).collides(this, newPosition.cpy().sub(position))) return;
+        if (Natac.instance.getGame().getMap().findTile(tilePos).collides(id, newPosition, new Vector2(collisionBox.width, collisionBox.height))) return;
 
-        PacketUtil.repositionMob(this, newPosition);
 //        position = newPosition;
     }
 
     public void update() {
 
         collisionBox.setPosition(tilePos.x + position.x - (collisionBox.width /2f), tilePos.y + position.y - (collisionBox.height / 2f));
+
+        if (!Natac.instance.player.getID().equals(owner)) return;
+
+        velocity.add(acceleration);
+        acceleration.scl(0);
+        velocity.nor().scl(speed);
+
+        Vector2 newPos = position.cpy().add(velocity);
+        if (!Natac.instance.getGame().getMap().findTile(tilePos).collides(id, newPos, new Vector2(collisionBox.width, collisionBox.height))) {
+            position.add(velocity);
+            collisionBox.setPosition(position.x - (collisionBox.width /2f), position.y - (collisionBox.height/2f));
+            PacketUtil.repositionMob(this, position);
+        }
 
         if (isTravelling()) {
             int tilePassability = Natac.instance.getGame().getMap().findTile(tilePos).getType().passability;

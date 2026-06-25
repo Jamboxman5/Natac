@@ -464,14 +464,13 @@ public class Tile {
         return closest;
     }
 
-    public boolean collides(Entity checking, Vector2 displacement) {
+    public boolean collides(UUID checkingID, Vector2 pos, Vector2 bounds) {
 
-        Rectangle rect = new Rectangle(checking.getCollisionBox());
-        rect.setPosition(rect.getX() + displacement.x, rect.getY() + displacement.y);
+        Rectangle checkBounds = new Rectangle(pos.x - (bounds.x / 2f), pos.y - (bounds.y / 2f), bounds.x, bounds.y);
 
         for (Entity e : entities) {
-            if (e == checking) continue;
-            if (e.getCollisionBox().contains(rect)) return true;
+            if (e.getID().equals(checkingID)) continue;
+            if (e.getCollisionBox().contains(checkBounds)) return true;
         }
         return false;
     }
