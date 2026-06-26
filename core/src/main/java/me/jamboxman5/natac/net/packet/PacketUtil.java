@@ -8,6 +8,9 @@ import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Unit;
 
+import java.util.HashSet;
+import java.util.UUID;
+
 public class PacketUtil {
 
     public static void buildStructure(Structure s, Vector2 tilePos) {
@@ -70,6 +73,14 @@ public class PacketUtil {
         packet.entity = entity;
         packet.healthDiff = damage;
         packet.displacement = displacement;
+
+        Natac.instance.getClientManager().sendPacketTCP(packet);
+    }
+
+    public static void startBattle(Vector2 tilePos, HashSet<UUID> fighters) {
+        PacketStartBattle packet = new PacketStartBattle();
+        packet.fightingPlayers = fighters;
+        packet.tilePos = tilePos;
 
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }

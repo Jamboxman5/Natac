@@ -25,10 +25,7 @@ import me.jamboxman5.natac.entity.units.army.Soldier;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Tile {
 
@@ -284,26 +281,35 @@ public class Tile {
             sort = true;
         }
 
-        if (owner != null && owner.equals(Natac.instance.player.getID())) {
-            UUID attacker = findAttacker();
-            if (attacker != null && !inBattle) {
-                Natac.instance.getGame().startBattle(this, attacker);
-                setBattleStatus(true);
-            }
-        }
-
         if (sort) sortEntities();
     }
 
     public boolean hasEnemies() {
-        return findAttacker() != null;
+        for (Unit u : getUnits()) {
+            if (!u.getOwner().equals(Natac.instance.player.getID())) return true;
+        }
+        return false;
     }
 
-    public UUID findAttacker() {
+    public boolean battlePending() {
+        if (inBattle) return false;
+        if (!hasUnits(Natac.instance.player.getID())) return false;
+        return getUnitOwners().size() > 1;
+    }
+
+    public boolean hasUnits(UUID owner) {
         for (Unit u : getUnits()) {
-            if (!u.getOwner().equals(owner)) return u.getOwner();
+            if (u.getOwner().equals(owner)) return true;
         }
-        return null;
+        return false;
+    }
+
+    public HashSet<UUID> getUnitOwners() {
+        HashSet<UUID> owners = new HashSet<>();
+        for (Unit u : getUnits()) {
+            owners.add(u.getOwner());
+        }
+        return owners;
     }
 
     public void add(Entity entity) { pendingEntities.add(entity); }

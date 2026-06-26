@@ -46,30 +46,18 @@ public class BattleModal extends Stage {
 
     UnitScroller unitSelector;
 
-    private final Player attacker;
-    private final Player defender;
-
     int margin = 40;
 
     Vector2 tileCenter = new Vector2(Settings.screenWidth / 2f, (Settings.screenHeight / 2f) + 50);
 
 
-    public BattleModal(Tile t, Player attacker) {
+    public BattleModal(Tile t) {
 
         super(new FitViewport(Settings.screenWidth, Settings.screenHeight));
-
-        if (Natac.instance.player.getID().equals(t.getOwner())) defender = Natac.instance.player;
-        else defender = Natac.instance.getClientManager().findPlayer(t.getOwner());
-
-        this.attacker = attacker;
 
         this.selectedTile = t;
         selectedTileSprite = new Sprite(selectedTile.getSprite());
         selectedTileHighlight = generateHighlight();
-
-        if (defender.equals(Natac.instance.player) && t.hasBarracks()) {
-//            addRecruitButton();
-        }
 
     }
 
@@ -87,28 +75,15 @@ public class BattleModal extends Stage {
 
             if (!(e instanceof Unit)) continue;
 
-            if (Natac.instance.player.equals(defender)) {
-                //TODO implement targeting logic
+            Unit unit = (Unit) e;
 
-                Unit unit = (Unit) e;
+            if (!unit.getOwner().equals(Natac.instance.player.getID())) return;
 
-                if (unit.getTarget() == null) {
-                    if (unit.getOwner().equals(defender.getID())) {
-                        //TODO Defensive targeting
-                        Unit target = selectedTile.getClosestUnitTarget(unit);
-                        if (target != null) {
-                            unit.setTarget(target);
-                        }
-                    }
-                    if (unit.getOwner().equals(attacker.getID())) {
-                        //TODO Offensive targeting
-                        Entity target = selectedTile.getClosestTarget(unit);
-                        if (target != null) {
-                            unit.setTarget(target);
-                        }
-                    }
+            if (unit.getTarget() == null) {
+                Unit target = selectedTile.getClosestUnitTarget(unit);
+                if (target != null) {
+                    unit.setTarget(target);
                 }
-
             }
         }
 

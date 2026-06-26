@@ -25,6 +25,7 @@ import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.entity.units.army.Soldier;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -49,6 +50,7 @@ public class NetUtil {
         kryo.register(PacketMoveMob.class);
         kryo.register(PacketRepositionMob.class);
         kryo.register(PacketDamageEntity.class);
+        kryo.register(PacketStartBattle.class);
 
 
 
@@ -56,6 +58,7 @@ public class NetUtil {
         kryo.register(Vector.class);
         kryo.register(Vector2.class);
         kryo.register(ArrayList.class);
+        kryo.register(HashSet.class);
         kryo.register(UUID.class, new DefaultSerializers.UUIDSerializer());
         kryo.register(float[].class);
         kryo.register(Rectangle.class);

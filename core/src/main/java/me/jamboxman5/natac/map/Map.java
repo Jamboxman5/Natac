@@ -55,7 +55,13 @@ public class Map {
     }
 
     public void update() {
-        for (Tile t : tiles) t.update();
+        for (Tile t : tiles) {
+            t.update();
+            if (t.battlePending()) {
+                Natac.instance.getGame().startBattle(t);
+//                PacketUtil.startBattle(t.getTilePosition(), t.getUnitOwners());
+            }
+        }
     }
 
     public void clearStartingTiles() {

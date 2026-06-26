@@ -352,8 +352,9 @@ public class GameScreen implements Screen, InputProcessor {
         map.deselectTile();
     }
 
-    public void startBattle(Tile battleTile, UUID attackerID) {
-        battleModal = new BattleModal(battleTile, Natac.instance.getClientManager().findPlayer(attackerID));
+    public void startBattle(Tile battleTile) {
+        battleTile.setBattleStatus(true);
+        battleModal = new BattleModal(battleTile);
         multiplexer.addProcessor(0, battleModal);
     }
 
