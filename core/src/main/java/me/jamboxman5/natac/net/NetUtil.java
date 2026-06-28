@@ -85,7 +85,7 @@ public class NetUtil {
 
         //STRUCTURES
         kryo.register(Structure.class);
-        kryo.register(TownHall.class);
+        kryo.register(Capital.class);
         kryo.register(Ruins.class);
         kryo.register(Barracks.class);
         kryo.register(ArmyOutpost.class);

@@ -25,11 +25,17 @@ public abstract class Structure extends Entity {
 
     private final static float structureScale = .75f;
 
+    protected float spriteYOffset = 1;
+    protected float spriteScale = 1;
+
     protected Structure() {
         this.drawColor = Color.WHITE;
+        spriteYOffset = 0;
     }
 
-    protected Structure(int goldCost, int resourceCost, int revenuePerTurn, int resourcesPerTurn, int maxHealth, Vector2 tilePos, Vector2 position, String name) {
+    protected Structure(int goldCost, int resourceCost, int revenuePerTurn, int resourcesPerTurn,
+                        int maxHealth, Vector2 tilePos, Vector2 position,
+                        String name) {
         super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth);
         this.goldCost = goldCost;
         this.resourceCost = resourceCost;
@@ -45,12 +51,16 @@ public abstract class Structure extends Entity {
         Vector2 drawPos = getDrawPos(center, scale);
         shapes.setColor(new Color(0f, 0f, 0f, .25f));
         if (sprite != null) {
-            shapes.filledEllipse(drawPos.x, drawPos.y, (sprite.getWidth()/2f) * scale * structureScale, 5 * scale * structureScale);
-            sprite.setScale(scale * structureScale);
+            shapes.filledEllipse(drawPos.x, drawPos.y + (spriteYOffset * spriteScale * scale * structureScale), (sprite.getWidth()/2f) * scale * spriteScale * structureScale, 5 * scale * structureScale);
+            sprite.setScale(scale * structureScale * spriteScale);
             sprite.setOrigin(sprite.getWidth()/2f, 0f);
-            sprite.setOriginBasedPosition(drawPos.x, drawPos.y);
+            sprite.setOriginBasedPosition(drawPos.x, drawPos.y + (spriteYOffset * scale * structureScale));
             sprite.draw(batch);
-
+            if (Settings.debugMode) {
+                shapes.setColor(Color.RED);
+                shapes.setDefaultLineWidth(1f);
+                shapes.rectangle(getBounds(center, scale));
+            }
             return;
         }
         Rectangle bounds = getBounds(center, scale);

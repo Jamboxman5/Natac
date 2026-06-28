@@ -16,7 +16,7 @@ import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.structures.constructed.Barracks;
-import me.jamboxman5.natac.entity.structures.constructed.TownHall;
+import me.jamboxman5.natac.entity.structures.constructed.Capital;
 import me.jamboxman5.natac.entity.structures.generated.Ruins;
 import me.jamboxman5.natac.entity.structures.prop.Prop;
 import me.jamboxman5.natac.entity.structures.prop.Tree;
@@ -192,7 +192,7 @@ public class Tile {
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
 
-            PacketUtil.buildStructure(new TownHall(Natac.instance.player.getPlayerClass(), pos), pos);
+            PacketUtil.buildStructure(new Capital(Natac.instance.player.getPlayerClass(), pos), pos);
             PacketUtil.spawnUnit(new Soldier(pos, new Vector2(-20, -20), owner), pos);
             PacketUtil.spawnUnit(new Soldier(pos, new Vector2(20, -20), owner), pos);
 
