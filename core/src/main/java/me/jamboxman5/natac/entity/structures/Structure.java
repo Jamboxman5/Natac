@@ -18,15 +18,9 @@ public abstract class Structure extends Entity {
     protected int revenuePerTurn;
     protected int resourcesPerTurn;
 
-    protected transient Color drawColor;
-    protected transient Sprite sprite;
-
     protected String structureName = "Structure";
 
     private final static float structureScale = .75f;
-
-    protected float spriteYOffset = 1;
-    protected float spriteScale = 1;
 
     protected Structure() {
         this.drawColor = Color.WHITE;
@@ -36,7 +30,7 @@ public abstract class Structure extends Entity {
     protected Structure(int goldCost, int resourceCost, int revenuePerTurn, int resourcesPerTurn,
                         int maxHealth, Vector2 tilePos, Vector2 position,
                         String name) {
-        super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth);
+        super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth, structureScale);
         this.goldCost = goldCost;
         this.resourceCost = resourceCost;
         this.revenuePerTurn = revenuePerTurn;
@@ -46,35 +40,35 @@ public abstract class Structure extends Entity {
         this.structureName = name;
     }
 
-    @Override
-    public void draw(SpriteBatch batch, ShapeDrawer shapes, Vector2 center, float scale) {
-        Vector2 drawPos = getDrawPos(center, scale);
-        shapes.setColor(new Color(0f, 0f, 0f, .25f));
-        if (sprite != null) {
-            shapes.filledEllipse(drawPos.x, drawPos.y + (spriteYOffset * spriteScale * scale * structureScale), (sprite.getWidth()/2f) * scale * spriteScale * structureScale, 5 * scale * structureScale);
-            sprite.setScale(scale * structureScale * spriteScale);
-            sprite.setOrigin(sprite.getWidth()/2f, 0f);
-            sprite.setOriginBasedPosition(drawPos.x, drawPos.y + (spriteYOffset * scale * structureScale));
-            sprite.draw(batch);
-            if (Settings.debugMode) {
-                shapes.setColor(Color.RED);
-                shapes.setDefaultLineWidth(1f);
-                shapes.rectangle(getBounds(center, scale));
-            }
-            return;
-        }
-        Rectangle bounds = getBounds(center, scale);
-        shapes.filledEllipse(drawPos.x, drawPos.y, (bounds.getWidth()), 5 * scale * structureScale);
-        shapes.setColor(drawColor);
-        shapes.filledRectangle(getBounds(center, scale));
-
-        if (Settings.debugMode) {
-            shapes.setColor(Color.RED);
-            shapes.setDefaultLineWidth(1f);
-            shapes.rectangle(getBounds(center, scale));
-        }
-
-    }
+//    @Override
+//    public void draw(SpriteBatch batch, ShapeDrawer shapes, Vector2 center, float scale) {
+//        Vector2 drawPos = getDrawPos(center, scale);
+//        shapes.setColor(new Color(0f, 0f, 0f, .25f));
+//        if (sprite != null) {
+//            shapes.filledEllipse(drawPos.x, drawPos.y + (spriteYOffset * spriteScale * scale * structureScale), (sprite.getWidth()/2f) * scale * spriteScale * structureScale, 5 * scale * structureScale);
+//            sprite.setScale(scale * structureScale * spriteScale);
+//            sprite.setOrigin(sprite.getWidth()/2f, 0f);
+//            sprite.setOriginBasedPosition(drawPos.x, drawPos.y + (spriteYOffset * scale * structureScale));
+//            sprite.draw(batch);
+//            if (Settings.debugMode) {
+//                shapes.setColor(Color.RED);
+//                shapes.setDefaultLineWidth(1f);
+//                shapes.rectangle(getBounds(center, scale));
+//            }
+//            return;
+//        }
+//        Rectangle bounds = getBounds(center, scale);
+//        shapes.filledEllipse(drawPos.x, drawPos.y, (bounds.getWidth()), 5 * scale * structureScale);
+//        shapes.setColor(drawColor);
+//        shapes.filledRectangle(getBounds(center, scale));
+//
+//        if (Settings.debugMode) {
+//            shapes.setColor(Color.RED);
+//            shapes.setDefaultLineWidth(1f);
+//            shapes.rectangle(getBounds(center, scale));
+//        }
+//
+//    }
 
     protected static Vector2 getRandomPosition() {
         float xDiff = (float) (Math.random() * 50f);
@@ -97,11 +91,7 @@ public abstract class Structure extends Entity {
     public int getGoldCost() { return goldCost; }
     public int getResourceCost() { return resourceCost; }
 
-    public Rectangle getBounds(Vector2 center, float scale) {
-        Vector2 drawPos = getDrawPos(center, scale);
-        drawPos.sub((5f * scale)/2f, (5f * scale)/2f);
-        return new Rectangle(drawPos.x, drawPos.y, 5f * scale, 5f * scale);
-    }
+
 
     protected Vector2 getDrawPos(Vector2 center, float scale) {
         return center.cpy().add(position.cpy().scl(scale));

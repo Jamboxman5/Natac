@@ -1,6 +1,8 @@
 package me.jamboxman5.natac.entity.units.army;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.entity.units.Unit;
 
@@ -30,5 +32,8 @@ public class Soldier extends Unit {
     @Override
     public void update() {
         super.update();
+        if (sprite == null) {
+            initGraphics(new Texture(Gdx.files.internal("unit/placeholder_unit.png")), 0, 1);
+        }
     }
 }

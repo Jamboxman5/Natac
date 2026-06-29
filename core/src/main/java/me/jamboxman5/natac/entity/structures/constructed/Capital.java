@@ -21,21 +21,16 @@ public class Capital extends Structure {
     public Capital(PlayerClass playerClass, Vector2 tilePos) {
         super(0, 0, 50, 0, 100, tilePos, new Vector2(0, 0), "Town Hall");
         this.type = playerClass;
-        initGraphics();
     }
 
     @Override
     public void update() {
-        if (sprite == null) initGraphics();
-    }
-
-    private void initGraphics() {
-        switch(type) {
-            case BARBARIANS:
-                sprite = new Sprite(barbarianCapital);
-                this.spriteYOffset = -12;
-                this.spriteScale = .5f;
-                break;
+        if (sprite == null) {
+            switch(type) {
+                case BARBARIANS:
+                    initGraphics(barbarianCapital, -4, .5f);
+                    break;
+            }
         }
     }
 

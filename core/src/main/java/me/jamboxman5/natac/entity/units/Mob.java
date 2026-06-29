@@ -36,10 +36,12 @@ public class Mob extends Entity {
     protected Vector2 acceleration;
     protected Vector2 targetPos;
 
+    private final static float mobScale = 0.5f;
+
     protected Mob() {}
 
     protected Mob(float speed, int maxHealth, Vector2 tilePos, Vector2 position, Color color, UUID owner) {
-        super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth);
+        super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth, mobScale);
         this.speed = speed;
         this.homePos = position.cpy();
         this.owner = owner;
@@ -110,7 +112,7 @@ public class Mob extends Entity {
 
     public void update() {
 
-        collisionBox.setPosition(tilePos.x + position.x - (collisionBox.width /2f), tilePos.y + position.y - (collisionBox.height / 2f));
+        collisionBox.setPosition(tilePos.x + position.x - (collisionBox.width /2f), tilePos.y + position.y);
 
         if (!Natac.instance.player.getID().equals(owner)) return;
 
@@ -137,21 +139,6 @@ public class Mob extends Entity {
             if (alpha < .4f) alpha = 1f;
         } else {
             alpha = 1f;
-        }
-
-    }
-
-    @Override
-    public void draw(SpriteBatch batch, ShapeDrawer shapes, Vector2 center, float scale) {
-        Color drawColor = new Color(color);
-        drawColor.a = alpha;
-        shapes.setColor(drawColor);
-        shapes.filledCircle(center.cpy().add(position.cpy().scl(scale)), (collisionBox.getWidth() / 2f) * scale);
-
-        if (Settings.debugMode) {
-            shapes.setColor(Color.RED);
-            shapes.setDefaultLineWidth(1f);
-            shapes.rectangle(getBounds(center, scale));
         }
 
     }

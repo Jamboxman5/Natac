@@ -7,18 +7,21 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Tree extends Prop {
 
+    protected int treeVersion = 1;
+
     public Tree() {
     }
 
     public Tree(Vector2 tilePosition, Vector2 positionInTile) {
         super(positionInTile, tilePosition, "Tree");
+        this.spriteScale = (float) (0.8f + (Math.random() * .4));
+        this.treeVersion = (int) ( 1 + (Math.random() * 2));
     }
 
     @Override
     public void update() {
         if (sprite == null) {
-            sprite = new Sprite(new Texture(Gdx.files.internal("structure/prop/tree_" + (int) ( 1 + (Math.random() * 2)) + ".png")));
-
+            initGraphics(new Texture(Gdx.files.internal("structure/prop/tree_" + treeVersion + ".png")), spriteYOffset, spriteScale);
         }
     }
 
