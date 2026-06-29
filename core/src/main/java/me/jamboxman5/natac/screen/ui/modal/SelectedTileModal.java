@@ -18,6 +18,7 @@ import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Unit;
+import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -104,6 +105,7 @@ public class SelectedTileModal extends Stage {
         for (Unit u : selectedTile.getUnits()) {
             if (u.getBounds(tileCenter, modalScale).contains(touchPos)) {
                 Natac.instance.getGame().selectUnit(u);
+                Sounds.SELECT.play();
                 return true;
             }
         }

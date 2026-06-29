@@ -24,6 +24,7 @@ import me.jamboxman5.natac.map.tile.TileType;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
+import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -58,6 +59,8 @@ public class BattleModal extends Stage {
         this.selectedTile = t;
         selectedTileSprite = new Sprite(selectedTile.getSprite());
         selectedTileHighlight = generateHighlight();
+
+        Sounds.BATTLE_START.play();
 
     }
 

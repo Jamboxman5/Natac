@@ -13,6 +13,7 @@ import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Unit;
+import me.jamboxman5.natac.sfx.Sounds;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -94,6 +95,7 @@ public class Map {
                 } else if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.TRAVEL) {
 
                    if (t.getState() != TileState.ENEMY_CLAIMED && !Natac.instance.getGame().getSelectedUnit().getTilePosition().epsilonEquals(t.getTilePosition())) {
+                       Sounds.SELECT.play();
                        gameScreen.setTileSelectionMode(GameScreen.SelectionMode.NONE);
                        gameScreen.getSelectedUnit().deploy(t);
                    }
@@ -101,6 +103,7 @@ public class Map {
                 } else if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.NONE) {
 
                     if (t.getState() == TileState.CLAIMED || t.hasUnits(Natac.instance.player)) {
+                        Sounds.SELECT.play();
                         selectedTile = t;
                     }
 
@@ -159,6 +162,7 @@ public class Map {
             }
         }
         PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, goldCollected, resourcesCollected);
+        if (goldCollected > 0 || resourcesCollected > 0) Sounds.RECEIVE_GOLD.play();
     }
 
     public void updateTravellers() {
