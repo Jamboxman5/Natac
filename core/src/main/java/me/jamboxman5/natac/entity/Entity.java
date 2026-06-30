@@ -57,13 +57,13 @@ public abstract class Entity {
         Vector2 drawPos = getDrawPos(center, scale);
         shapes.setColor(new Color(0f, 0f, 0f, .25f));
 
-        shapes.filledEllipse(drawPos.x, drawPos.y + (spriteYOffset * spriteScale * scale), (sprite.getWidth()/2f) * scale * spriteScale, 5 * scale);
+        shapes.filledEllipse(drawPos.x, drawPos.y - (spriteYOffset * spriteScale * scale), (sprite.getWidth()/2f) * scale * spriteScale, 5 * scale);
         sprite.setScale(scale * spriteScale * scaleMod);
         sprite.setOrigin(sprite.getWidth()/2f, 0f);
         sprite.setOriginBasedPosition(drawPos.x, drawPos.y + (spriteYOffset * scale));
         sprite.draw(batch);
         if (Settings.debugMode) {
-            drawCollision(shapes, drawPos, scale * spriteScale);
+            drawCollision(shapes, drawPos, scale);
             shapes.setColor(Color.WHITE);
             shapes.filledCircle(drawPos.x, drawPos.y, 1);
         }
@@ -96,8 +96,20 @@ public abstract class Entity {
     protected void drawCollision(ShapeDrawer shapes, Vector2 drawPos, float scale) {
         shapes.setColor(Color.RED);
         shapes.setDefaultLineWidth(1f);
-        float w = collisionBox.width * scale * scaleMod;
-        shapes.rectangle(drawPos.x - (w / 2f), drawPos.y, w, collisionBox.height * scale * scaleMod);
+
+        float w =
+            collisionBox.width * scale;
+
+        float h =
+            collisionBox.height * scale;
+
+        float x =
+            drawPos.x - (w / 2f);
+
+        float y =
+            drawPos.y + (spriteYOffset * scale);
+
+        shapes.rectangle(x, y, w, h);
     }
 
     public Rectangle getBounds(Vector2 center, float scale) {
@@ -116,16 +128,26 @@ public abstract class Entity {
 
     protected Rectangle generateCollisionBox() {
         if (sprite == null) return new Rectangle(position.x - 5, position.y - 5, 10, 10);
-        float w = sprite.getWidth();
-        float h;
-        if (this instanceof Structure) {
-            h = sprite.getHeight() / 2f;
-        } else {
-            h = sprite.getHeight();
-        }
-        float x = position.x - (w/2f);
-        float y = position.y;
+        float w =
+            sprite.getWidth()
+                * spriteScale
+                * scaleMod;
+
+        float h =
+            sprite.getHeight()
+                * spriteScale
+                * scaleMod;
+        if (this instanceof Structure) h *= (1f/2f);
+        float x = tilePos.x + position.x - (w/2f);
+        float y = tilePos.y + position.y;
         return new Rectangle(x, y, w, h);
+    }
+
+    protected void updateCollisionBox() {
+        collisionBox.setPosition(
+            tilePos.x + position.x - collisionBox.width / 2f,
+            tilePos.y + position.y
+        );
     }
 
 }

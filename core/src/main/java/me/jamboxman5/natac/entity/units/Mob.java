@@ -112,19 +112,26 @@ public class Mob extends Entity {
 
     public void update() {
 
-        collisionBox.setPosition(tilePos.x + position.x - (collisionBox.width /2f), tilePos.y + position.y);
+        updateCollisionBox();
 
-        if (!Natac.instance.player.getID().equals(owner)) return;
+        if (!Natac.instance.player.getID().equals(owner))
+            return;
 
         velocity.add(acceleration);
-        acceleration.scl(0);
-        velocity.nor().scl(speed);
+        acceleration.setZero();
 
-        Vector2 newPos = position.cpy().add(velocity);
+        if (velocity.len2() > 0)
+            velocity.limit(speed);
 
-        if (!Natac.instance.getGame().getMap().findTile(tilePos).collides(id, newPos, new Vector2(collisionBox.width, collisionBox.height))) {
+        if (!Natac.instance.getGame()
+            .getMap()
+            .findTile(tilePos)
+            .collides(this, velocity)) {
+
             position.add(velocity);
-            collisionBox.setPosition(position.x - (collisionBox.width /2f), position.y - (collisionBox.height/2f));
+
+            updateCollisionBox();
+
             PacketUtil.repositionMob(this, position);
         }
 

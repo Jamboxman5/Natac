@@ -1,11 +1,14 @@
 package me.jamboxman5.natac.screen.ui.modal;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -71,8 +74,43 @@ public class SelectedTileModal extends Stage {
         addActor(backButton);
 
         if (t.hasBarracks()) addRecruitButton();
+        Unit moving = selectedTile.getUnits().get(0);
 
+        addListener(new InputListener() {
 
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+
+                if (keycode == Input.Keys.ESCAPE) {
+                    Natac.instance.getGame().getMap().deselectTile();
+                    return true;
+                }
+
+                if (keycode == Input.Keys.B) {
+                    buildButton.toggle();
+                    return true;
+                }
+
+                if (keycode == Input.Keys.W) {
+                    moving.setPosition(moving.getPosition().add(0, 10));
+                    return true;
+                } else if (keycode == Input.Keys.A) {
+                    moving.setPosition(moving.getPosition().add(-10, 0));
+                    return true;
+                } else if (keycode == Input.Keys.S) {
+                    moving.setPosition(moving.getPosition().add(0, -10));
+                    return true;
+                } else if (keycode == Input.Keys.D) {
+                    moving.setPosition(moving.getPosition().add(10, 0));
+                    return true;
+                }
+                return false;
+
+            }
+
+        });
+
+        setKeyboardFocus(getRoot());
 
 
     }

@@ -476,14 +476,36 @@ public class Tile {
         return closest;
     }
 
-    public boolean collides(UUID checkingID, Vector2 pos, Vector2 bounds) {
+    public boolean collides(Entity checking, Vector2 velocity) {
 
-        Rectangle checkBounds = new Rectangle(pos.x - (bounds.x / 2f), pos.y - (bounds.y / 2f), bounds.x, bounds.y);
+        Rectangle current = checking.getCollisionBox();
+
+        Rectangle future =
+            new Rectangle(
+                pos.x + checking.getPosition().x + velocity.x - (current.width / 2f),
+                pos.y + checking.getPosition().y + velocity.y,
+                current.width,
+                current.height
+            );
 
         for (Entity e : entities) {
-            if (e.getID().equals(checkingID)) continue;
-            if (e.getCollisionBox().overlaps(checkBounds)) return true;
+
+            if (e == checking)
+                continue;
+
+            if (future.overlaps(e.getCollisionBox())) {
+
+//                System.out.println(
+//                    "COLLISION: "
+//                        + checking.getClass().getSimpleName()
+//                        + " -> "
+//                        + e.getClass().getSimpleName()
+//                );
+
+                return true;
+            }
         }
+
         return false;
     }
 
