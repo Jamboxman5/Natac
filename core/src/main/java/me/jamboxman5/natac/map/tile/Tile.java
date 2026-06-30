@@ -68,11 +68,17 @@ public class Tile {
         pos = new Vector2(x, y);
         bounds = new Hexagon(pos);
 
-        if (Math.random() > 0.8 && state != TileState.STARTING) entities.add(new Ruins(pos));
+        if (Math.random() > 0.8 && state != TileState.STARTING) {
+            Ruins c = new Ruins(pos);
+            if (!collides(c)) entities.add(c);
+        }
         if (type == TileType.PLAINS) {
             for (int i = 0; i < 10; i++) {
-                if (Math.random() > .5)
-                    entities.add(new Tree(pos, getRandomPosition()));
+                if (Math.random() > .5) {
+                    Tree c = new Tree(pos, getRandomPosition());
+                    if (!collides(c)) entities.add(c);
+                }
+
             }
         }
     }
@@ -476,8 +482,18 @@ public class Tile {
 
         for (Entity e : entities) {
             if (e.getID().equals(checkingID)) continue;
-            if (e.getCollisionBox().contains(checkBounds)) return true;
+            if (e.getCollisionBox().overlaps(checkBounds)) return true;
         }
+        return false;
+    }
+
+    public boolean collides(Entity checking) {
+
+        for (Entity e : entities) {
+            if (e.getID().equals(checking.getID())) continue;
+            if (e.getCollisionBox().overlaps(checking.getCollisionBox())) return true;
+        }
+
         return false;
     }
 

@@ -20,6 +20,7 @@ public class Barracks extends Structure {
 
     public Barracks(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
         super(goldCost, resourceCost, 0, 0, 50, tilePos, pos, name);
+        initGraphics(new Texture(Gdx.files.internal("structure/placeholder_structure.png")), 0, 1);
     }
 
     @Override

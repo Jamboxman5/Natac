@@ -16,6 +16,8 @@ public class Tree extends Prop {
         super(positionInTile, tilePosition, "Tree");
         this.spriteScale = (float) (0.8f + (Math.random() * .4));
         this.treeVersion = (int) ( 1 + (Math.random() * 2));
+        initGraphics(new Texture(Gdx.files.internal("structure/prop/tree_" + treeVersion + ".png")), spriteYOffset, spriteScale);
+
     }
 
     @Override
