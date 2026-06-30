@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.structures.constructed.*;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
@@ -63,31 +64,39 @@ public class StructureScroller extends DDScroller {
 
                     if (!selectedTileBounds.contains(dropPos)) return;
 
-                    Sounds.STRUCTURE_DROP.play();
+
+                    Structure placing = null;
 
                     switch(selected) {
                         case BARRACKS:
-                            PacketUtil.buildStructure(new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case DEPOT:
-                            PacketUtil.buildStructure(new Depot(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new Depot(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case LOGGER:
-                            PacketUtil.buildStructure(new Logger(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new Logger(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case QUARRY:
-                            PacketUtil.buildStructure(new Quarry(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new Quarry(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case LIBRARY:
-                            PacketUtil.buildStructure(new Library(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new Library(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case SCOUT_TOWER:
-                            PacketUtil.buildStructure(new ScoutTower(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new ScoutTower(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case ARMY_OUTPOST:
-                            PacketUtil.buildStructure(new ArmyOutpost(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos)), selectedTile.getTilePosition());
+                            placing = new ArmyOutpost(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                     }
+
+                    if (selectedTile.collides(placing)) placing = null;
+
+                    if (placing == null) return;
+
+                    PacketUtil.buildStructure(placing, selectedTile.getTilePosition());
+                    Sounds.STRUCTURE_DROP.play();
 
                     PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
                     parent.addRecruitButton();

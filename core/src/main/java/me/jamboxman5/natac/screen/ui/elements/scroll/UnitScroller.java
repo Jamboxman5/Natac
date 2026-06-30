@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
+import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.elements.select.UnitSelection;
@@ -58,11 +59,19 @@ public class UnitScroller extends DDScroller {
 
                     if (!selectedTileBounds.contains(dropPos)) return;
 
+                    Unit spawning = null;
+
                     switch(selected) {
                         case SOLDIER:
-                            PacketUtil.spawnUnit(new Soldier(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner()), selectedTile.getTilePosition());
+                            spawning = new Soldier(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner());
                             break;
                     }
+
+                    if (selectedTile.collides(spawning)) spawning = null;
+
+                    if (spawning == null) return;
+
+                    PacketUtil.spawnUnit(spawning, selectedTile.getTilePosition());
 
                     PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);
                     Sounds.UNIT_SPAWN.play();
