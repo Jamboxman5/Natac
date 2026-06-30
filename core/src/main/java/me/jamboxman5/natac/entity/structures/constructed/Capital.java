@@ -11,7 +11,7 @@ public class Capital extends Structure {
 
     protected PlayerClass type;
 
-    public static final Texture barbarianCapital = new Texture("structure/capital/capital_barbarians.png");
+    public static final String barbarianCapitalPath = "structure/capital/capital_barbarians.png";
 
     public Capital() {
         this.drawColor = Color.PINK;
@@ -28,7 +28,7 @@ public class Capital extends Structure {
         if (sprite == null) {
             switch(type) {
                 case BARBARIANS:
-                    initGraphics(barbarianCapital, -4, .5f);
+                    initGraphics(new Texture(barbarianCapitalPath), -4, .5f);
                     break;
             }
         }
