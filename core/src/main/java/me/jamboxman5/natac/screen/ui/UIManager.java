@@ -15,6 +15,7 @@ public class UIManager {
 
         Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Gold: $" + Natac.instance.player.getGold(), batch, 20, statStart);
         Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Resources: " + Natac.instance.player.getResources(), batch, 20, statStart - 40);
+        Fonts.drawScaled(Fonts.PLACEHOLDER_FONT, 1f, "Research: " + Natac.instance.player.getResearch(), batch, 20, statStart - 80);
 
         switch(gameState) {
             case PLAY:
