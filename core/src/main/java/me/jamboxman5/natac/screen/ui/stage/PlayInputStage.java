@@ -17,10 +17,7 @@ public class PlayInputStage extends Stage {
 
     Skin skin = new Skin(Gdx.files.internal("ui/skins/shade/uiskin.json"));
 
-    TextButton claimTileButton = new TextButton("Claim", skin);
     TextButton shopButton = new TextButton("Shop", skin);
-    TextButton attackButton = new TextButton("Attack", skin);
-    TextButton scoutButton = new TextButton("Scout", skin);
     TextButton cardButton = new TextButton("Cards", skin);
     TextButton endButton = new TextButton("End Turn", skin);
 
@@ -30,8 +27,8 @@ public class PlayInputStage extends Stage {
 
         super(new FitViewport(Settings.screenWidth, Settings.screenHeight));
 
-        claimTileButton.getStyle().font.getData().setScale(2f);
-        claimTileButton.getStyle().disabledFontColor = Color.GRAY;
+        shopButton.getStyle().font.getData().setScale(2f);
+        shopButton.getStyle().disabledFontColor = Color.GRAY;
 
         int width = Settings.screenWidth / 10;
         int height = Settings.screenHeight / 10;
@@ -40,24 +37,15 @@ public class PlayInputStage extends Stage {
         int x = Settings.screenWidth - (margin * 2) - width;
         int y = Settings.screenHeight - (margin * 2) - height;
 
-        claimTileButton.setPosition(x, y);
-        shopButton.setPosition(x, y - (height) - (margin));
-        attackButton.setPosition(x, y - (height * 2) - (margin * 2));
-        scoutButton.setPosition(x, y - (height * 3) - (margin * 3));
-        cardButton.setPosition(x, y - (height * 4) - (margin * 4));
-        endButton.setPosition(x, y - (height * 5) - (margin * 5));
+        shopButton.setPosition(x, y);
+        cardButton.setPosition(x, y - (height) - (margin));
+        endButton.setPosition(x, y - (height * 2) - (margin * 2));
 
-        claimTileButton.setSize(width, height);
         shopButton.setSize(width, height);
-        attackButton.setSize(width, height);
-        scoutButton.setSize(width, height);
         cardButton.setSize(width, height);
         endButton.setSize(width, height);
 
-        addActor(claimTileButton);
         addActor(shopButton);
-        addActor(attackButton);
-        addActor(scoutButton);
         addActor(cardButton);
         addActor(endButton);
 
@@ -93,24 +81,18 @@ public class PlayInputStage extends Stage {
     }
 
     public void disableInput() {
-        claimTileButton.setDisabled(true);
         shopButton.setDisabled(true);
-        attackButton.setDisabled(true);
-        scoutButton.setDisabled(true);
         cardButton.setDisabled(true);
         endButton.setDisabled(true);
     }
 
     public void enableInput() {
-        claimTileButton.setDisabled(false);
         shopButton.setDisabled(false);
-        attackButton.setDisabled(false);
-        scoutButton.setDisabled(false);
         cardButton.setDisabled(false);
         endButton.setDisabled(false);
     }
 
-    public boolean isDisabled() { return claimTileButton.isDisabled(); }
+    public boolean isDisabled() { return shopButton.isDisabled(); }
 
 
 
