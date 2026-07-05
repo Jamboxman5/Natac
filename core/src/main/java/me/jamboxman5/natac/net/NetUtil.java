@@ -8,6 +8,9 @@ import com.esotericsoftware.kryonet.Client;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.entity.structures.constructed.*;
 import me.jamboxman5.natac.entity.units.Mob;
+import me.jamboxman5.natac.entity.units.army.Brute;
+import me.jamboxman5.natac.entity.units.army.Marksman;
+import me.jamboxman5.natac.entity.units.army.Scout;
 import me.jamboxman5.natac.map.Map;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
@@ -82,6 +85,9 @@ public class NetUtil {
         kryo.register(Mob.class);
         kryo.register(Unit.class);
         kryo.register(Soldier.class);
+        kryo.register(Brute.class);
+        kryo.register(Marksman.class);
+        kryo.register(Scout.class);
 
         //STRUCTURES
         kryo.register(Structure.class);

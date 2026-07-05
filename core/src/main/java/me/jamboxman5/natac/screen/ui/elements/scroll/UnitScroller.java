@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 import com.badlogic.gdx.utils.Align;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.units.Unit;
+import me.jamboxman5.natac.entity.units.army.Brute;
+import me.jamboxman5.natac.entity.units.army.Marksman;
+import me.jamboxman5.natac.entity.units.army.Scout;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.screen.ui.elements.select.UnitSelection;
@@ -64,6 +67,15 @@ public class UnitScroller extends DDScroller {
                     switch(selected) {
                         case SOLDIER:
                             spawning = new Soldier(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner());
+                            break;
+                        case BRUTE:
+                            spawning = new Brute(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner());
+                            break;
+                        case MARKSMAN:
+                            spawning = new Marksman(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner());
+                            break;
+                        case SCOUT:
+                            spawning = new Scout(selectedTile.getTilePosition(), unprojectDropPos(dropPos), selectedTile.getOwner());
                             break;
                     }
 
