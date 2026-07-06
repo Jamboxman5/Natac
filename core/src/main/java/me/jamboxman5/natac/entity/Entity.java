@@ -114,8 +114,23 @@ public abstract class Entity {
 
     public Rectangle getBounds(Vector2 center, float scale) {
         Vector2 drawPos = getDrawPos(center, scale);
-        float w = collisionBox.width * scale * scaleMod;
-        return new Rectangle(drawPos.x - (w / 2f), drawPos.y, w, collisionBox.height * scale * scaleMod);
+        float w =
+            collisionBox.width * scale;
+
+        float h =
+            collisionBox.height * scale;
+
+        float x =
+            drawPos.x - (w / 2f);
+
+        float y =
+            getY(scale, drawPos);
+
+        return new Rectangle(x, y, w, h);
+    }
+
+    private float getY(float scale, Vector2 drawPos) {
+        return drawPos.y + (spriteYOffset * scale);
     }
 
     protected void initGraphics(Texture texture, float spriteYOffset, float spriteScale) {
