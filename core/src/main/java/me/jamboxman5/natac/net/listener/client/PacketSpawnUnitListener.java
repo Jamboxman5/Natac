@@ -10,7 +10,7 @@ public class PacketSpawnUnitListener implements Listener {
     public void received(Connection conn, Object obj) {
         if (obj instanceof PacketSpawnMob) {
             PacketSpawnMob packet = (PacketSpawnMob) obj;
-            Natac.instance.getGame().getMap().findTile(packet.tilePos).add(packet.mob);
+            Natac.instance.getGame().getMap().findTile(packet.tilePos).add(packet.mob, false);
         }
     }
 }

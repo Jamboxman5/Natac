@@ -95,7 +95,7 @@ public class StructureScroller extends DDScroller {
 
                     if (placing == null) return;
 
-                    PacketUtil.buildStructure(placing, selectedTile.getTilePosition());
+                    PacketUtil.buildStructure(placing, selectedTile.getTilePosition(), false);
                     Sounds.STRUCTURE_DROP.play();
 
                     PacketUtil.createStatChange(Natac.instance.player, 0, 0, 0, 0, -selected.goldCost, -selected.resourceCost);

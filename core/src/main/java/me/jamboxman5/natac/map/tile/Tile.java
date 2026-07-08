@@ -198,7 +198,7 @@ public class Tile {
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
 
-            PacketUtil.buildStructure(new Capital(Natac.instance.player.getPlayerClass(), pos), pos);
+            PacketUtil.buildStructure(new Capital(Natac.instance.player.getPlayerClass(), pos), pos, true);
             PacketUtil.spawnUnit(new Soldier(pos, new Vector2(-20, -20), owner), pos);
             PacketUtil.spawnUnit(new Soldier(pos, new Vector2(20, -20), owner), pos);
 
@@ -318,7 +318,39 @@ public class Tile {
         return owners;
     }
 
-    public void add(Entity entity) { pendingEntities.add(entity); }
+    public void add(Entity entity, boolean clearObstacles) {
+        if (!clearObstacles) pendingEntities.add(entity);
+        else {
+            removingEntities.addAll(getCollisions(entity, null));
+            pendingEntities.add(entity);
+        }
+    }
+
+    private List<Entity> getCollisions(Entity checking, Vector2 velocity) {
+
+        Rectangle current = checking.getCollisionBox();
+
+        if (velocity != null) {
+            current = new Rectangle(
+                pos.x + checking.getPosition().x + velocity.x - (current.width / 2f),
+                pos.y + checking.getPosition().y + velocity.y,
+                current.width,
+                current.height
+            );
+        }
+
+        List<Entity> collisions = new ArrayList<>();
+
+        for (Entity e : entities) {
+
+            if (e == checking)
+                continue;
+
+            if (current.overlaps(e.getCollisionBox())) { collisions.add(e); }
+        }
+
+        return collisions;
+    }
 
     public boolean contains(Vector2 point) {
         return bounds.shape.contains(point);

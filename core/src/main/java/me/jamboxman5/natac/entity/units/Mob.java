@@ -1,19 +1,14 @@
 package me.jamboxman5.natac.entity.units;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
-import me.jamboxman5.natac.util.Settings;
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class Mob extends Entity {
@@ -187,7 +182,7 @@ public class Mob extends Entity {
 
     public void move(Tile from, Tile to) {
         from.remove(this);
-        to.add(this);
+        to.add(this, false);
         tilePos = to.getTilePosition();
         Vector2 displacement =
             from.getTilePosition().cpy()

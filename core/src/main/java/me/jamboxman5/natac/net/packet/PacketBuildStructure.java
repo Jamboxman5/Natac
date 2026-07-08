@@ -9,4 +9,5 @@ public class PacketBuildStructure extends Packet {
     public Structure structure;
     public UUID builderID;
     public Vector2 tilePos;
+    public boolean clearObstacles;
 }

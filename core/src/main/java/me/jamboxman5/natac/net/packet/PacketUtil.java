@@ -13,11 +13,12 @@ import java.util.UUID;
 
 public class PacketUtil {
 
-    public static void buildStructure(Structure s, Vector2 tilePos) {
+    public static void buildStructure(Structure s, Vector2 tilePos, boolean clearObstacles) {
         PacketBuildStructure packet = new PacketBuildStructure();
         packet.builderID = Natac.instance.player.getID();
         packet.tilePos = tilePos;
         packet.structure = s;
+        packet.clearObstacles = clearObstacles;
         Natac.instance.getClientManager().sendPacketTCP(packet);
     }
 
