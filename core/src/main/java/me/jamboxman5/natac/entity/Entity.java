@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Mob;
+import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -163,6 +165,10 @@ public abstract class Entity {
             tilePos.x + position.x - collisionBox.width / 2f,
             tilePos.y + position.y
         );
+    }
+
+    protected Tile getTile() {
+        return Natac.instance.getGame().getMap().findTile(tilePos);
     }
 
 }

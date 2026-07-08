@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.entity.structures.Structure;
+import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 
 import java.util.UUID;
@@ -53,6 +54,7 @@ public abstract class Unit extends Mob {
             }
         } else {
             //move back to standard position
+//            findTarget();
             arrive(homePos, 200, 1);
 
         }
@@ -66,5 +68,10 @@ public abstract class Unit extends Mob {
 
     public Entity getTarget() { return target; }
     public void setTarget(Entity newTarget) { target = newTarget; }
+
+    protected void findTarget() {
+        Tile t = getTile();
+        if (t.hasEnemies()) target = t.getClosestTarget(this);
+    }
 
 }
