@@ -71,6 +71,29 @@ public class Map {
         }
     }
 
+    public boolean ownsTiles(Player owner) {
+        for (Tile t : tiles) {
+            if (t.getOwner() != null && t.getOwner().equals(owner.getID())) return true;
+        }
+        return false;
+    }
+
+    public List<Tile> getTiles(Player owner) {
+        List<Tile> owned = new ArrayList<>();
+        for (Tile t : tiles) {
+            if (t.getOwner() != null && t.getOwner().equals(owner.getID())) owned.add(t);
+        }
+        return owned;
+    }
+
+    public List<Tile> getBaseTiles() {
+        List<Tile> base = new ArrayList<>();
+        for (Tile t : tiles) {
+            if (t.getState() == TileState.STARTING) base.add(t);
+        }
+        return base;
+    }
+
     public void clickTile(Vector2 pos) {
 
         for (Tile t : tiles) {
