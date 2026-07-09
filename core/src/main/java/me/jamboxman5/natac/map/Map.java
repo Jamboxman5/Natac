@@ -89,7 +89,9 @@ public class Map {
     public List<Tile> getBaseTiles() {
         List<Tile> base = new ArrayList<>();
         for (Tile t : tiles) {
-            if (t.getState() == TileState.STARTING) base.add(t);
+            if (getNeighborSet(t).size() <= 3 && t.getOwner() == null) {
+                base.add(t);
+            }
         }
         return base;
     }

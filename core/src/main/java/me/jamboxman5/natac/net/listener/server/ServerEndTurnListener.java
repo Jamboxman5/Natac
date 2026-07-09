@@ -6,6 +6,8 @@ import me.jamboxman5.natac.net.DiscreteServer;
 import me.jamboxman5.natac.net.packet.PacketEndTurn;
 import me.jamboxman5.natac.net.packet.PacketStartGame;
 import me.jamboxman5.natac.net.packet.PacketStartTurn;
+import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.player.ai.BotPlayer;
 
 import java.util.UUID;
 
@@ -26,9 +28,17 @@ public class ServerEndTurnListener implements Listener {
             server.log("Player " + server.findPlayer(packet.turnPlayerID) + " (" + packet.turnPlayerID + ") ended their turn at " + packet.timestamp + ". ");
             server.getServer().sendToAllTCP(packet);
 
+            Player next = server.popPlayer();
+
             PacketStartTurn turnPacket = new PacketStartTurn();
-            turnPacket.turnPlayerID = server.popPlayer().getID();
+            turnPacket.turnPlayerID = next.getID();
             server.getServer().sendToAllTCP(turnPacket);
+
+            if (next instanceof BotPlayer) {
+                ((BotPlayer) next).initiateMove(server);
+            }
+
+
 
         }
     }

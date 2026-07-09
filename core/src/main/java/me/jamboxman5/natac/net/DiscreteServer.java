@@ -108,4 +108,21 @@ public class DiscreteServer {
         }
     }
 
+    public void botEndTurn(PacketEndTurn packet) {
+
+        log("Player " + findPlayer(packet.turnPlayerID) + " (" + packet.turnPlayerID + ") ended their turn at " + packet.timestamp + ". ");
+        getServer().sendToAllTCP(packet);
+
+        Player next = popPlayer();
+
+        PacketStartTurn turnPacket = new PacketStartTurn();
+        turnPacket.turnPlayerID = next.getID();
+        getServer().sendToAllTCP(turnPacket);
+
+        if (next instanceof BotPlayer) {
+            ((BotPlayer) next).initiateMove(this);
+        }
+
+    }
+
 }
