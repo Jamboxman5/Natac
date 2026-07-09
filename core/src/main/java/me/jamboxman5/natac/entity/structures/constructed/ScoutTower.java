@@ -13,6 +13,8 @@ public class ScoutTower extends Structure {
     public static final int goldCost = 0;
     public static final int resourceCost = 40;
 
+    public static final String spritePath = "structure/constructed/scout_tower.png";
+
     public ScoutTower() {
         this.drawColor = Color.ORANGE;
         this.structureName = name;
@@ -26,7 +28,7 @@ public class ScoutTower extends Structure {
     @Override
     public void update() {
         if (sprite == null) {
-            initGraphics(new Texture(Gdx.files.internal("structure/placeholder_structure.png")), 0, 1);
+            initGraphics(new Texture(Gdx.files.internal(spritePath)), 0, 1);
         }
     }
 

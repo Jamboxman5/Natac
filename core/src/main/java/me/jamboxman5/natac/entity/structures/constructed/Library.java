@@ -13,6 +13,8 @@ public class Library extends Structure {
     public static final int goldCost = 80;
     public static final int resourceCost = 0;
 
+    public static final String spritePath = "structure/constructed/library.png";
+
     public Library() {
         this.drawColor = Color.BLACK;
         this.structureName = name;
@@ -26,7 +28,7 @@ public class Library extends Structure {
     @Override
     public void update() {
         if (sprite == null) {
-            initGraphics(new Texture(Gdx.files.internal("structure/placeholder_structure.png")), 0, 1);
+            initGraphics(new Texture(Gdx.files.internal(spritePath)), 0, 1);
         }
     }
 

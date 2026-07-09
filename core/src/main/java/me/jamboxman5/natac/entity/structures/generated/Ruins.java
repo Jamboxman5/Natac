@@ -8,6 +8,8 @@ import me.jamboxman5.natac.entity.structures.Structure;
 
 public class Ruins extends Structure {
 
+    public static final String spritePath = "structure/generated/ruins.png";
+
     public Ruins() {
         this.drawColor = Color.BROWN;
     }
@@ -21,7 +23,7 @@ public class Ruins extends Structure {
     @Override
     public void update() {
         if (sprite == null) {
-            initGraphics(new Texture(Gdx.files.internal("structure/placeholder_structure.png")), 0, 1);
+            initGraphics(new Texture(Gdx.files.internal(spritePath)), 0, 1);
         }
     }
 
