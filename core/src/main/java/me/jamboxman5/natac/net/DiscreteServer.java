@@ -90,11 +90,11 @@ public class DiscreteServer {
         return playerTurnQueue.first();
     }
 
-    public void populateBots() {
+    public void populateBots(int botDelay, boolean delayRandom, float randomRatio) {
         if (connectedPlayers.size < maxPlayers) {
             int toAdd = maxPlayers - connectedPlayers.size;
             for (int i = 0; i < toAdd; i++) {
-                BotPlayer bot = new BotPlayer();
+                BotPlayer bot = new BotPlayer(botDelay, randomRatio, delayRandom);
                 playerTurnQueue.addLast(bot);
                 connectedPlayers.add(bot);
 

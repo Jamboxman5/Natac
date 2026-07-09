@@ -24,7 +24,12 @@ public class Settings {
     public static int defogTileRadius = 3;
     public static int mapRadius = 3;
     public static boolean debugMode = true;
+
+    //MULTIPLAYER SETTINGS
     public static int maxPlayers = 2;
+    public static int botDelayMS = 3000;
+    public static boolean variableBotDelay = true;
+    public static float delayRandomRatio = .3f;
 
     public static void getAvailableResolutions(Vector2 screenRes) {
         Array<Resolution> allResolutions = getAllResolutions();

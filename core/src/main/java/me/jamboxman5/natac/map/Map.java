@@ -24,7 +24,11 @@ import java.util.UUID;
 
 public class Map {
     private List<Tile> tiles;
-    private int defogRadius = Settings.defogTileRadius;
+
+    public final int defogRadius = Settings.defogTileRadius;
+    public final int botDelayMS = Settings.botDelayMS;
+    public final boolean variableBotDelay = Settings.variableBotDelay;
+    public final float delayRandomRatio = Settings.delayRandomRatio;
 
     private transient Tile selectedTile = null;
 

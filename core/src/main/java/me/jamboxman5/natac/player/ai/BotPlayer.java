@@ -15,8 +15,17 @@ import java.util.List;
 
 public class BotPlayer extends Player {
 
-    public BotPlayer() {
+    int delay;
+    float delayRandomness;
+    boolean useRandom;
+
+    public BotPlayer() {}
+
+    public BotPlayer(int delay, float delayRandomness, boolean useRandom) {
         super("Player_" + (int) (Math.random() * 999), getRandomClass(), Color.RED);
+        this.delay = delay;
+        this.delayRandomness = delayRandomness;
+        this.useRandom = useRandom;
     }
 
     public void initiateMove(DiscreteServer server) {
@@ -24,27 +33,39 @@ public class BotPlayer extends Player {
 
         new Thread(() -> {
 
-            if (!m.ownsTiles(this)) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                server.getServer().sendToAllTCP(claimBaseTile(m));
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                server.botEndTurn((PacketEndTurn) endTurn());
-            } else {
+            try {
 
+                //BASE CASE
+                if (!m.ownsTiles(this)) {
+                    Thread.sleep(getDelay() * 2);
+                    server.getServer().sendToAllTCP(claimBaseTile(m));
+                    Thread.sleep(getDelay());
+                    server.botEndTurn((PacketEndTurn) endTurn());
+
+                } else {
+
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+
 
         }).start();
 
 
 
+    }
+
+    private long getDelay() {
+        if (useRandom) {
+            double random = (delay * delayRandomness * Math.random());
+            if (Math.random() > .5) random *= -1;
+            return (long) (delay + random);
+        } else {
+            return delay;
+        }
     }
 
     private static PlayerClass getRandomClass() {
