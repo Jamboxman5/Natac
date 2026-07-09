@@ -1,5 +1,6 @@
 package me.jamboxman5.natac.net.listener.server;
 
+import com.badlogic.gdx.utils.Queue;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import me.jamboxman5.natac.net.DiscreteServer;
@@ -42,4 +43,5 @@ public class ServerEndTurnListener implements Listener {
 
         }
     }
+
 }

@@ -10,6 +10,7 @@ import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
 import me.jamboxman5.natac.sfx.MusicTracks;
+import me.jamboxman5.natac.sfx.Sounds;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -111,6 +112,8 @@ public class Natac extends Game {
         }
         else game.setState(GameScreen.State.CLAIM);
 
+        Sounds.START_TURN.play();
+
         isTurn = true;
     }
     public void endTurn() {
@@ -123,6 +126,7 @@ public class Natac extends Game {
         getGame().setState(GameScreen.State.WAIT);
 
         isTurn = false;
+
     }
     public void updateAfterTurn() {
         if (getGame() == null) return;

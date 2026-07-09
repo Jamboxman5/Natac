@@ -1,6 +1,7 @@
 package me.jamboxman5.natac.net;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Queue;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import me.jamboxman5.natac.Natac;
@@ -23,6 +24,7 @@ public class ClientManager {
     Natac game;
 
     Array<Player> connectedPlayers;
+    Player currentTurn = null;
 
     public ClientManager(Natac game) {
         this.game = game;
@@ -115,4 +117,12 @@ public class ClientManager {
         }
         return null;
     }
+
+    public void setCurrentPlayer(UUID turnPlayerID) {
+        currentTurn = findPlayer(turnPlayerID);
+    }
+
+    public Player getCurrentTurn() { return currentTurn; }
+
+
 }

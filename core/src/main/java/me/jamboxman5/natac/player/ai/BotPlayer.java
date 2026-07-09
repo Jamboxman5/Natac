@@ -40,7 +40,6 @@ public class BotPlayer extends Player {
                 if (!m.ownsTiles(this)) {
                     Thread.sleep(getDelay() * 2);
                     claimBaseTile(server, m);
-                    Thread.sleep(getDelay());
                     server.botEndTurn((PacketEndTurn) endTurn());
 
                 } else {
