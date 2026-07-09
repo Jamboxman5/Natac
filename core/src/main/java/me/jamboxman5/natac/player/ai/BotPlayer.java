@@ -22,10 +22,28 @@ public class BotPlayer extends Player {
     public void initiateMove(DiscreteServer server) {
         Map m = Natac.instance.getGame().getMap();
 
-        if (!m.ownsTiles(this)) {
-            server.getServer().sendToAllTCP(claimBaseTile(m));
-            server.botEndTurn((PacketEndTurn) endTurn());
-        }
+        new Thread(() -> {
+
+            if (!m.ownsTiles(this)) {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                server.getServer().sendToAllTCP(claimBaseTile(m));
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                server.botEndTurn((PacketEndTurn) endTurn());
+            } else {
+
+            }
+
+        }).start();
+
+
 
     }
 
