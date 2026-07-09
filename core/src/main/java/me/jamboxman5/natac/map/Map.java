@@ -122,7 +122,7 @@ public class Map {
 
                 } else if (gameScreen.getTileSelectionMode() == GameScreen.SelectionMode.TRAVEL) {
 
-                   if (t.getState() != TileState.ENEMY_CLAIMED && !Natac.instance.getGame().getSelectedUnit().getTilePosition().epsilonEquals(t.getTilePosition())) {
+                   if (!Natac.instance.getGame().getSelectedUnit().getTilePosition().epsilonEquals(t.getTilePosition())) {
                        Sounds.SELECT.play();
                        gameScreen.setTileSelectionMode(GameScreen.SelectionMode.NONE);
                        gameScreen.getSelectedUnit().deploy(t);
