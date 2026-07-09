@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
@@ -18,7 +15,6 @@ import me.jamboxman5.natac.data.SettingsData;
 import me.jamboxman5.natac.screen.MainMenuScreen;
 import me.jamboxman5.natac.screen.SettingsScreen;
 import me.jamboxman5.natac.screen.ui.Fonts;
-import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.util.Settings;
 
 public class SettingsStage extends Stage {
@@ -33,6 +29,10 @@ public class SettingsStage extends Stage {
     Slider sfxVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
     Slider defogRadiusSlider = new Slider(1, 3, 1, false, skin);
     Slider mapRadiusSlider = new Slider(1, 6, 1, false, skin);
+
+    Slider maxPlayersSlider = new Slider(1, 6, 1, false, skin);
+    Slider botDelaySlider = new Slider(0, 10, 1, false, skin);
+    Slider botDelayRandomnessSlider = new Slider(0, 1, 0.01f, false, skin);
 
     SelectBox<Settings.Resolution> resolutionSelector = new SelectBox<>(skin);
 
@@ -55,6 +55,10 @@ public class SettingsStage extends Stage {
         addActor(defogRadiusSlider);
         addActor(mapRadiusSlider);
 
+        addActor(maxPlayersSlider);
+        addActor(botDelaySlider);
+        addActor(botDelayRandomnessSlider);
+
         float yStart = center.y + (40 * ((getActors().size-2)/2f));
 
         resolutionSelector.setItems(Settings.resolutions);
@@ -73,6 +77,10 @@ public class SettingsStage extends Stage {
         defogRadiusSlider.setSize(200, 20);
         mapRadiusSlider.setSize(200, 20);
 
+        maxPlayersSlider.setSize(200, 20);
+        botDelaySlider.setSize(200, 20);
+        botDelayRandomnessSlider.setSize(200, 20);
+
         button1.setPosition(40, 40);
         button2.setPosition(Settings.screenWidth - 40 - button2.getWidth(), 40);
 
@@ -84,6 +92,13 @@ public class SettingsStage extends Stage {
         musVolumeSlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
         yStart-=50;
         mapRadiusSlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
+
+        yStart-=50;
+        maxPlayersSlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
+        yStart-=50;
+        botDelaySlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
+        yStart-=50;
+        botDelayRandomnessSlider.setPosition(center.x + 300 - musVolumeSlider.getWidth(), yStart);
 
         button1.addListener(new ChangeListener() {
             @Override
@@ -103,6 +118,11 @@ public class SettingsStage extends Stage {
                 Settings.setMusicVolume(musVolumeSlider.getValue());
                 Settings.setSfxVolume(sfxVolumeSlider.getValue());
 
+                Settings.botDelayRandom = botDelayRandomnessSlider.getValue();
+                Settings.botDelayMS = (int) (botDelaySlider.getValue() * 1000);
+
+                Settings.maxPlayers = (int) maxPlayersSlider.getValue();
+
                 Natac.instance.setScreen(new SettingsScreen());
 
                 SettingsData.updateSettings();
@@ -113,6 +133,11 @@ public class SettingsStage extends Stage {
         musVolumeSlider.setValue(Settings.musVolume);
         defogRadiusSlider.setValue(Settings.defogTileRadius);
         mapRadiusSlider.setValue(Settings.mapRadius);
+
+        botDelayRandomnessSlider.setValue(Settings.botDelayRandom);
+        botDelaySlider.setValue(Settings.botDelayMS / 1000f);
+
+        maxPlayersSlider.setValue(Settings.maxPlayers);
 
         musVolumeSlider.addListener(new ChangeListener() {
             @Override
@@ -131,6 +156,9 @@ public class SettingsStage extends Stage {
         labelFont.draw(batch, "Music Volume: ", center.x - 300, musVolumeSlider.getY() + Fonts.getTextHeight("Music Volume:", labelFont, 1f));
         labelFont.draw(batch, "SFX Volume: ", center.x - 300, sfxVolumeSlider.getY() + Fonts.getTextHeight("SFX Volume: ", labelFont, 1f));
         labelFont.draw(batch, "Map Radius: ", center.x - 300, mapRadiusSlider.getY() + Fonts.getTextHeight("Map Radius: ", labelFont, 1f));
+        labelFont.draw(batch, "Max Players: ", center.x - 300, maxPlayersSlider.getY() + Fonts.getTextHeight("Map Radius: ", labelFont, 1f));
+        labelFont.draw(batch, "Bot Delay: ", center.x - 300, botDelaySlider.getY() + Fonts.getTextHeight("Map Radius: ", labelFont, 1f));
+        labelFont.draw(batch, "Bot Delay Randomness: ", center.x - 300, botDelayRandomnessSlider.getY() + Fonts.getTextHeight("Map Radius: ", labelFont, 1f));
 
     }
 

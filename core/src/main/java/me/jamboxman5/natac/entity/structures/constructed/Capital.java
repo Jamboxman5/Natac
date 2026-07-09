@@ -21,7 +21,7 @@ public class Capital extends Structure {
     public Capital(PlayerClass playerClass, Vector2 tilePos) {
         super(0, 0, 50, 0, 100, tilePos, new Vector2(0, 0), "Town Hall");
         this.type = playerClass;
-        initClassGraphics();
+//        initClassGraphics();
     }
 
     @Override

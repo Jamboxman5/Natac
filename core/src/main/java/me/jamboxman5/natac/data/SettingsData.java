@@ -6,7 +6,6 @@ import com.google.gson.JsonParser;
 import me.jamboxman5.natac.util.Settings;
 
 import javax.swing.filechooser.FileSystemView;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -57,6 +56,9 @@ public class SettingsData {
         Settings.hudMargin = settingsOBJ.get("hudMargin").getAsInt();
         Settings.defogTileRadius = settingsOBJ.get("defogTileRadius").getAsInt();
         Settings.mapRadius = settingsOBJ.get("mapRadius").getAsInt();
+        Settings.maxPlayers = settingsOBJ.get("maxPlayers").getAsInt();
+        Settings.botDelayMS = settingsOBJ.get("botDelay").getAsInt();
+        Settings.botDelayRandom = settingsOBJ.get("botDelayRandom").getAsFloat();
     }
 
     public static void updateSettings() {
@@ -69,6 +71,9 @@ public class SettingsData {
         settingsOBJ.addProperty("musVolume", Settings.musVolume);
         settingsOBJ.addProperty("defogTileRadius", Settings.defogTileRadius);
         settingsOBJ.addProperty("mapRadius", Settings.mapRadius);
+        settingsOBJ.addProperty("maxPlayers", Settings.maxPlayers);
+        settingsOBJ.addProperty("botDelay", Settings.botDelayMS);
+        settingsOBJ.addProperty("botDelayRandom", Settings.botDelayRandom);
 
         try {
             DataManager.save(settingsOBJ.toString(), settingsPath);

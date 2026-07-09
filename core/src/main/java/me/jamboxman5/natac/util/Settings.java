@@ -28,8 +28,7 @@ public class Settings {
     //MULTIPLAYER SETTINGS
     public static int maxPlayers = 2;
     public static int botDelayMS = 3000;
-    public static boolean variableBotDelay = true;
-    public static float delayRandomRatio = .3f;
+    public static float botDelayRandom = .3f;
 
     public static void getAvailableResolutions(Vector2 screenRes) {
         Array<Resolution> allResolutions = getAllResolutions();

@@ -40,7 +40,7 @@ public class ServerStartGameListener implements Listener {
             }).start();
 
             Map m = packet.map;
-            server.populateBots(m.botDelayMS, m.variableBotDelay, m.delayRandomRatio);
+            server.populateBots(m.botDelayMS, m.delayRandomRatio);
 
         }
     }

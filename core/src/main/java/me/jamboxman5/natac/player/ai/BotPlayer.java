@@ -20,15 +20,13 @@ public class BotPlayer extends Player {
 
     int delay;
     float delayRandomness;
-    boolean useRandom;
 
     public BotPlayer() {}
 
-    public BotPlayer(int delay, float delayRandomness, boolean useRandom) {
+    public BotPlayer(int delay, float delayRandomness) {
         super("Player_" + (int) (Math.random() * 999), getRandomClass(), Color.RED);
         this.delay = delay;
         this.delayRandomness = delayRandomness;
-        this.useRandom = useRandom;
     }
 
     public void initiateMove(DiscreteServer server) {
@@ -65,7 +63,7 @@ public class BotPlayer extends Player {
     }
 
     private long getDelay() {
-        if (useRandom) {
+        if (delayRandomness > 0) {
             double random = (delay * delayRandomness * Math.random());
             if (Math.random() > .5) random *= -1;
             return (long) (delay + random);

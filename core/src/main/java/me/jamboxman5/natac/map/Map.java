@@ -27,8 +27,7 @@ public class Map {
 
     public final int defogRadius = Settings.defogTileRadius;
     public final int botDelayMS = Settings.botDelayMS;
-    public final boolean variableBotDelay = Settings.variableBotDelay;
-    public final float delayRandomRatio = Settings.delayRandomRatio;
+    public final float delayRandomRatio = Settings.botDelayRandom;
 
     private transient Tile selectedTile = null;
 
