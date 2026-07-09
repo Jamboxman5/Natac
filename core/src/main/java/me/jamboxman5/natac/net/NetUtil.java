@@ -26,6 +26,7 @@ import me.jamboxman5.natac.entity.structures.prop.Prop;
 import me.jamboxman5.natac.entity.structures.prop.Tree;
 import me.jamboxman5.natac.entity.units.Unit;
 import me.jamboxman5.natac.entity.units.army.Soldier;
+import me.jamboxman5.natac.player.ai.BotPlayer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -70,6 +71,7 @@ public class NetUtil {
         /* MAP * WORLD */
         kryo.register(Player.class);
         kryo.register(PlayerClass.class);
+        kryo.register(BotPlayer.class);
         kryo.register(Map.class);
         kryo.register(Tile.class);
         kryo.register(TileState.class);

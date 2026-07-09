@@ -20,6 +20,7 @@ public class ServerStartGameListener implements Listener {
     public void received(Connection conn, Object obj) {
         if (obj instanceof PacketStartGame) {
             if (server.getState() != DiscreteServer.GameState.LOBBY) return;
+
             PacketStartGame packet = (PacketStartGame) obj;
 
             server.log("Game started at " + packet.timestamp + ": " + packet.map.toString());
@@ -37,7 +38,7 @@ public class ServerStartGameListener implements Listener {
                 }
             }).start();
 
-
+            server.populateBots();
 
         }
     }

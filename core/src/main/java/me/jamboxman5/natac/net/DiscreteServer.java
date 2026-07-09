@@ -7,6 +7,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import me.jamboxman5.natac.net.packet.*;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.player.ai.BotPlayer;
+import me.jamboxman5.natac.util.Settings;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,6 +22,8 @@ public class DiscreteServer {
     public Array<Player> connectedPlayers;
 
     public Queue<Player> playerTurnQueue;
+
+    private final int maxPlayers;
 
     public void setState(GameState gameState) { this.state = gameState; }
 
@@ -38,6 +42,7 @@ public class DiscreteServer {
 
     public DiscreteServer() {
         server = new Server(65536, 65536);
+        maxPlayers = Settings.maxPlayers;
     }
 
     public void start() throws IOException {
@@ -83,6 +88,24 @@ public class DiscreteServer {
 
     public Player peekPlayer() {
         return playerTurnQueue.first();
+    }
+
+    public void populateBots() {
+        if (connectedPlayers.size < maxPlayers) {
+            int toAdd = maxPlayers - connectedPlayers.size;
+            for (int i = 0; i < toAdd; i++) {
+                BotPlayer bot = new BotPlayer();
+                playerTurnQueue.addLast(bot);
+                connectedPlayers.add(bot);
+
+                log("Generated BotPlayer: " + bot.getUsername() + " (" + bot.getID() + ")");
+
+                PacketLogin login = new PacketLogin();
+                login.connectingPlayer = bot;
+                server.sendToAllTCP(login);
+
+            }
+        }
     }
 
 }
