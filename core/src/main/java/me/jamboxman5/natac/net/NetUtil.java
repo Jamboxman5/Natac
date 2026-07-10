@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
 import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Server;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.entity.structures.constructed.*;
 import me.jamboxman5.natac.entity.units.Mob;
@@ -55,6 +56,7 @@ public class NetUtil {
         kryo.register(PacketRepositionMob.class);
         kryo.register(PacketDamageEntity.class);
         kryo.register(PacketStartBattle.class);
+        kryo.register(PacketRemoveStructure.class);
 
 
 
@@ -124,6 +126,7 @@ public class NetUtil {
         client.addListener(new PacketMoveUnitListener());
         client.addListener(new PacketRepositionMobListener());
         client.addListener(new PacketDamageEntityListener());
+        client.addListener(new PacketRemoveStructureListener());
     }
 
     public static void registerListeners(DiscreteServer server) {
@@ -139,6 +142,7 @@ public class NetUtil {
         server.getServer().addListener(new ServerMoveUnitListener(server));
         server.getServer().addListener(new ServerRepositionUnitListener(server));
         server.getServer().addListener(new ServerDamageEntityListener(server));
+        server.getServer().addListener(new ServerRemoveStructureListener(server));
     }
 
 }

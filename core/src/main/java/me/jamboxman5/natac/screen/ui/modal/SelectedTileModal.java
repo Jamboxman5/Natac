@@ -15,8 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.structures.generated.Ruins;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileType;
+import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.elements.scroll.StructureScroller;
 import me.jamboxman5.natac.screen.ui.elements.scroll.UnitScroller;
 import me.jamboxman5.natac.entity.structures.Structure;
@@ -44,6 +47,7 @@ public class SelectedTileModal extends Stage {
     StructureScroller structureSelector;
     UnitScroller unitSelector;
 
+    private long lastRuinClick = 0;
 
     int margin = 40;
 
@@ -136,6 +140,33 @@ public class SelectedTileModal extends Stage {
 
         for (Structure s : selectedTile.getStructures()) {
             if (s.getBounds(tileCenter, modalScale).contains(touchPos)) {
+
+                //HANDLE STRUCTURE CLICK
+
+                if (s instanceof Ruins) {
+                    if (selectedTile.getOwner() != null && selectedTile.getOwner().equals(Natac.instance.player.getID())) {
+                        Player p = Natac.instance.player;
+
+                        long currentClick = System.currentTimeMillis();
+                        long diff = currentClick - lastRuinClick;
+
+                        if (100 < diff && diff < 1000) {
+                            if (p.getResearch() > 0 && p.getResources() > 50) {
+                                PacketUtil.createStatChange(p, -1, 0, 0, 0, 0, -50);
+                                PacketUtil.upgradeRuins(p, (Ruins) s);
+                                Sounds.STRUCTURE_DROP.play();
+                                Sounds.RECEIVE_GOLD.play();
+                            } else {
+                                //TODO replace with fail sound
+                                Sounds.END_TURN.play();
+                            }
+                        }
+
+                        lastRuinClick = currentClick;
+
+                    }
+                }
+
                 return true;
             }
         }

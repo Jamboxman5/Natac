@@ -3,6 +3,8 @@ package me.jamboxman5.natac.net.packet;
 import com.badlogic.gdx.math.Vector2;
 import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
+import me.jamboxman5.natac.entity.structures.constructed.*;
+import me.jamboxman5.natac.entity.structures.generated.Ruins;
 import me.jamboxman5.natac.entity.units.Mob;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.entity.structures.Structure;
@@ -88,5 +90,35 @@ public class PacketUtil {
 
     private static boolean isOwner(Mob mob) {
         return (mob.getOwner().equals(Natac.instance.player.getID()));
+    }
+
+    public static void upgradeRuins(Player p, Ruins s) {
+        PacketRemoveStructure packet1 = new PacketRemoveStructure();
+        packet1.structure = s;
+        packet1.tilePos = s.getTilePosition();
+        Natac.instance.getClientManager().sendPacketTCP(packet1);
+
+        PacketBuildStructure packet2 = new PacketBuildStructure();
+        packet2.tilePos = s.getTilePosition();
+        packet2.clearObstacles = true;
+        packet2.builderID = p.getID();
+        packet2.structure = getRandomRuinStructure(p, s);
+        Natac.instance.getClientManager().sendPacketTCP(packet2);
+
+    }
+
+    private static Structure getRandomRuinStructure(Player p, Ruins ruins) {
+        double roll = Math.random();
+        if (roll < .2) {
+            return new ArmyOutpost(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+        } else if (roll < .4) {
+            return new Logger(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+        } else if (roll < .6) {
+            return new Depot(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+        } else if (roll < .8) {
+            return new Quarry(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+        } else {
+            return new Library(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+        }
     }
 }
