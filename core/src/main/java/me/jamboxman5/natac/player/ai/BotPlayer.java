@@ -73,10 +73,10 @@ public class BotPlayer extends Player {
                         if (toBuy.getGoldCost() > gold || toBuy.getResourceCost() > resources) continue;
                         server.getServer().sendToAllTCP(buildStructure(t, toBuy, true));
                         server.getServer().sendToAllTCP(modifyStats(0, 0, 0, 0, -toBuy.getGoldCost(), -toBuy.getResourceCost()));
+                        constructed = true;
+                        System.out.println("CONSTRUCTED");
                     }
-                    constructed = true;
                     server.botEndTurn((PacketEndTurn) endTurn());
-                    System.out.println("CONSTRUCTED");
                 } else {
 
                     //DO NOTHING

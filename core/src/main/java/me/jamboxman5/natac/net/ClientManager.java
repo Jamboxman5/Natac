@@ -10,6 +10,7 @@ import me.jamboxman5.natac.net.packet.PacketCloseGame;
 import me.jamboxman5.natac.net.packet.PacketDisconnect;
 import me.jamboxman5.natac.net.packet.PacketLogin;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.player.ai.BotPlayer;
 
 
 import javax.swing.*;
@@ -125,4 +126,7 @@ public class ClientManager {
     public Player getCurrentTurn() { return currentTurn; }
 
 
+    public boolean isBot(UUID playerID) {
+        return (findPlayer(playerID) instanceof BotPlayer);
+    }
 }

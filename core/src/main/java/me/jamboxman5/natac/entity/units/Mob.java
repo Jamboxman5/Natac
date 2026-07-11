@@ -7,6 +7,7 @@ import me.jamboxman5.natac.Natac;
 import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.net.packet.PacketUtil;
+import me.jamboxman5.natac.player.ai.BotPlayer;
 
 import java.util.List;
 import java.util.UUID;
@@ -109,8 +110,11 @@ public class Mob extends Entity {
 
         updateCollisionBox();
 
-        if (!Natac.instance.player.getID().equals(owner))
-            return;
+        if (!Natac.instance.player.getID().equals(owner)) {
+            if (!(Natac.instance.isHosting() && Natac.instance.getClientManager().isBot(owner))) {
+                return;
+            }
+        }
 
         velocity.add(acceleration);
         acceleration.setZero();
