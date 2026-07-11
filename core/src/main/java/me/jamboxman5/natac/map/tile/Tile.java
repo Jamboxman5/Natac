@@ -170,7 +170,6 @@ public class Tile {
     public List<Tile> getNeighbors() {
         return Natac.instance.getGame().getMap().getNeighbors(this);
     }
-    public List<Tile> getNeighbors(Map map) { return map.getNeighbors(this); }
 
     public void defog() {
         if (state != TileState.UNAVAILABLE) isFogged = false;
@@ -465,7 +464,7 @@ public class Tile {
         return false;
     }
 
-    protected static Vector2 getRandomPosition() {
+    public static Vector2 getRandomPosition() {
         float xDiff = (float) (Math.random() * 50f);
         float yDiff = (float) (Math.random() * 50f);
         if (Math.random() > .5) xDiff = -xDiff;

@@ -9,20 +9,20 @@ import java.util.UUID;
 
 public class Player {
 
-    private PlayerClass playerClass;
+    protected PlayerClass playerClass;
 
-    private transient List<Card> inventory;
+    protected transient List<Card> inventory;
 
-    private int gold;
-    private int resources;
+    protected int gold;
+    protected int resources;
 
-    private int research;
-    private int status;
-    private int attack;
-    private int defense;
+    protected int research;
+    protected int status;
+    protected int attack;
+    protected int defense;
 
-    private String username;
-    private UUID id;
+    protected String username;
+    protected UUID id;
 
     public Player() {}
 

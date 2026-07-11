@@ -10,6 +10,7 @@ import me.jamboxman5.natac.map.tile.Tile;
 import me.jamboxman5.natac.map.tile.TileState;
 import me.jamboxman5.natac.net.packet.PacketUtil;
 import me.jamboxman5.natac.player.Player;
+import me.jamboxman5.natac.player.ai.BotPlayer;
 import me.jamboxman5.natac.screen.GameScreen;
 import me.jamboxman5.natac.entity.structures.Structure;
 import me.jamboxman5.natac.entity.units.Unit;
@@ -231,5 +232,13 @@ public class Map {
             }
         }
         return null;
+    }
+
+    public List<Tile> findOccupiedTiles(Player occupier) {
+        List<Tile> occupied = new ArrayList<>();
+        for (Tile t : tiles) {
+            if (t.hasUnits(occupier)) occupied.add(t);
+        }
+        return occupied;
     }
 }
