@@ -48,14 +48,20 @@ public abstract class Unit extends Mob {
             } else {
                 seek(target.getPosition());
             }
-            if (position.dst(target.getPosition()) < range && System.currentTimeMillis() - lastHit > attackCooldownMS) {
-                PacketUtil.damageEntity(target, baseDamage, getAttackDisplacement(target));
-                lastHit = System.currentTimeMillis();
+            if (position.dst(target.getPosition()) < range) {
+                if (System.currentTimeMillis() - lastHit > attackCooldownMS) {
+                    PacketUtil.damageEntity(target, baseDamage, getAttackDisplacement(target));
+                    lastHit = System.currentTimeMillis();
+                } else {
+                    System.out.println("COOLDOWN NOT DONE");
+                }
+            } else {
+                System.out.println("TARGET NOT IN RANGE");
             }
         } else {
             //move back to standard position
 //            findTarget();
-            arrive(homePos, 200, 1);
+            arrive(homePos, 40, 1);
 
         }
 

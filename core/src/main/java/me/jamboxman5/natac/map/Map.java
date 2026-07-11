@@ -42,7 +42,13 @@ public class Map {
     }
 
     public void update(Vector2 touchPos) {
-        for (Tile t : tiles) t.update(touchPos);
+        for (Tile t : tiles) {
+            t.update(touchPos);
+            if (t.battlePending()) {
+                Natac.instance.getGame().startBattle(t);
+//                PacketUtil.startBattle(t.getTilePosition(), t.getUnitOwners());
+            }
+        }
 //        if (Natac.instance.getGame().getState() != GameScreen.State.CLAIM) {
 //            for (Tile t : tiles)
 //                if (t.getState() == TileState.SELECTABLE) t.setState(TileState.BLOCKED);
