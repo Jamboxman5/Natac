@@ -192,7 +192,7 @@ public class Mob extends Entity {
             from.getTilePosition().cpy()
                 .sub(to.getTilePosition());
         position.add(displacement);
-        to.defog();
+        if (owner.equals(Natac.instance.player.getID())) to.defog();
 
         if (tilePos.epsilonEquals(targetTilePos)) targetTilePos = null;
     }
