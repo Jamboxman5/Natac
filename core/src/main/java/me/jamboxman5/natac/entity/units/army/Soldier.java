@@ -16,9 +16,9 @@ public class Soldier extends Unit {
     public static final int attackCooldownMS = 1000;
     public static final int baseDamage = 10;
     public static final int attackForce = 50;
-    public static final int range = 10;
+    public static final int range = 13;
 
-    public static final float speed = 0.3f;
+    public static final float speed = 0.2f;
     public static final int maxHealth = 100;
 
     public Soldier() {

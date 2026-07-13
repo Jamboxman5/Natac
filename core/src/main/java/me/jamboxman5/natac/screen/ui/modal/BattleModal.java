@@ -29,6 +29,8 @@ import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.List;
+
 public class BattleModal extends Stage {
 
     private Sprite selectedTileSprite = null;
@@ -72,17 +74,17 @@ public class BattleModal extends Stage {
             if (!unitSelector.hasParent()) unitSelector = null;
         }
 
-        for (Entity e : selectedTile.getEntities()) {
+        selectedTile.update();
 
-            e.update();
+        List<Unit> units = selectedTile.getUnits();
 
-            if (!(e instanceof Unit)) continue;
-
-            Unit unit = (Unit) e;
+        for (Unit unit : units) {
 
             if (!unit.getOwner().equals(Natac.instance.player.getID())) return;
 
-            if (unit.getTarget() == null) {
+            Entity curTarget = unit.getTarget();
+
+            if (curTarget == null) {
                 Unit target = selectedTile.getClosestUnitTarget(unit);
                 if (target != null) {
                     unit.setTarget(target);
