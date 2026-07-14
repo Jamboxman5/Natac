@@ -67,6 +67,7 @@ public class BotPlayer extends Player {
                     System.out.println("DEPLOYED");
                 } else if (!constructed) {
                     List<Tile> occupied = m.findOccupiedTiles(this);
+                    Thread.sleep(getDelay());
                     for (Tile t : occupied) {
                         if (t.getTilePosition().epsilonEquals(capitalTile)) continue;
                         Structure toBuy = new ArmyOutpost(playerClass, t.getTilePosition(), Tile.getRandomPosition());
@@ -76,6 +77,7 @@ public class BotPlayer extends Player {
                         constructed = true;
                         System.out.println("CONSTRUCTED");
                     }
+                    Thread.sleep(getDelay());
                     server.botEndTurn((PacketEndTurn) endTurn());
                 } else {
 
