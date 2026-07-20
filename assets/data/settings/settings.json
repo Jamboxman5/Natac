@@ -8,6 +8,10 @@
   "guiScale": 1.5,
   "hudMargin": 20,
   "defogTileRadius": 2,
-  "mapRadius": 3
+  "mapRadius": 3,
+
+  "maxPlayers": 6,
+  "boyDelay": 3000,
+  "botDelayRandom": 0.5
 
 }
