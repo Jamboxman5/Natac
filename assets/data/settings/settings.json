@@ -11,7 +11,7 @@
   "mapRadius": 3,
 
   "maxPlayers": 6,
-  "boyDelay": 3000,
+  "botDelay": 3000,
   "botDelayRandom": 0.5
 
 }
