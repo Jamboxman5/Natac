@@ -23,10 +23,6 @@ import me.jamboxman5.natac.screen.ui.elements.prompt.JoinAddressPrompt;
 import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.util.Settings;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Set;
-
 public class MainMenuScreen implements Screen {
 
     Texture menuBKG;
@@ -133,9 +129,9 @@ public class MainMenuScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
 
-        if (!MusicTracks.MENU_BGM.isPlaying()) {
+        if (MusicTracks.lastPlayed != MusicTracks.MAIN_MENU_BGM) {
             MusicTracks.stopAll();
-            MusicTracks.MENU_BGM.play();
+            MusicTracks.MAIN_MENU_BGM.play();
         }
 
     }

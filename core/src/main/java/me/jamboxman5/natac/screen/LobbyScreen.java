@@ -24,6 +24,7 @@ import me.jamboxman5.natac.map.MapBuilder;
 import me.jamboxman5.natac.net.packet.PacketStartGame;
 import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.screen.ui.Fonts;
+import me.jamboxman5.natac.sfx.MusicTracks;
 import me.jamboxman5.natac.util.Settings;
 
 
@@ -98,6 +99,9 @@ public class LobbyScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
+
+        MusicTracks.stopAll();
+        MusicTracks.LOBBY_BGM.play();
     }
 
     @Override
