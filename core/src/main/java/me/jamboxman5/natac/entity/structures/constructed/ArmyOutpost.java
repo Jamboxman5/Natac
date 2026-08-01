@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.entity.structures.Structure;
 
@@ -20,8 +21,8 @@ public class ArmyOutpost extends Structure {
         this.structureName = name;
     }
 
-    public ArmyOutpost(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(goldCost, resourceCost, 0, 0, 100, tilePos, pos, name);
+    public ArmyOutpost(Player owner, Vector2 tilePos, Vector2 pos) {
+        super(goldCost, resourceCost, 0, 0, 100, tilePos, pos, name, owner.getID());
     }
 
     @Override

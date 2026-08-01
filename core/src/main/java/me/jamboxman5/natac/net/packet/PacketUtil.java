@@ -110,15 +110,15 @@ public class PacketUtil {
     private static Structure getRandomRuinStructure(Player p, Ruins ruins) {
         double roll = Math.random();
         if (roll < .2) {
-            return new ArmyOutpost(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+            return new ArmyOutpost(p, ruins.getTilePosition(), ruins.getPosition());
         } else if (roll < .4) {
-            return new Logger(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+            return new Logger(p, ruins.getTilePosition(), ruins.getPosition());
         } else if (roll < .6) {
-            return new Depot(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+            return new Depot(p, ruins.getTilePosition(), ruins.getPosition());
         } else if (roll < .8) {
-            return new Quarry(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+            return new Quarry(p, ruins.getTilePosition(), ruins.getPosition());
         } else {
-            return new Library(p.getPlayerClass(), ruins.getTilePosition(), ruins.getPosition());
+            return new Library(p, ruins.getTilePosition(), ruins.getPosition());
         }
     }
 }

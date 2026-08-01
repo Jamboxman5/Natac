@@ -15,7 +15,7 @@ public class Ruins extends Structure {
     }
 
     public Ruins(Vector2 tilePos) {
-        super(0, 0, 0, 0, (int) Float.POSITIVE_INFINITY, tilePos, getRandomPosition(), "Ruins");
+        super(0, 0, 0, 0, (int) Float.POSITIVE_INFINITY, tilePos, getRandomPosition(), "Ruins", null);
         initGraphics(new Texture(Gdx.files.internal("structure/placeholder_structure.png")), 0, 1);
 
     }

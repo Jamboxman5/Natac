@@ -70,7 +70,7 @@ public class BotPlayer extends Player {
                     Thread.sleep(getDelay());
                     for (Tile t : occupied) {
                         if (t.getTilePosition().epsilonEquals(capitalTile)) continue;
-                        Structure toBuy = new ArmyOutpost(playerClass, t.getTilePosition(), Tile.getRandomPosition());
+                        Structure toBuy = new ArmyOutpost(this, t.getTilePosition(), Tile.getRandomPosition());
                         if (toBuy.getGoldCost() > gold || toBuy.getResourceCost() > resources) continue;
                         server.getServer().sendToAllTCP(buildStructure(t, toBuy, true));
                         server.getServer().sendToAllTCP(modifyStats(0, 0, 0, 0, -toBuy.getGoldCost(), -toBuy.getResourceCost()));
@@ -120,7 +120,7 @@ public class BotPlayer extends Player {
         capitalTile = claiming.getTilePosition();
 
         server.getServer().sendToAllTCP(claimTile(claiming));
-        server.getServer().sendToAllTCP(buildStructure(claiming, new Capital(getPlayerClass(), claiming.getTilePosition()), true));
+        server.getServer().sendToAllTCP(buildStructure(claiming, new Capital(this, claiming.getTilePosition()), true));
         server.getServer().sendToAllTCP(spawnUnit(claiming, new Soldier(claiming.getTilePosition(), new Vector2(-20, -20), getID())));
         server.getServer().sendToAllTCP(spawnUnit(claiming, new Soldier(claiming.getTilePosition(), new Vector2(20, -20), getID())));
     }

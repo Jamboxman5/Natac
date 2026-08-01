@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.entity.structures.Structure;
 
@@ -22,8 +23,8 @@ public class Depot extends Structure {
         this.structureName = name;
     }
 
-    public Depot(PlayerClass playerClass, Vector2 tilePos, Vector2 pos) {
-        super(goldCost, resourceCost, 0, 0, 50, tilePos, pos, name);
+    public Depot(Player owner, Vector2 tilePos, Vector2 pos) {
+        super(goldCost, resourceCost, 0, 0, 50, tilePos, pos, name, owner.getID());
     }
 
     @Override

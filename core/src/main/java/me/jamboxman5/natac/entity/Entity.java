@@ -34,6 +34,8 @@ public abstract class Entity {
 
     protected transient Color drawColor;
 
+    protected UUID owner;
+
     protected UUID id = UUID.randomUUID();
 
     protected Entity() {
@@ -170,5 +172,8 @@ public abstract class Entity {
     protected Tile getTile() {
         return Natac.instance.getGame().getMap().findTile(tilePos);
     }
+
+    public UUID getOwner() { return owner; }
+
 
 }

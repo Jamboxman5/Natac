@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import me.jamboxman5.natac.player.Player;
 import me.jamboxman5.natac.player.PlayerClass;
 import me.jamboxman5.natac.entity.structures.Structure;
 
@@ -23,9 +24,9 @@ public class Capital extends Structure {
         this.structureName = "Town Hall";
     }
 
-    public Capital(PlayerClass playerClass, Vector2 tilePos) {
-        super(0, 0, 50, 0, 100, tilePos, new Vector2(0, 0), "Town Hall");
-        this.type = playerClass;
+    public Capital(Player owner, Vector2 tilePos) {
+        super(0, 0, 50, 0, 100, tilePos, new Vector2(0, 0), "Town Hall", owner.getID());
+        this.type = owner.getPlayerClass();
     }
 
     @Override

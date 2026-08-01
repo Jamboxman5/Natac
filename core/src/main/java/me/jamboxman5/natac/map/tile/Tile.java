@@ -197,7 +197,7 @@ public class Tile {
 
         if (Natac.instance.getGame().getState() == GameScreen.State.CLAIM) {
 
-            PacketUtil.buildStructure(new Capital(Natac.instance.player.getPlayerClass(), pos), pos, true);
+            PacketUtil.buildStructure(new Capital(Natac.instance.player, pos), pos, true);
             PacketUtil.spawnUnit(new Soldier(pos, new Vector2(-20, -20), owner), pos);
             PacketUtil.spawnUnit(new Soldier(pos, new Vector2(20, -20), owner), pos);
 
@@ -299,12 +299,26 @@ public class Tile {
     public boolean battlePending() {
         if (inBattle) return false;
         if (!hasUnits(Natac.instance.player.getID())) return false;
-        return getUnitOwners().size() > 1;
+        return hasTargets();
     }
 
     public boolean hasUnits(UUID owner) {
         for (Unit u : getUnits()) {
             if (u.getOwner().equals(owner)) return true;
+        }
+        return false;
+    }
+
+    public boolean hasStructures(UUID owner) {
+        for (Structure s : getStructures()) {
+            if (s.getOwner().equals(owner)) return true;
+        }
+        return false;
+    }
+
+    public boolean hasTargets() {
+        for (Entity e : entities) {
+            if (e.getOwner() != null && !e.getOwner().equals(Natac.instance.player.getID())) return true;
         }
         return false;
     }

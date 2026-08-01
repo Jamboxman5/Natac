@@ -10,6 +10,8 @@ import me.jamboxman5.natac.entity.Entity;
 import me.jamboxman5.natac.util.Settings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.UUID;
+
 public abstract class Structure extends Entity {
 
     protected int goldCost;
@@ -29,7 +31,7 @@ public abstract class Structure extends Entity {
 
     protected Structure(int goldCost, int resourceCost, int revenuePerTurn, int resourcesPerTurn,
                         int maxHealth, Vector2 tilePos, Vector2 position,
-                        String name) {
+                        String name, UUID owner) {
         super(position, tilePos, new Rectangle(tilePos.x + position.x - 5, tilePos.y + position.y - 5, 10, 10), maxHealth, structureScale);
         this.goldCost = goldCost;
         this.resourceCost = resourceCost;
@@ -38,6 +40,8 @@ public abstract class Structure extends Entity {
 
         this.drawColor = Color.WHITE;
         this.structureName = name;
+
+        this.owner = owner;
     }
 
 //    @Override

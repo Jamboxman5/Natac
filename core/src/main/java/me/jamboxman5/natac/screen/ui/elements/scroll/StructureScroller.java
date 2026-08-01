@@ -69,25 +69,25 @@ public class StructureScroller extends DDScroller {
 
                     switch(selected) {
                         case BARRACKS:
-                            placing = new Barracks(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new Barracks(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case DEPOT:
-                            placing = new Depot(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new Depot(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case LOGGER:
-                            placing = new Logger(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new Logger(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case QUARRY:
-                            placing = new Quarry(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new Quarry(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case LIBRARY:
-                            placing = new Library(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new Library(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case SCOUT_TOWER:
-                            placing = new ScoutTower(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new ScoutTower(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                         case ARMY_OUTPOST:
-                            placing = new ArmyOutpost(Natac.instance.player.getPlayerClass(), selectedTile.getTilePosition(), unprojectDropPos(dropPos));
+                            placing = new ArmyOutpost(Natac.instance.player, selectedTile.getTilePosition(), unprojectDropPos(dropPos));
                             break;
                     }
 

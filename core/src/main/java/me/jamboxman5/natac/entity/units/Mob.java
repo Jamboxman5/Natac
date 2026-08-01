@@ -22,8 +22,6 @@ public class Mob extends Entity {
 
     protected int travelCounter = 0;
 
-    protected UUID owner;
-
     protected transient Color color;
 
     protected float alpha = 1f;
@@ -148,8 +146,6 @@ public class Mob extends Entity {
         }
 
     }
-
-    public UUID getOwner() { return owner; }
 
     public void deploy(Tile target) {
         targetTilePos = target.getTilePosition();
