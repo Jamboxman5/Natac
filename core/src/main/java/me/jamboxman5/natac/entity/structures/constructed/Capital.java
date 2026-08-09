@@ -42,7 +42,7 @@ public class Capital extends Structure {
                 initGraphics(new Texture(barbarianCapitalPath), -4, .5f);
                 break;
             case STEEL_CITY:
-                initGraphics(new Texture(steelCityCapitalPath), 0, 1f);
+                initGraphics(new Texture(steelCityCapitalPath), 0, .75f);
                 break;
             case MOLE_PEOPLE:
                 initGraphics(new Texture(molePeopleCapitalPath), 0, 1f);
