@@ -222,15 +222,6 @@ public class Map {
         }
     }
 
-    public Unit findUnit(UUID unitID) {
-        for (Tile t : tiles) {
-            for (Unit u : t.getUnits()) {
-                if (u.getID().equals(unitID)) return u;
-            }
-        }
-        return null;
-    }
-
     public Entity findEntity(UUID entityID) {
         for (Tile t : tiles) {
             for (Entity e : t.getEntities()) {

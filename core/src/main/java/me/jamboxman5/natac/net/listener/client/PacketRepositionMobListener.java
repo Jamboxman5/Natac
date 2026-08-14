@@ -13,7 +13,7 @@ public class PacketRepositionMobListener implements Listener {
         if (obj instanceof PacketRepositionMob) {
             PacketRepositionMob packet = (PacketRepositionMob) obj;
             Map m = Natac.instance.getGame().getMap();
-            Mob moving = m.findUnit(packet.mob.getID());
+            Mob moving = (Mob) m.findEntity(packet.mob.getID());
             if (moving != null) moving.setPosition(packet.newPosition);
         }
     }
